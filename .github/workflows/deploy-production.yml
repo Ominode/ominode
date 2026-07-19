@@ -122,7 +122,10 @@ jobs:
             echo "📥 Pulling ${NEW_IMAGE}..."
             dc pull
 
-            echo "🚀 Recreating containers..."
+            echo "🛑 Stopping existing containers..."
+            dc down --remove-orphans || true
+
+            echo "🚀 Starting containers..."
             dc up -d
 
             # ---- 3. Health check (60s timeout, 2s interval) ----
