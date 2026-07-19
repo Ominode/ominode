@@ -208,7 +208,11 @@ func getLogFiles() ([]LogFileInfo, error) {
 			continue
 		}
 		name := entry.Name()
-		if !strings.HasPrefix(name, "oneapi-") || !strings.HasSuffix(name, ".log") {
+		// Accept the current ominode- prefix and legacy oneapi- log files.
+		if !strings.HasPrefix(name, "ominode-") && !strings.HasPrefix(name, "oneapi-") {
+			continue
+		}
+		if !strings.HasSuffix(name, ".log") {
 			continue
 		}
 		info, err := entry.Info()
