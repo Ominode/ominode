@@ -89,6 +89,15 @@ jobs:
             set -e
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
 
+            # Compat: use 'docker compose' plugin if available, else 'docker-compose' standalone
+            dc() {
+              if docker compose version >/dev/null 2>&1; then
+                docker compose "$@"
+              else
+                docker-compose "$@"
+              fi
+            }
+
             NEW_TAG="${{ github.sha }}"
             NEW_IMAGE="${{ env.DOCKER_IMAGE }}:${NEW_TAG}"
             HEALTH_URL="http://localhost:3000/api/status"
@@ -108,10 +117,10 @@ jobs:
             sed -i "s|image: ${{ env.DOCKER_IMAGE }}:.*|image: ${NEW_IMAGE}|" docker-compose.yml
 
             echo "📥 Pulling ${NEW_IMAGE}..."
-            docker-compose pull
+            dc pull
 
             echo "🚀 Recreating containers..."
-            docker-compose up -d
+            dc up -d
 
             # ---- 3. Health check (60s timeout, 2s interval) ----
             echo "🩺 Waiting for healthy response from ${HEALTH_URL} ..."
@@ -133,8 +142,8 @@ jobs:
               # Restore previous docker-compose.yml and deploy old image
               cp docker-compose.yml.bak docker-compose.yml
               echo "↩️  Reverting to: ${OLD_IMAGE}"
-              docker-compose pull
-              docker-compose up -d
+              dc pull
+              dc up -d
 
               rm -f docker-compose.yml.bak
               docker image prune -f
