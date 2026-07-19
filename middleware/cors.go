@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/QuantumNous/new-api/common"
+	"github.com/chain-works/ominode/common"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )

@@ -3,8 +3,8 @@ package gemini
 import (
 	"strings"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/dto"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/dto"
 )
 
 const (

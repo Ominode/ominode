@@ -8,13 +8,13 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/dto"
-	"github.com/QuantumNous/new-api/logger"
-	"github.com/QuantumNous/new-api/model"
-	"github.com/QuantumNous/new-api/service"
-	"github.com/QuantumNous/new-api/setting"
-	"github.com/QuantumNous/new-api/setting/system_setting"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/dto"
+	"github.com/chain-works/ominode/logger"
+	"github.com/chain-works/ominode/model"
+	"github.com/chain-works/ominode/service"
+	"github.com/chain-works/ominode/setting"
+	"github.com/chain-works/ominode/setting/system_setting"
 
 	"github.com/gin-gonic/gin"
 )

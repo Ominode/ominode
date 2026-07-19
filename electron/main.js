@@ -15,7 +15,7 @@ const DEV_FRONTEND_PORT = 5173; // Vite dev server port
 function saveAndOpenErrorLog() {
   try {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const logFileName = `new-api-crash-${timestamp}.log`;
+    const logFileName = `ominode-crash-${timestamp}.log`;
     const logDir = app.getPath('logs');
     const logFilePath = path.join(logDir, logFileName);
     
@@ -25,7 +25,7 @@ function saveAndOpenErrorLog() {
     }
     
     // 写入日志
-    const logContent = `New API 崩溃日志
+    const logContent = `Ominode 崩溃日志
 生成时间: ${new Date().toLocaleString('zh-CN')}
 平台: ${process.platform}
 架构: ${process.arch}
@@ -152,23 +152,23 @@ function getBinaryPath() {
   const platform = process.platform;
 
   if (isDev) {
-    const binaryName = platform === 'win32' ? 'new-api.exe' : 'new-api';
+    const binaryName = platform === 'win32' ? 'ominode.exe' : 'ominode';
     return path.join(__dirname, '..', binaryName);
   }
 
   let binaryName;
   switch (platform) {
     case 'win32':
-      binaryName = 'new-api.exe';
+      binaryName = 'ominode.exe';
       break;
     case 'darwin':
-      binaryName = 'new-api';
+      binaryName = 'ominode';
       break;
     case 'linux':
-      binaryName = 'new-api';
+      binaryName = 'ominode';
       break;
     default:
-      binaryName = 'new-api';
+      binaryName = 'ominode';
   }
 
   return path.join(process.resourcesPath, 'bin', binaryName);
@@ -261,7 +261,7 @@ function startServer() {
       fs.mkdirSync(dataDir, { recursive: true });
     }
 
-    env.SQLITE_PATH = path.join(dataDir, 'new-api.db');
+    env.SQLITE_PATH = path.join(dataDir, 'ominode.db');
     
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('📁 您的数据存储位置：');

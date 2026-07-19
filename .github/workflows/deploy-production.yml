@@ -1,0 +1,173 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  DOCKER_IMAGE: ghcr.io/chain-works/ominode
+
+jobs:
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_IMAGE }}
+
+      - name: Build & push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.DOCKER_IMAGE }}:latest
+            ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: mode=max
+          sbom: true
+
+      - name: Image summary
+        run: |
+          echo "### 🐳 Docker Image Pushed" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ env.DOCKER_IMAGE }}:latest" >> $GITHUB_STEP_SUMMARY
+          echo "${{ env.DOCKER_IMAGE }}:${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Make package public
+        continue-on-error: true
+        run: |
+          gh api --method PATCH \
+            "/orgs/${{ github.repository_owner }}/packages/container/ominode/visibility" \
+            -f visibility=public \
+            || echo "::warning::Auto-set visibility failed. Make it manually: https://github.com/${{ github.repository }}/pkgs/container/ominode → Package settings → Change visibility → Public"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Deploy to Production Server
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy & health check
+        id: deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          script: |
+            set -e
+            cd ${{ secrets.SERVER_DEPLOY_DIR }}
+
+            NEW_TAG="${{ github.sha }}"
+            NEW_IMAGE="${{ env.DOCKER_IMAGE }}:${NEW_TAG}"
+            HEALTH_URL="http://localhost:3000/api/status"
+
+            # ---- 1. Snapshot current state for rollback ----
+            OLD_IMAGE=$(docker inspect --format='{{.Config.Image}}' ominode 2>/dev/null || echo "")
+            if [ -z "$OLD_IMAGE" ]; then
+              OLD_IMAGE="${{ env.DOCKER_IMAGE }}:latest"
+              echo "ℹ️  No running container 'ominode', fallback rollback target: ${OLD_IMAGE}"
+            else
+              echo "📸 Current running image: ${OLD_IMAGE}"
+            fi
+
+            # ---- 2. Update to new SHA-tagged image ----
+            echo "⬆️  Updating docker-compose.yml to: ${NEW_IMAGE}"
+            cp docker-compose.yml docker-compose.yml.bak
+            sed -i "s|image: ${{ env.DOCKER_IMAGE }}:.*|image: ${NEW_IMAGE}|" docker-compose.yml
+
+            echo "📥 Pulling ${NEW_IMAGE}..."
+            docker-compose pull
+
+            echo "🚀 Recreating containers..."
+            docker-compose up -d
+
+            # ---- 3. Health check (60s timeout, 2s interval) ----
+            echo "🩺 Waiting for healthy response from ${HEALTH_URL} ..."
+            HEALTH_OK=false
+            for i in $(seq 1 30); do
+              if curl -sf --max-time 3 "${HEALTH_URL}" 2>/dev/null | grep -q '"success":\s*true'; then
+                echo "✅ Health check passed (attempt ${i})"
+                HEALTH_OK=true
+                break
+              fi
+              echo "⏳ Attempt ${i}/30 — waiting 2s..."
+              sleep 2
+            done
+
+            if [ "$HEALTH_OK" = false ]; then
+              echo ""
+              echo "❌ Health check FAILED after 60s — rolling back!"
+
+              # Restore previous docker-compose.yml and deploy old image
+              cp docker-compose.yml.bak docker-compose.yml
+              echo "↩️  Reverting to: ${OLD_IMAGE}"
+              docker-compose pull
+              docker-compose up -d
+
+              rm -f docker-compose.yml.bak
+              docker image prune -f
+
+              echo ""
+              echo "⛔ ROLLBACK COMPLETE. ${OLD_IMAGE} is running."
+              echo "⛔ The new image ${NEW_IMAGE} was rejected."
+              exit 1
+            fi
+
+            # ---- 4. Success ----
+            rm -f docker-compose.yml.bak
+            echo ""
+            echo "🧹 Cleaning up old images..."
+            docker image prune -f
+            echo ""
+            echo "✅ Deployment successful!"
+            echo "   Old: ${OLD_IMAGE}"
+            echo "   New: ${NEW_IMAGE}"
+
+      - name: Deployment summary
+        if: always()
+        run: |
+          if [ "${{ steps.deploy.outcome }}" = "success" ]; then
+            echo "### ✅ Production Deployed" >> $GITHUB_STEP_SUMMARY
+            echo "**Image:** ${{ env.DOCKER_IMAGE }}:${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Health check passed. Service is running." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Deployment Failed" >> $GITHUB_STEP_SUMMARY
+            echo "**Attempted image:** ${{ env.DOCKER_IMAGE }}:${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Automatic rollback executed. Previous version is still running." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details." >> $GITHUB_STEP_SUMMARY
+          fi

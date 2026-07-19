@@ -4,8 +4,8 @@ import (
 	"math"
 	"testing"
 
-	relaycommon "github.com/QuantumNous/new-api/relay/common"
-	"github.com/QuantumNous/new-api/types"
+	relaycommon "github.com/chain-works/ominode/relay/common"
+	"github.com/chain-works/ominode/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

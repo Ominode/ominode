@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/setting/config"
-	"github.com/QuantumNous/new-api/types"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/setting/config"
+	"github.com/chain-works/ominode/types"
 )
 
 var defaultGroupRatio = map[string]float64{

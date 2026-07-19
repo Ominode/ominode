@@ -5,12 +5,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/pkg/billingexpr"
-	relaycommon "github.com/QuantumNous/new-api/relay/common"
-	"github.com/QuantumNous/new-api/setting/billing_setting"
-	"github.com/QuantumNous/new-api/setting/config"
-	"github.com/QuantumNous/new-api/types"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/pkg/billingexpr"
+	relaycommon "github.com/chain-works/ominode/relay/common"
+	"github.com/chain-works/ominode/setting/billing_setting"
+	"github.com/chain-works/ominode/setting/config"
+	"github.com/chain-works/ominode/types"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
 )

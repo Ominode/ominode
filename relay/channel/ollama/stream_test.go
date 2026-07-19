@@ -7,10 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/constant"
-	"github.com/QuantumNous/new-api/dto"
-	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/constant"
+	"github.com/chain-works/ominode/dto"
+	relaycommon "github.com/chain-works/ominode/relay/common"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"

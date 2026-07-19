@@ -1,7 +1,7 @@
 package ratio_setting
 
 import (
-	"github.com/QuantumNous/new-api/types"
+	"github.com/chain-works/ominode/types"
 )
 
 var defaultCacheRatio = map[string]float64{

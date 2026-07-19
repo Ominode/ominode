@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/model"
-	"github.com/QuantumNous/new-api/service"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/model"
+	"github.com/chain-works/ominode/service"
 
 	"github.com/gin-gonic/gin"
 )

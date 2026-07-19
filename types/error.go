@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/QuantumNous/new-api/common"
+	"github.com/chain-works/ominode/common"
 )
 
 type OpenAIError struct {

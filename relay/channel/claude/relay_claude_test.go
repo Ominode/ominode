@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/QuantumNous/new-api/dto"
-	"github.com/QuantumNous/new-api/service"
+	"github.com/chain-works/ominode/dto"
+	"github.com/chain-works/ominode/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

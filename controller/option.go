@@ -6,14 +6,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/i18n"
-	"github.com/QuantumNous/new-api/model"
-	"github.com/QuantumNous/new-api/setting"
-	"github.com/QuantumNous/new-api/setting/console_setting"
-	"github.com/QuantumNous/new-api/setting/operation_setting"
-	"github.com/QuantumNous/new-api/setting/ratio_setting"
-	"github.com/QuantumNous/new-api/setting/system_setting"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/i18n"
+	"github.com/chain-works/ominode/model"
+	"github.com/chain-works/ominode/setting"
+	"github.com/chain-works/ominode/setting/console_setting"
+	"github.com/chain-works/ominode/setting/operation_setting"
+	"github.com/chain-works/ominode/setting/ratio_setting"
+	"github.com/chain-works/ominode/setting/system_setting"
 
 	"github.com/gin-gonic/gin"
 )

@@ -9,12 +9,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/constant"
-	"github.com/QuantumNous/new-api/dto"
-	"github.com/QuantumNous/new-api/logger"
-	relayconstant "github.com/QuantumNous/new-api/relay/constant"
-	"github.com/QuantumNous/new-api/setting"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/constant"
+	"github.com/chain-works/ominode/dto"
+	"github.com/chain-works/ominode/logger"
+	relayconstant "github.com/chain-works/ominode/relay/constant"
+	"github.com/chain-works/ominode/setting"
 
 	"github.com/gin-gonic/gin"
 )

@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/QuantumNous/new-api/dto"
-	"github.com/QuantumNous/new-api/model"
+	"github.com/chain-works/ominode/dto"
+	"github.com/chain-works/ominode/model"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
 )

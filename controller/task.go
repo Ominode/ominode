@@ -3,12 +3,12 @@ package controller
 import (
 	"strconv"
 
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/constant"
-	"github.com/QuantumNous/new-api/dto"
-	"github.com/QuantumNous/new-api/model"
-	"github.com/QuantumNous/new-api/relay"
-	"github.com/QuantumNous/new-api/types"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/constant"
+	"github.com/chain-works/ominode/dto"
+	"github.com/chain-works/ominode/model"
+	"github.com/chain-works/ominode/relay"
+	"github.com/chain-works/ominode/types"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/setting/operation_setting"
+	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/setting/operation_setting"
 )
 
 // ToolCallUsage captures all tool call counts from a single request.

@@ -3,7 +3,7 @@ package model
 import (
 	"testing"
 
-	"github.com/QuantumNous/new-api/common"
+	"github.com/chain-works/ominode/common"
 	"github.com/stretchr/testify/require"
 )
 
