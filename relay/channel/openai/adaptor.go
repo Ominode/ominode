@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/textproto"
 	"net/url"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -218,10 +219,13 @@ func (a *Adaptor) SetupRequestHeader(c *gin.Context, header *http.Header, info *
 	}
 	if info.ChannelType == constant.ChannelTypeOpenRouter {
 		if header.Get("HTTP-Referer") == "" {
-			header.Set("HTTP-Referer", "https://www.newapi.ai")
+			// Optional deployment identity for OpenRouter stats; set OPENROUTER_REFERER to your site URL.
+			if referer := strings.TrimSpace(os.Getenv("OPENROUTER_REFERER")); referer != "" {
+				header.Set("HTTP-Referer", referer)
+			}
 		}
 		if header.Get("X-OpenRouter-Title") == "" {
-			header.Set("X-OpenRouter-Title", "New API")
+			header.Set("X-OpenRouter-Title", common.SystemName)
 		}
 	}
 	return nil
