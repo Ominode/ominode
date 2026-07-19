@@ -98,6 +98,9 @@ jobs:
               fi
             }
 
+            # Login to GHCR so server can pull private packages
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
             NEW_TAG="${{ github.sha }}"
             NEW_IMAGE="${{ env.DOCKER_IMAGE }}:${NEW_TAG}"
             HEALTH_URL="http://localhost:3000/api/status"
