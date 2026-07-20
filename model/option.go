@@ -1,6 +1,7 @@
 package model
 
 import (
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -192,6 +193,14 @@ func loadOptionsFromDatabase() {
 		err := updateOptionMap(option.Key, option.Value)
 		if err != nil {
 			common.SysLog("failed to update option map: " + err.Error())
+		}
+	}
+	// Environment variables take precedence over database-stored options for
+	// deployment identity, so a deployment can set its display name via env
+	// without editing the DB or the admin UI.
+	if name := strings.TrimSpace(os.Getenv("SYSTEM_NAME")); name != "" {
+		if err := updateOptionMap("SystemName", name); err != nil {
+			common.SysLog("failed to apply SYSTEM_NAME env override: " + err.Error())
 		}
 	}
 }
