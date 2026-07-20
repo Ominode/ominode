@@ -22,7 +22,7 @@ var TopUpLink = ""
 var themeValue atomic.Value // stores string; safe for concurrent read/write
 
 func init() {
-	themeValue.Store("classic")
+	themeValue.Store("default")
 }
 
 func GetTheme() string {
@@ -30,9 +30,10 @@ func GetTheme() string {
 }
 
 // SetTheme updates the frontend theme atomically.
-// Only "default" and "classic" are accepted; other values are silently ignored.
+// The classic frontend has been removed; only "default" is accepted and
+// other values (including legacy "classic" stored in the DB) are ignored.
 func SetTheme(t string) {
-	if t == "default" || t == "classic" {
+	if t == "default" {
 		themeValue.Store(t)
 	}
 }
