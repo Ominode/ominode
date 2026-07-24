@@ -41,3 +41,8 @@ skills-lock.json
 .local-tests/
 service/relayconvert/chat_responses_live_local_test.go
 service/openaicompat/chat_responses_live_local_test.go
+
+# docs site
+docs-site/node_modules
+docs-site/.vitepress/dist
+docs-site/.vitepress/cache

@@ -117,6 +117,29 @@ services:
 #      - "8123:8123"  # HTTP interface, uncomment if you need external access
 #      - "9000:9000"  # Native interface used by the LOG_SQL_DSN example above
 
+# ---------------------------------------------------------------------------
+# OPTIONAL: docs site (docs.ominode.com) — VitePress static site in a container.
+#
+#   1. Merge the docs-site changes and let the "Publish docs site image"
+#      workflow build ghcr.io/chain-works/ominode-docs (or build locally:
+#      docker build -t ghcr.io/chain-works/ominode-docs:latest docs-site).
+#   2. Add a DNS record for docs.ominode.com in Cloudflare pointing at this
+#      server (same as the main site).
+#   3. Route the hostname to this container, either by:
+#      a. enabling the Caddy section below (it proxies docs.{$DOMAIN} here), or
+#      b. adding a public hostname in your existing reverse proxy / Cloudflare
+#         Tunnel pointing to http://localhost:3001 (mapped on 127.0.0.1 only).
+#   4. Uncomment the service below and `docker compose up -d`.
+# ---------------------------------------------------------------------------
+#  docs:
+#    image: ghcr.io/chain-works/ominode-docs:latest
+#    container_name: ominode-docs
+#    restart: always
+#    ports:
+#      - "127.0.0.1:3001:80"
+#    networks:
+#      - ominode-network
+
 volumes:
   pg_data:
 #  caddy_data:

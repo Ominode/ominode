@@ -12,6 +12,17 @@
 # Reverse proxy to the ominode container
 reverse_proxy ominode:3000
 
+# Docs site (requires the `docs` service enabled in docker-compose.yml)
+docs.{$DOMAIN} {
+	reverse_proxy docs:80
+	header {
+		-Server
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+}
+
 # Security headers
 header {
 	-Server

@@ -1,0 +1,21 @@
+:80
+
+root * /srv
+encode gzip
+
+# VitePress cleanUrls: serve /getting-started as /getting-started.html
+try_files {path} {path}.html {path}/index.html
+
+file_server
+
+header {
+	-Server
+	X-Content-Type-Options nosniff
+	X-Frame-Options DENY
+	Referrer-Policy strict-origin-when-cross-origin
+}
+
+log {
+	output stdout
+	format console
+}
