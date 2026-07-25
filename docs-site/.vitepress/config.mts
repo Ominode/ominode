@@ -23,6 +23,13 @@ export default defineConfig({
       { text: 'Billing & Pricing', link: '/billing' },
       { text: 'Error Codes', link: '/error-codes' },
       { text: 'FAQ', link: '/faq' },
+      {
+        text: 'Legal',
+        items: [
+          { text: 'Terms of Service', link: '/terms' },
+          { text: 'Privacy Policy', link: '/privacy' },
+        ],
+      },
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/chain-works/ominode' }],
     footer: {
