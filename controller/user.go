@@ -905,8 +905,10 @@ func DeleteUser(c *gin.Context) {
 		common.ApiError(c, err)
 		return
 	}
-	originUser, err := model.GetUserById(id, false)
-	if err != nil {
+	// Load with Unscoped so that soft-deleted users can be permanently
+	// deleted (which also frees their email/username for re-registration).
+	originUser := model.User{Id: id}
+	if err := model.DB.Unscoped().Select("id", "username", "role").First(&originUser, "id = ?", id).Error; err != nil {
 		common.ApiError(c, err)
 		return
 	}

@@ -136,7 +136,28 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const isRoot = user.role === USER_ROLE.ROOT
 
   if (isUserDeleted(user)) {
-    return null
+    // Soft-deleted users only expose permanent deletion, which frees the
+    // email/username for re-registration.
+    return (
+      <div className='-ml-1.5 flex items-center gap-1'>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Button
+                variant='ghost'
+                size='icon-sm'
+                onClick={handleDelete}
+                disabled={isRoot}
+                aria-label={t('Delete')}
+              />
+            }
+          >
+            <Trash2 className='text-destructive' />
+          </TooltipTrigger>
+          <TooltipContent>{t('Delete')}</TooltipContent>
+        </Tooltip>
+      </div>
+    )
   }
 
   return (
