@@ -235,3 +235,141 @@ body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb:hover {
     transform: translateY(0);
   }
 }
+
+/* ============================================================================
+ * 天宫幻境 — jade panels, 鎏金 lines, ancient-style inputs.
+ *
+ * These drive the home page's 玉石信息面板 and the auth pages' 玉石/深木/鎏金
+ * form containers. Kept preset-scoped: switch the preset and the hero jade
+ * slab / auth container silently fall back to the plain translucent surface.
+ * ========================================================================== */
+
+/* ── 玉石信息面板：半透明青玉 + 鎏金边框 + 内层玉光 ─────────────────── */
+[data-theme-preset='celestial-twilight'] .hero-jade-slab {
+  position: relative;
+  border: 1px solid rgba(200, 155, 88, 0.3);
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 70% at 85% -10%, rgba(96, 148, 132, 0.2), transparent 55%),
+    radial-gradient(90% 50% at 0% 110%, rgba(200, 155, 88, 0.1), transparent 60%),
+    linear-gradient(155deg, rgba(23, 33, 31, 0.84) 0%, rgba(13, 18, 20, 0.88) 100%);
+  box-shadow:
+    0 24px 60px -20px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(200, 155, 88, 0.05),
+    inset 0 0 36px rgba(80, 130, 118, 0.14),
+    inset 0 1px 0 rgba(232, 210, 172, 0.08);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme-preset='celestial-twilight'] .hero-jade-slab {
+    animation: celestial-float 7s ease-in-out infinite;
+  }
+}
+
+@keyframes celestial-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 鎏金四角：玉牌四角的金色回纹角饰 */
+[data-theme-preset='celestial-twilight'] .hero-jade-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  border: 0 solid rgba(200, 155, 88, 0.55);
+}
+[data-theme-preset='celestial-twilight'] .hero-jade-corner-tl {
+  top: 9px;
+  left: 9px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-top-left-radius: 9px;
+}
+[data-theme-preset='celestial-twilight'] .hero-jade-corner-tr {
+  top: 9px;
+  right: 9px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-top-right-radius: 9px;
+}
+[data-theme-preset='celestial-twilight'] .hero-jade-corner-bl {
+  bottom: 9px;
+  left: 9px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-bottom-left-radius: 9px;
+}
+[data-theme-preset='celestial-twilight'] .hero-jade-corner-br {
+  right: 9px;
+  bottom: 9px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-bottom-right-radius: 9px;
+}
+
+/* 玉牌首行之「天」字玉印 */
+[data-theme-preset='celestial-twilight'] .hero-jade-seal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: #e9d9b8;
+  border: 1px solid rgba(200, 155, 88, 0.5);
+  background: linear-gradient(135deg, rgba(200, 155, 88, 0.18), rgba(200, 155, 88, 0.04));
+  box-shadow: 0 0 12px rgba(200, 155, 88, 0.15), inset 0 0 8px rgba(200, 155, 88, 0.08);
+}
+
+/* 朱砂印：「云上」 */
+[data-theme-preset='celestial-twilight'] .hero-jade-cinnabar {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #f6e7d4;
+  background: linear-gradient(160deg, #a33b2c, #7e2c20);
+  border: 1px solid rgba(244, 200, 180, 0.35);
+  padding: 3px 8px;
+  transform: rotate(4deg);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ── 登录/注册页：半透明玉石/深木容器 + 鎏金边框 ────────────────────── */
+[data-theme-preset='celestial-twilight'] .auth-jade-panel {
+  border: 1px solid rgba(200, 155, 88, 0.28);
+  border-radius: 16px;
+  background:
+    radial-gradient(110% 60% at 85% -10%, rgba(96, 148, 132, 0.16), transparent 55%),
+    linear-gradient(155deg, rgba(24, 32, 30, 0.82), rgba(13, 18, 20, 0.86));
+  box-shadow:
+    0 24px 70px -22px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(232, 210, 172, 0.08),
+    inset 0 0 40px rgba(80, 130, 118, 0.1);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+/* 古风输入框：鎏金边框 + 聚焦柔光 */
+[data-theme-preset='celestial-twilight'] .auth-jade-panel [data-slot='input'] {
+  background-color: rgba(10, 13, 16, 0.42);
+  border-color: rgba(200, 155, 88, 0.28);
+}
+
+[data-theme-preset='celestial-twilight']
+  .auth-jade-panel
+  [data-slot='input']:focus {
+  background-color: rgba(12, 15, 18, 0.55);
+  border-color: rgba(200, 155, 88, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(200, 155, 88, 0.35),
+    0 0 16px rgba(200, 155, 88, 0.18);
+}

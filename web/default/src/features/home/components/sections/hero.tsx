@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { useStatus } from '@/hooks/use-status'
 
-import { HeroTerminalDemo } from '../hero-terminal-demo'
+import { HeroJadePanel } from '../hero-jade-panel'
 
 interface HeroProps {
   className?: string
@@ -57,7 +57,7 @@ export function Hero(props: HeroProps) {
       return (
         <Button
           variant='outline'
-          className='group border-border/50 hover:border-border hover:bg-muted/50 inline-flex h-11 items-center gap-1.5 rounded-lg px-5 text-sm font-medium'
+          className='group border-border hover:border-border hover:bg-muted/50 inline-flex h-11 items-center gap-1.5 rounded-lg px-5 text-sm font-medium'
           render={
             <a href={docsUrl} target='_blank' rel='noopener noreferrer' />
           }
@@ -70,7 +70,7 @@ export function Hero(props: HeroProps) {
     return (
       <Button
         variant='outline'
-        className='group border-border/50 hover:border-border hover:bg-muted/50 inline-flex h-11 items-center gap-1.5 rounded-lg px-5 text-sm font-medium'
+        className='group border-border hover:border-border hover:bg-muted/50 inline-flex h-11 items-center gap-1.5 rounded-lg px-5 text-sm font-medium'
         render={<Link to={docsUrl} />}
       >
         <BookOpen className='text-muted-foreground/80 group-hover:text-foreground size-4 transition-colors duration-200' />
@@ -81,22 +81,22 @@ export function Hero(props: HeroProps) {
 
   return (
     <section className='relative z-10 overflow-hidden px-6 pt-24 pb-16 md:pt-32 md:pb-24 lg:pt-36 lg:pb-28'>
-      {/* Radial gradient background */}
+      {/* 金晕：暮光金漫射在标题背后，天宫云海透出 */}
       <div
         aria-hidden
-        className='pointer-events-none absolute inset-0 -z-10 opacity-25 dark:opacity-[0.12]'
+        className='pointer-events-none absolute inset-0 -z-10 opacity-60'
         style={{
           background: [
-            'radial-gradient(ellipse 60% 50% at 20% 20%, oklch(0.72 0.18 250 / 80%) 0%, transparent 70%)',
-            'radial-gradient(ellipse 50% 40% at 80% 15%, oklch(0.65 0.15 200 / 60%) 0%, transparent 70%)',
-            'radial-gradient(ellipse 40% 35% at 40% 80%, oklch(0.70 0.12 280 / 40%) 0%, transparent 70%)',
+            'radial-gradient(ellipse 55% 45% at 18% 25%, rgba(200,155,88,0.16) 0%, transparent 65%)',
+            'radial-gradient(ellipse 45% 40% at 80% 55%, rgba(200,155,88,0.10) 0%, transparent 60%)',
+            'radial-gradient(ellipse 40% 35% at 30% 90%, rgba(138,98,42,0.10) 0%, transparent 60%)',
           ].join(', '),
         }}
       />
-      {/* Grid pattern */}
+      {/* 左侧可读性纱幕：标题背后收一层暖夜色，保证文字在云海上清晰 */}
       <div
         aria-hidden
-        className='absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_30%,black_20%,transparent_100%)] bg-[size:4rem_4rem] opacity-[0.08]'
+        className='pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_75%_at_18%_30%,rgba(12,10,8,0.5),transparent_72%)]'
       />
 
       <div className='mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-8'>
@@ -104,12 +104,12 @@ export function Hero(props: HeroProps) {
         <div className='flex flex-col items-start text-left lg:col-span-6'>
           {/* Top Pill Badge */}
           <div
-            className='landing-animate-fade-up mb-5 inline-flex items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 px-3 py-1.5 text-[11px] font-medium text-blue-600 opacity-0 shadow-xs dark:border-blue-400/20 dark:bg-blue-400/5 dark:text-blue-400'
+            className='landing-animate-fade-up mb-5 inline-flex items-center gap-1.5 rounded-full border border-[#C89B58]/25 bg-[#C89B58]/[0.06] px-3 py-1.5 text-[11px] font-medium tracking-[0.18em] text-[#D8BC85] opacity-0 shadow-[0_0_18px_rgba(200,155,88,0.12)]'
             style={{ animationDelay: '0ms' }}
           >
             <span className='relative flex size-1.5'>
-              <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75' />
-              <span className='relative inline-flex size-1.5 rounded-full bg-blue-500 dark:bg-blue-400' />
+              <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C89B58] opacity-60' />
+              <span className='relative inline-flex size-1.5 rounded-full bg-[#C89B58]' />
             </span>
             <span>{t('AI Application Infrastructure Foundation')}</span>
           </div>
@@ -120,7 +120,7 @@ export function Hero(props: HeroProps) {
           >
             {t('Unified API Gateway for')}
             <br />
-            <span className='bg-gradient-to-r from-blue-400 via-violet-400 to-purple-500 bg-clip-text text-transparent'>
+            <span className='bg-gradient-to-r from-[#EFD9A7] via-[#D8BC85] to-[#9A6B2F] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(200,155,88,0.28)]'>
               {t('Vast Range of AI Models')}
             </span>
           </h1>
@@ -159,7 +159,7 @@ export function Hero(props: HeroProps) {
                 </Button>
                 <Button
                   variant='outline'
-                  className='border-border/50 hover:border-border hover:bg-muted/50 h-11 rounded-lg px-5 text-sm font-medium'
+                  className='border-border hover:border-border hover:bg-muted/50 h-11 rounded-lg px-5 text-sm font-medium'
                   render={<Link to='/pricing' />}
                 >
                   {t('View Pricing')}
@@ -216,7 +216,7 @@ export function Hero(props: HeroProps) {
                 />
                 <span
                   style={{ display: 'none' }}
-                  className='size-6 shrink-0 items-center justify-center rounded-md bg-blue-500/10 text-[10px] font-bold text-blue-600 dark:bg-blue-400/10 dark:text-blue-400'
+                  className='size-6 shrink-0 items-center justify-center rounded-md bg-[#C89B58]/10 text-[10px] font-bold text-[#C89B58]'
                 >
                   CC
                 </span>
@@ -232,12 +232,12 @@ export function Hero(props: HeroProps) {
           </div>
         </div>
 
-        {/* Right Column: Hero Terminal API Demo */}
+        {/* Right Column: 玉石信息面板 */}
         <div
           className='landing-animate-fade-up flex w-full justify-center opacity-0 lg:col-span-6'
           style={{ animationDelay: '320ms' }}
         >
-          <HeroTerminalDemo className='mt-8 lg:mt-0' />
+          <HeroJadePanel className='mt-8 lg:mt-0' />
         </div>
       </div>
     </section>
