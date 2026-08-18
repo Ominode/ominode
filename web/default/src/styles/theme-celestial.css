@@ -47,6 +47,27 @@ body[data-theme-preset='celestial-twilight'] {
   background-attachment: fixed;
 }
 
+/* ── 暮色纱幕：让天宫视频与暮光金晕从各层底下透出 ─────────────────────── */
+/* 仪表盘内容区默认是纯色 bg-background，把 body 上的暮光金晕完全盖死——
+   把内容区换成半透明暖夜色纱幕，背景层（天宫视频若有、金晕恒有）从内容
+   底下透出，正是「磨砂云雾悬于天宫之上」的氛围来源。 */
+[data-theme-preset='celestial-twilight'] [data-slot='sidebar-inset'] {
+  background-color: rgba(15, 16, 15, 0.42);
+}
+
+/* 顶栏：sticky 透明条，改为一层轻度磨砂，避免视频/金晕直接怼在导航图标后。 */
+[data-theme-preset='celestial-twilight'] header.sticky {
+  background-color: rgba(13, 17, 20, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme-preset='celestial-twilight'] .celestial-video-layer {
+    display: none;
+  }
+}
+
 /* ── Serif headings with 舒朗 letter-spacing (宋体风骨) ─────────────────── */
 /* Split element selectors from attribute selectors: `:is()` takes the max
    specificity of its arguments, so mixing `[data-slot=...]` in would bump
