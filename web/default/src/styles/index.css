@@ -29,6 +29,9 @@ For commercial licensing, please contact support@quantumnous.com
 
 @import './theme.css';
 @import './theme-presets.css';
+/* 仙阙暮光 (Celestial Twilight) preset-scoped aesthetic layer. Inert for any
+ * other preset because every rule is keyed to `data-theme-preset`. */
+@import './theme-celestial.css';
 
 /* Shiki dual themes: token colors follow dark theme (pre background stays `bg-background` on the block) */
 @layer components {

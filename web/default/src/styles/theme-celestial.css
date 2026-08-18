@@ -1,0 +1,216 @@
+/*
+Copyright (C) 2023-2026 QuantumNous
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+For commercial licensing, please contact support@quantumnous.com
+*/
+/* ============================================================================
+ * 仙阙暮光 (Celestial Twilight) — preset-scoped styling.
+ *
+ * Every rule here is keyed to `[data-theme-preset='celestial-twilight']` (the
+ * shipped default preset), so it layers the aesthetic — glass surfaces
+ * (磨砂云雾), serif headings (宋体风骨), table flow-light, gold button
+ * gradients, entrance motion — on top of the color tokens defined in
+ * theme-presets.css WITHOUT leaking into other presets. Switching presets
+ * replaces the attribute and this stylesheet goes silently inert.
+ *
+ * The attribute lives on <body>, so `body[data-theme-preset='celestial-twilight']`
+ * styles the page chrome and descendant selectors style the components inside.
+ * ========================================================================== */
+
+[data-theme-preset='celestial-twilight'] {
+  /* 仙家缓动曲线 — starts fast, eases out long and slow. */
+  --ease-celestial: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Page chrome: twilight aura over the night canvas ──────────────────── */
+body[data-theme-preset='celestial-twilight'] {
+  background-image:
+    radial-gradient(
+      1100px 460px at 50% -12%,
+      rgba(200, 155, 88, 0.11),
+      transparent 70%
+    ),
+    linear-gradient(to bottom, #11161b 0%, #0a0d10 100%);
+  background-attachment: fixed;
+}
+
+/* ── Serif headings with 舒朗 letter-spacing (宋体风骨) ─────────────────── */
+/* Split element selectors from attribute selectors: `:is()` takes the max
+   specificity of its arguments, so mixing `[data-slot=...]` in would bump
+   the whole rule above the h1/h2 override below and 0.15em would never win. */
+[data-theme-preset='celestial-twilight'] :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-serif);
+  letter-spacing: 0.12em;
+}
+
+/* Larger displays earn wider tracking per the spec's 0.15em–0.25em range. */
+[data-theme-preset='celestial-twilight'] :is(h1, h2) {
+  letter-spacing: 0.15em;
+}
+
+/* Slot-based titles (card / dialog / sheet / …) keep the same serif face
+   but tighter tracking; card-title's gold color is set below. */
+[data-theme-preset='celestial-twilight']
+  :is(
+    [data-slot='card-title'],
+    [data-slot='dialog-title'],
+    [data-slot='alert-dialog-title'],
+    [data-slot='sheet-title'],
+    [data-slot='drawer-title'],
+    [data-slot='popover-title']
+  ) {
+  font-family: var(--font-serif);
+  letter-spacing: 0.12em;
+}
+
+/* 卡片标题：宋体赤金 */
+[data-theme-preset='celestial-twilight'] [data-slot='card-title'] {
+  color: var(--primary);
+  letter-spacing: 0.08em;
+}
+
+/* ── 磨砂云雾 glass surfaces ───────────────────────────────────────────── */
+[data-theme-preset='celestial-twilight']
+  :is(
+    [data-slot='card'],
+    [data-slot='dialog-content'],
+    [data-slot='alert-dialog-content'],
+    [data-slot='sheet-content'],
+    [data-slot='drawer-content'],
+    [data-slot='popover-content'],
+    [data-slot='dropdown-menu-content'],
+    [data-slot='context-menu-content'],
+    [data-slot='menubar-content'],
+    [data-slot='select-content'],
+    [data-slot='combobox-content'],
+    [data-slot='sidebar']
+  ) {
+  background-color: rgba(28, 36, 43, 0.6);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* Hairline gold edges on ring-based surfaces (card / dialog / sheet / popover). */
+[data-theme-preset='celestial-twilight']
+  :is(
+    [data-slot='card'],
+    [data-slot='dialog-content'],
+    [data-slot='alert-dialog-content'],
+    [data-slot='sheet-content'],
+    [data-slot='drawer-content'],
+    [data-slot='popover-content']
+  ) {
+  --tw-ring-color: rgba(200, 155, 88, 0.18);
+}
+
+/* Deeper, frostier night scrims behind modals. */
+[data-theme-preset='celestial-twilight']
+  :is(
+    [data-slot='dialog-overlay'],
+    [data-slot='alert-dialog-overlay'],
+    [data-slot='sheet-overlay'],
+    [data-slot='drawer-overlay']
+  ) {
+  background-color: rgba(10, 13, 16, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ── Data tables: de-grid + serif gold headers + hover flow-light ──────── */
+[data-theme-preset='celestial-twilight'] [data-slot='table'] thead th {
+  font-family: var(--font-serif);
+  color: var(--primary);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+/* 行交互：hover 时产生从左至右的渐变流光 */
+[data-theme-preset='celestial-twilight'] [data-slot='table'] tbody tr:hover {
+  background-color: transparent;
+}
+
+[data-theme-preset='celestial-twilight']
+  [data-slot='table']
+  tbody
+  tr:hover
+  td {
+  background-image: linear-gradient(
+    90deg,
+    rgba(200, 155, 88, 0.08),
+    transparent
+  );
+}
+
+/* ── Buttons: gold gradient primary + gold-tinted outline ──────────────── */
+[data-theme-preset='celestial-twilight'] [data-slot='button'].bg-primary {
+  background-image: linear-gradient(135deg, #c89b58 0%, #8a622a 100%);
+}
+
+[data-theme-preset='celestial-twilight']
+  [data-slot='button'].bg-primary:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 0 16px rgba(200, 155, 88, 0.35);
+  transform: translateY(-1px);
+}
+
+[data-theme-preset='celestial-twilight']
+  [data-slot='button'].border-border:hover {
+  background-color: rgba(200, 155, 88, 0.08);
+  border-color: rgba(200, 155, 88, 0.5);
+  color: var(--primary);
+}
+
+/* ── Inputs: subtle gold-tinted focus state ────────────────────────────── */
+[data-theme-preset='celestial-twilight'] [data-slot='input']:focus,
+[data-theme-preset='celestial-twilight'] [data-slot='textarea']:focus,
+[data-theme-preset='celestial-twilight'] [data-slot='select']:focus,
+[data-theme-preset='celestial-twilight'] [data-slot='combobox-input']:focus {
+  background-color: rgba(200, 155, 88, 0.04);
+}
+
+/* ── Scrollbar: thin gold thread ───────────────────────────────────────── */
+body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb {
+  background: rgba(200, 155, 88, 0.18);
+  border-radius: 3px;
+}
+body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 155, 88, 0.3);
+}
+
+/* ── Route entrance: rise + fade (页面载入伴随上浮与渐显) ─────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme-preset='celestial-twilight'] [data-slot='sidebar-inset'] > * {
+    animation: celestial-rise 0.45s var(--ease-celestial) both;
+  }
+}
+
+@keyframes celestial-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

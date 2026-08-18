@@ -25,6 +25,14 @@ For commercial licensing, please contact support@quantumnous.com
 
 export const THEME_PRESETS = [
   {
+    // 仙阙暮光 (Celestial Twilight) — Eastern classical xianxia merged with
+    // modern brutalism: night-blue-black canvas with twilight gold. This is
+    // the shipped default preset. Night-toned in both light and dark modes.
+    value: 'celestial-twilight',
+    name: '仙阙暮光',
+    swatches: ['#C89B58', '#11161B'],
+  },
+  {
     value: 'default',
     name: 'Default',
     swatches: ['oklch(0.13 0 0)', 'oklch(0.95 0 0)'],
@@ -116,7 +124,7 @@ export type ThemeCustomization = {
 }
 
 export const DEFAULT_THEME_CUSTOMIZATION: ThemeCustomization = {
-  preset: 'default',
+  preset: 'celestial-twilight',
   font: 'default',
   radius: 'default',
   scale: 'default',

@@ -13,12 +13,34 @@
       content="Unified AI API gateway and admin dashboard."
     />
 
-    <meta name="theme-color" content="#fff" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <meta name="theme-color" content="#11161B" />
     <!--umami-->
     <!--Google Analytics-->
   </head>
 
   <body>
+    <script>
+      // Anti-FOUC: paint the celestial preset (or the user's stored preset)
+      // on <body> before React mounts, so the default night canvas never
+      // flashes the base light theme. The preset attribute is normally
+      // written by ThemeCustomizationProvider after mount; this just moves
+      // it before first paint.
+      (function () {
+        try {
+          var m = /(?:^|;\s*)theme_preset=([^;]+)/.exec(document.cookie)
+          document.body.setAttribute(
+            'data-theme-preset',
+            m ? m[1] : 'celestial-twilight'
+          )
+        } catch (e) {
+          /* empty */
+        }
+      })()
+    </script>
     <div id="root"></div>
   </body>
 </html>

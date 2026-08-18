@@ -417,10 +417,15 @@ For commercial licensing, please contact support@quantumnous.com
  *   - `anthropic`: warm cream surfaces are a brand choice, NOT a primary-mix
  *     derivation (the Anthropic system deliberately uses warm neutrals for
  *     cards/borders rather than tinting them with the clay accent).
- *   - `simple-large`: keeps intentionally neutral, high-contrast surfaces. */
+ *   - `simple-large`: keeps intentionally neutral, high-contrast surfaces.
+ *   - `celestial-twilight`: bespoke night-blue-black surfaces with hairline
+ *     gold borders — its own deliberate counter-positioning, not a
+ *     primary-tinted derivation. */
 [data-theme-preset]:not([data-theme-preset='default']):not(
     [data-theme-preset='anthropic']
-  ):not([data-theme-preset='simple-large']) {
+  ):not([data-theme-preset='simple-large']):not(
+    [data-theme-preset='celestial-twilight']
+  ) {
   --card: color-mix(in oklch, var(--primary) 3%, var(--background));
   --popover: color-mix(in oklch, var(--primary) 5%, var(--background));
   --muted: color-mix(in oklch, var(--primary) 7%, var(--background));
@@ -445,7 +450,9 @@ For commercial licensing, please contact support@quantumnous.com
 .dark
   [data-theme-preset]:not([data-theme-preset='default']):not(
     [data-theme-preset='anthropic']
-  ):not([data-theme-preset='simple-large']) {
+  ):not([data-theme-preset='simple-large']):not(
+    [data-theme-preset='celestial-twilight']
+  ) {
   --card: color-mix(in oklch, var(--primary) 8%, var(--background));
   --popover: color-mix(in oklch, var(--primary) 12%, var(--background));
   --muted: color-mix(in oklch, var(--primary) 12%, var(--background));
@@ -730,4 +737,86 @@ For commercial licensing, please contact support@quantumnous.com
     margin-inline: auto;
     width: 100%;
   }
+}
+
+/* ── Celestial Twilight (仙阙暮光) ──────────────────────────────────────── */
+/*
+ * Eastern classical xianxia merged with modern brutalism — the shipped
+ * default preset. A night-blue-black canvas (`#11161B`, never pure black)
+ * under a twilight-gold accent (`#C89B58`). Deliberately night-toned in BOTH
+ * light and dark modes: this is a "dusk" system, not a day/night one. The
+ * `.light` block (below) and `.dark` block differ only in surface elevation,
+ * so the existing light/dark toggle still has a subtle effect.
+ *
+ * Glass surfaces (磨砂云雾), serif headings (宋体风骨) and the motion curve
+ * are layered on top of these tokens in ./theme-celestial.css, which is
+ * scoped to this preset via the `data-theme-preset` attribute.
+ */
+[data-theme-preset='celestial-twilight'] {
+  /* Canvas + ink — the defining pair. */
+  --background: #11161b; /* 极夜青黑 */
+  --foreground: #e8dfd1; /* 羊脂白 */
+
+  --card: #161d24;
+  --card-foreground: #e8dfd1;
+  --popover: #151b21;
+  --popover-foreground: #e8dfd1;
+
+  /* Twilight gold — the single accent, scarce and warm. */
+  --primary: #c89b58; /* 暮光赤金 */
+  --primary-foreground: #11161b;
+
+  --secondary: #638580; /* 青黛/玉青 */
+  --secondary-foreground: #e8dfd1;
+
+  --muted: #1c242b; /* 暮云深灰 */
+  --muted-foreground: #969e9f; /* 暮霭灰 */
+  --accent: #9b382a; /* 朱砂赤红 */
+  --accent-foreground: #e8dfd1;
+
+  --destructive: #c4524f;
+  --destructive-foreground: #0a0d10;
+  --success: #5fa97e;
+  --success-foreground: #0a0d10;
+  --warning: #d9a05b;
+  --warning-foreground: #0a0d10;
+  --info: #5b8db8;
+  --info-foreground: #0a0d10;
+  --neutral: #969e9f;
+  --neutral-foreground: #0a0d10;
+
+  /* Hairline gold borders — 金黛微光. */
+  --border: rgba(200, 155, 88, 0.15);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #c89b58;
+
+  --chart-1: #c89b58;
+  --chart-2: #638580;
+  --chart-3: #8a622a;
+  --chart-4: #9b382a;
+  --chart-5: #d9c39a;
+
+  --sidebar: #0e1318;
+  --sidebar-foreground: #e8dfd1;
+  --sidebar-primary: #c89b58;
+  --sidebar-primary-foreground: #11161b;
+  --sidebar-accent: rgba(200, 155, 88, 0.12);
+  --sidebar-accent-foreground: #c89b58;
+  --sidebar-border: rgba(200, 155, 88, 0.12);
+  --sidebar-ring: #c89b58;
+
+  --skeleton-base: rgba(200, 155, 88, 0.06);
+  --skeleton-highlight: rgba(200, 155, 88, 0.16);
+
+  /* 2px micro-corners — 中式榫卯/梁柱的硬朗感. */
+  --radius: 0.125rem;
+}
+
+.dark [data-theme-preset='celestial-twilight'] {
+  /* Deeper night; cards lift one step for separation. */
+  --background: #0e1215;
+  --card: #141a20;
+  --popover: #12171c;
+  --muted: #182028;
+  --sidebar: #0b0f12;
 }
