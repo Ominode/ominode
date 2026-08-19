@@ -358,18 +358,55 @@ body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb:hover {
   -webkit-backdrop-filter: blur(18px) saturate(130%);
 }
 
-/* 古风输入框：鎏金边框 + 聚焦柔光 */
-[data-theme-preset='celestial-twilight'] .auth-jade-panel [data-slot='input'] {
-  background-color: rgba(10, 13, 16, 0.42);
-  border-color: rgba(200, 155, 88, 0.28);
+/* 古风输入框：鎏金边框 + 聚焦柔光（全站 input/textarea 生效） */
+[data-theme-preset='celestial-twilight'] :is([data-slot='input'], [data-slot='textarea']) {
+  background-color: rgba(10, 13, 16, 0.4);
+  border-color: rgba(200, 155, 88, 0.22);
 }
 
 [data-theme-preset='celestial-twilight']
-  .auth-jade-panel
-  [data-slot='input']:focus {
+  :is([data-slot='input'], [data-slot='textarea']):focus {
   background-color: rgba(12, 15, 18, 0.55);
   border-color: rgba(200, 155, 88, 0.6);
   box-shadow:
     0 0 0 1px rgba(200, 155, 88, 0.35),
     0 0 16px rgba(200, 155, 88, 0.18);
+}
+
+/* ── 公开页段落容器：透明化，让天宫场景贯通 ── */
+[data-theme-preset='celestial-twilight'] [data-slot='section'] {
+  background-color: transparent;
+}
+
+/* ── Tabs：激活项鎏金 ── */
+[data-theme-preset='celestial-twilight'] [data-slot='tabs-list'] {
+  background-color: rgba(10, 13, 16, 0.4);
+  border-color: rgba(200, 155, 88, 0.18);
+}
+[data-theme-preset='celestial-twilight'] [data-slot='tabs-trigger'][data-active] {
+  color: #e4c98f;
+}
+[data-theme-preset='celestial-twilight'] [data-slot='tabs-trigger']::after {
+  background-color: var(--primary);
+}
+
+/* ── Toast（sonner）：玻璃玉石 + 鎏金边 ── */
+[data-theme-preset='celestial-twilight'] .toaster [data-sonner-toast] {
+  background-color: rgba(20, 27, 28, 0.88);
+  border-color: rgba(200, 155, 88, 0.28);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(232, 210, 172, 0.06);
+}
+
+/* ── 错误页：宋体鎏金大字 ── */
+[data-theme-preset='celestial-twilight'] .celestial-error-code {
+  font-family: var(--font-serif);
+  background: linear-gradient(135deg, #efd9a7 0%, #d8bc85 45%, #9a6b2f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.04em;
 }

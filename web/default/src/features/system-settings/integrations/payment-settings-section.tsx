@@ -1250,24 +1250,24 @@ export function PaymentSettingsSection({
                   </p>
                 </div>
 
-                <div className='rounded-md bg-blue-50 p-4 text-sm text-blue-900 dark:bg-blue-950 dark:text-blue-100'>
+                <div className='rounded-md bg-[#C89B58]/8 p-4 text-sm text-[#8A622A] dark:bg-[#C89B58]/10 dark:text-[#E4C98F]'>
                   <p className='mb-2 font-medium'>
                     {t('Webhook Configuration:')}
                   </p>
                   <ul className='list-inside list-disc space-y-1'>
                     <li>
                       {t('Webhook URL:')}{' '}
-                      <code className='rounded bg-blue-100 px-1 py-0.5 text-xs dark:bg-blue-900'>
+                      <code className='rounded bg-[#C89B58]/15 px-1 py-0.5 text-xs dark:bg-[#C89B58]/20'>
                         {'<ServerAddress>/api/stripe/webhook'}
                       </code>
                     </li>
                     <li>
                       {t('Required events:')}{' '}
-                      <code className='rounded bg-blue-100 px-1 py-0.5 text-xs dark:bg-blue-900'>
+                      <code className='rounded bg-[#C89B58]/15 px-1 py-0.5 text-xs dark:bg-[#C89B58]/20'>
                         {t('checkout.session.completed')}
                       </code>{' '}
                       {t('and')}{' '}
-                      <code className='rounded bg-blue-100 px-1 py-0.5 text-xs dark:bg-blue-900'>
+                      <code className='rounded bg-[#C89B58]/15 px-1 py-0.5 text-xs dark:bg-[#C89B58]/20'>
                         {t('checkout.session.expired')}
                       </code>
                     </li>
@@ -1442,14 +1442,14 @@ export function PaymentSettingsSection({
                   </p>
                 </div>
 
-                <div className='rounded-md bg-blue-50 p-4 text-sm text-blue-900 dark:bg-blue-950 dark:text-blue-100'>
+                <div className='rounded-md bg-[#C89B58]/8 p-4 text-sm text-[#8A622A] dark:bg-[#C89B58]/10 dark:text-[#E4C98F]'>
                   <p className='mb-2 font-medium'>
                     {t('Webhook Configuration:')}
                   </p>
                   <ul className='list-inside list-disc space-y-1'>
                     <li>
                       {t('Webhook URL:')}{' '}
-                      <code className='rounded bg-blue-100 px-1 py-0.5 text-xs dark:bg-blue-900'>
+                      <code className='rounded bg-[#C89B58]/15 px-1 py-0.5 text-xs dark:bg-[#C89B58]/20'>
                         {'<ServerAddress>/api/creem/webhook'}
                       </code>
                     </li>

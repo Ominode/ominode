@@ -1030,7 +1030,7 @@ export function DetailsDialog(props: DetailsDialogProps) {
               value={
                 <span className='flex items-center gap-1'>
                   {other.admin_info.local_count_tokens ? (
-                    <Monitor className='size-3 text-blue-500' />
+                    <Monitor className='size-3 text-[#C89B58]' />
                   ) : (
                     <Cloud className='size-3 text-emerald-500' />
                   )}

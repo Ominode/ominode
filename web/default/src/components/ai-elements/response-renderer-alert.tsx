@@ -33,8 +33,8 @@ const alertConfig = {
   note: {
     label: 'Note',
     className:
-      'border-blue-500/40 bg-blue-500/8 text-blue-950 dark:text-blue-100',
-    markerClassName: 'text-blue-600 dark:text-blue-300',
+      'border-[#C89B58]/40 bg-[#C89B58]/8 text-[#5a4020] dark:text-[#E4C98F]',
+    markerClassName: 'text-[#8A622A] dark:text-[#C89B58]',
   },
   tip: {
     label: 'Tip',
@@ -45,8 +45,8 @@ const alertConfig = {
   important: {
     label: 'Important',
     className:
-      'border-violet-500/40 bg-violet-500/8 text-violet-950 dark:text-violet-100',
-    markerClassName: 'text-violet-600 dark:text-violet-300',
+      'border-[#6FA8A0]/40 bg-[#6FA8A0]/8 text-[#2a4a46] dark:text-[#C4D8D4]',
+    markerClassName: 'text-[#4a7a74] dark:text-[#8FB5AE]',
   },
   warning: {
     label: 'Warning',

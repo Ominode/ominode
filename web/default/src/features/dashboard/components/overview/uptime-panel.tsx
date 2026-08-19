@@ -35,7 +35,7 @@ const STATUS_COLOR_MAP: Record<number, string> = {
   1: 'bg-emerald-500',
   0: 'bg-red-500',
   2: 'bg-amber-500',
-  3: 'bg-blue-500',
+  3: 'bg-[#6FA8A0]',
 }
 const DEFAULT_STATUS_COLOR = 'bg-muted-foreground/40'
 

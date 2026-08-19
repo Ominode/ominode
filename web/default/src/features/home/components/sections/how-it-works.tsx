@@ -50,7 +50,7 @@ export function HowItWorks() {
   ]
 
   return (
-    <section className='border-border/40 relative z-10 border-t px-6 py-24 md:py-32'>
+    <section className='relative z-10 border-t border-[rgba(200,155,88,0.14)] px-6 py-24 md:py-32'>
       <div className='mx-auto max-w-6xl'>
         <AnimateInView className='mb-16 text-center md:mb-20'>
           <p className='text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase'>
@@ -70,14 +70,14 @@ export function HowItWorks() {
               className='relative flex flex-col items-center text-center'
             >
               <div className='relative mb-6'>
-                <div className='text-muted-foreground border-border/50 bg-muted/30 flex size-16 items-center justify-center rounded-2xl border transition-colors'>
+                <div className='border-[rgba(200,155,88,0.25)] bg-[rgba(200,155,88,0.05)] text-[#C89B58] flex size-16 items-center justify-center rounded-2xl border transition-colors'>
                   {step.icon}
                 </div>
-                <div className='bg-foreground text-background absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full text-xs font-bold'>
+                <div className='absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border border-[rgba(200,155,88,0.4)] bg-[#2a2015] text-xs font-bold text-[#D8BC85]'>
                   {step.num}
                 </div>
               </div>
-              <h3 className='mb-2 text-base font-semibold'>{step.title}</h3>
+              <h3 className='font-serif mb-2 text-base font-medium tracking-[0.12em] text-[#E9D9B8]'>{step.title}</h3>
               <p className='text-muted-foreground max-w-[240px] text-sm leading-relaxed'>
                 {step.desc}
               </p>

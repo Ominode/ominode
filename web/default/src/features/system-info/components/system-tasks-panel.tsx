@@ -56,7 +56,7 @@ const STATUS_CLASS_NAME: Record<SystemTaskStatus, string> = {
   pending:
     'bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300',
   running:
-    'bg-sky-50 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 [&_span]:bg-sky-500',
+    'bg-[#6FA8A0]/12 text-[#4a7a74] dark:bg-[#6FA8A0]/15 dark:text-[#8FB5AE] [&_span]:bg-[#6FA8A0]',
   succeeded:
     'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300',
   failed: '',
@@ -64,14 +64,14 @@ const STATUS_CLASS_NAME: Record<SystemTaskStatus, string> = {
 
 const STATUS_DOT_CLASS_NAME: Record<SystemTaskStatus, string> = {
   pending: 'bg-amber-500',
-  running: 'bg-sky-500',
+  running: 'bg-[#6FA8A0]',
   succeeded: 'bg-emerald-500',
   failed: 'bg-destructive',
 }
 
 const PROGRESS_BAR_CLASS_NAME: Record<SystemTaskStatus, string> = {
   pending: '[&_[data-slot=progress-indicator]]:bg-amber-500',
-  running: '[&_[data-slot=progress-indicator]]:bg-sky-500',
+  running: '[&_[data-slot=progress-indicator]]:bg-[#6FA8A0]',
   succeeded: '[&_[data-slot=progress-indicator]]:bg-emerald-500',
   failed: '[&_[data-slot=progress-indicator]]:bg-destructive',
 }
