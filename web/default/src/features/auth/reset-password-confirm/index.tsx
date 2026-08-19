@@ -109,10 +109,15 @@ export function ResetPasswordConfirm({
     <AuthLayout>
       <div className='w-full space-y-8'>
         <div className='space-y-2'>
-          <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
+          <h2 className='font-serif text-center text-2xl font-medium tracking-[0.16em] text-[#E4C98F]'>
             {t('Reset password')}
           </h2>
-          <p className='text-muted-foreground text-left text-sm sm:text-base'>
+          <div className='flex items-center justify-center gap-3 pt-1' aria-hidden>
+            <span className='h-px w-16 bg-gradient-to-r from-transparent to-[#C89B58]/60' />
+            <span className='text-[10px] text-[#C89B58]'>◆</span>
+            <span className='h-px w-16 bg-gradient-to-l from-transparent to-[#C89B58]/60' />
+          </div>
+          <p className='text-muted-foreground text-center text-sm sm:text-base'>
             {newPassword
               ? t('auth.resetPasswordConfirm.success')
               : t('auth.resetPasswordConfirm.description')}

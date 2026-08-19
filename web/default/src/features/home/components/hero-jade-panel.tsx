@@ -55,7 +55,12 @@ export function HeroJadePanel(props: HeroJadePanelProps) {
   ]
 
   return (
-    <div className={cn('mx-auto w-full max-w-[520px]', props.className)}>
+    <div
+      className={cn(
+        'hero-jade-stage mx-auto w-full max-w-[540px]',
+        props.className
+      )}
+    >
       <div className='hero-jade-slab'>
         {/* 鎏金四角 */}
         <span className='hero-jade-corner hero-jade-corner-tl' aria-hidden />

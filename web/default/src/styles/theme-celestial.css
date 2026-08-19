@@ -36,6 +36,8 @@ For commercial licensing, please contact support@quantumnous.com
 }
 
 /* ── Page chrome: twilight aura over the night canvas ──────────────────── */
+/* 不加 background-attachment: fixed——fixed 背景在滚动时强制整页重绘，
+   是主要的卡顿来源；天宫场景由 fixed 的 .celestial-video-layer 承载。 */
 body[data-theme-preset='celestial-twilight'] {
   background-image:
     radial-gradient(
@@ -44,7 +46,6 @@ body[data-theme-preset='celestial-twilight'] {
       transparent 70%
     ),
     linear-gradient(to bottom, #11161b 0%, #0a0d10 100%);
-  background-attachment: fixed;
 }
 
 /* ── 暮色纱幕：让天宫视频与暮光金晕从各层底下透出 ─────────────────────── */
@@ -65,6 +66,24 @@ body[data-theme-preset='celestial-twilight'] {
 @media (prefers-reduced-motion: reduce) {
   [data-theme-preset='celestial-twilight'] .celestial-video-layer {
     display: none;
+  }
+}
+
+/* Ken Burns 推镜：天宫场景缓慢推进，营造电影级纵深感。
+   transform-only 动画，GPU 合成，不占主线程。 */
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme-preset='celestial-twilight'] .celestial-video-layer img,
+  [data-theme-preset='celestial-twilight'] .celestial-video-layer video {
+    animation: celestial-kenburns 60s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes celestial-kenburns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.09);
   }
 }
 
@@ -104,9 +123,21 @@ body[data-theme-preset='celestial-twilight'] {
 }
 
 /* ── 磨砂云雾 glass surfaces ───────────────────────────────────────────── */
+/* 性能：常驻卡片用低档 blur(8px)（仪表盘上卡片多，16px+saturate 在滚动时
+   每帧重算大面积模糊是主要卡顿源）；只有临时浮层保留较浓磨砂。 */
+[data-theme-preset='celestial-twilight'] :is([data-slot='card'], [data-slot='sidebar']) {
+  background-color: rgba(28, 36, 43, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* 卡片顶部一线玉光 */
+[data-theme-preset='celestial-twilight'] [data-slot='card'] {
+  box-shadow: inset 0 1px 0 rgba(232, 210, 172, 0.06);
+}
+
 [data-theme-preset='celestial-twilight']
   :is(
-    [data-slot='card'],
     [data-slot='dialog-content'],
     [data-slot='alert-dialog-content'],
     [data-slot='sheet-content'],
@@ -116,12 +147,21 @@ body[data-theme-preset='celestial-twilight'] {
     [data-slot='context-menu-content'],
     [data-slot='menubar-content'],
     [data-slot='select-content'],
-    [data-slot='combobox-content'],
-    [data-slot='sidebar']
+    [data-slot='combobox-content']
   ) {
   background-color: rgba(28, 36, 43, 0.6);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+/* 侧栏：深木色渐变覆在玻璃之上（木纹质感） */
+[data-theme-preset='celestial-twilight'] [data-slot='sidebar'] {
+  background-image: linear-gradient(
+    165deg,
+    rgba(58, 42, 26, 0.28) 0%,
+    rgba(30, 26, 22, 0.12) 40%,
+    transparent 70%
+  );
 }
 
 /* Hairline gold edges on ring-based surfaces (card / dialog / sheet / popover). */
@@ -182,8 +222,10 @@ body[data-theme-preset='celestial-twilight'] {
 
 [data-theme-preset='celestial-twilight']
   [data-slot='button'].bg-primary:hover {
-  filter: brightness(1.12);
-  box-shadow: 0 0 16px rgba(200, 155, 88, 0.35);
+  filter: brightness(1.15);
+  box-shadow:
+    0 0 22px rgba(200, 155, 88, 0.45),
+    0 4px 14px rgba(0, 0, 0, 0.35);
   transform: translateY(-1px);
 }
 
@@ -195,8 +237,8 @@ body[data-theme-preset='celestial-twilight'] {
 }
 
 /* ── Inputs: subtle gold-tinted focus state ────────────────────────────── */
-[data-theme-preset='celestial-twilight'] [data-slot='input']:focus,
-[data-theme-preset='celestial-twilight'] [data-slot='textarea']:focus,
+/* (superseded by the stronger global 古风输入框 focus rule appended below;
+   kept minimal here so select/combobox focus still picks up the gold tint) */
 [data-theme-preset='celestial-twilight'] [data-slot='select']:focus,
 [data-theme-preset='celestial-twilight'] [data-slot='combobox-input']:focus {
   background-color: rgba(200, 155, 88, 0.04);
@@ -245,6 +287,23 @@ body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb:hover {
  * ========================================================================== */
 
 /* ── 玉石信息面板：半透明青玉 + 鎏金边框 + 内层玉光 ─────────────────── */
+/* 3D 纵深：外层舞台提供透视，玉牌本体做轻微倾斜；浮动动画挂在舞台上，
+   避免与玉牌的静态 transform 互相覆盖。blur 收到 10px——大幅滚动性能更好。 */
+[data-theme-preset='celestial-twilight'] .hero-jade-stage {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+[data-theme-preset='celestial-twilight'] .hero-jade-stage .hero-jade-slab {
+  transform: rotateX(3deg) rotateY(-4deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme-preset='celestial-twilight'] .hero-jade-stage {
+    animation: celestial-float 7s ease-in-out infinite;
+  }
+}
+
 [data-theme-preset='celestial-twilight'] .hero-jade-slab {
   position: relative;
   border: 1px solid rgba(200, 155, 88, 0.3);
@@ -254,18 +313,12 @@ body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb:hover {
     radial-gradient(90% 50% at 0% 110%, rgba(200, 155, 88, 0.1), transparent 60%),
     linear-gradient(155deg, rgba(23, 33, 31, 0.84) 0%, rgba(13, 18, 20, 0.88) 100%);
   box-shadow:
-    0 24px 60px -20px rgba(0, 0, 0, 0.55),
+    0 34px 80px -22px rgba(0, 0, 0, 0.65),
     0 0 0 1px rgba(200, 155, 88, 0.05),
     inset 0 0 36px rgba(80, 130, 118, 0.14),
     inset 0 1px 0 rgba(232, 210, 172, 0.08);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  [data-theme-preset='celestial-twilight'] .hero-jade-slab {
-    animation: celestial-float 7s ease-in-out infinite;
-  }
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 @keyframes celestial-float {
@@ -354,8 +407,8 @@ body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb:hover {
     0 24px 70px -22px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(232, 210, 172, 0.08),
     inset 0 0 40px rgba(80, 130, 118, 0.1);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* 古风输入框：鎏金边框 + 聚焦柔光（全站 input/textarea 生效） */

@@ -80,7 +80,7 @@ export function Hero(props: HeroProps) {
   }
 
   return (
-    <section className='relative z-10 overflow-hidden px-6 pt-24 pb-16 md:pt-32 md:pb-24 lg:pt-36 lg:pb-28'>
+    <section className='relative z-10 overflow-hidden px-6 pt-28 pb-20 md:pt-36 md:pb-28 lg:pt-44 lg:pb-32'>
       {/* 金晕：暮光金漫射在标题背后，天宫云海透出 */}
       <div
         aria-hidden
@@ -99,7 +99,7 @@ export function Hero(props: HeroProps) {
         className='pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_75%_at_18%_30%,rgba(12,10,8,0.5),transparent_72%)]'
       />
 
-      <div className='mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-8'>
+      <div className='mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10'>
         {/* Left Column: Title, description, action buttons and application support */}
         <div className='flex flex-col items-start text-left lg:col-span-6'>
           {/* Top Pill Badge */}
@@ -115,12 +115,12 @@ export function Hero(props: HeroProps) {
           </div>
 
           <h1
-            className='landing-animate-fade-up text-[clamp(2.25rem,4.5vw,3.25rem)] leading-[1.15] font-bold tracking-tight'
+            className='landing-animate-fade-up text-[clamp(2.75rem,5.5vw,4.4rem)] leading-[1.1] font-bold tracking-tight'
             style={{ animationDelay: '60ms' }}
           >
             {t('Unified API Gateway for')}
             <br />
-            <span className='bg-gradient-to-r from-[#EFD9A7] via-[#D8BC85] to-[#9A6B2F] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(200,155,88,0.28)]'>
+            <span className='bg-gradient-to-r from-[#F2E2B6] via-[#DDBE82] to-[#9A6B2F] bg-clip-text text-transparent drop-shadow-[0_0_38px_rgba(200,155,88,0.38)]'>
               {t('Vast Range of AI Models')}
             </span>
           </h1>

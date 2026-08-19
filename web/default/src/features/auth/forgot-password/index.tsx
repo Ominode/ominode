@@ -28,15 +28,20 @@ export function ForgotPassword() {
     <AuthLayout>
       <div className='w-full space-y-8'>
         <div className='space-y-3'>
-          <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
+          <h2 className='font-serif text-center text-2xl font-medium tracking-[0.16em] text-[#E4C98F]'>
             {t('Forgot password')}
           </h2>
-          <p className='text-muted-foreground text-left text-sm sm:text-base'>
+          <div className='flex items-center justify-center gap-3 pt-1' aria-hidden>
+            <span className='h-px w-16 bg-gradient-to-r from-transparent to-[#C89B58]/60' />
+            <span className='text-[10px] text-[#C89B58]'>◆</span>
+            <span className='h-px w-16 bg-gradient-to-l from-transparent to-[#C89B58]/60' />
+          </div>
+          <p className='text-muted-foreground text-center text-sm sm:text-base'>
             {t(
               'Enter your registered email and we will send you a link to reset your password.'
             )}
           </p>
-          <p className='text-muted-foreground text-left text-sm sm:text-base'>
+          <p className='text-muted-foreground text-center text-sm sm:text-base'>
             {t("Don't have an account?")}{' '}
             <Link
               to='/sign-up'
