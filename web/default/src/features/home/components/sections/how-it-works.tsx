@@ -16,7 +16,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { Settings, Zap, BarChart3 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { AnimateInView } from '@/components/animate-in-view'
@@ -26,42 +25,36 @@ export function HowItWorks() {
 
   const steps = [
     {
-      num: '1',
+      num: '壹',
       title: t('Configure'),
       desc: t(
         'Add your API keys, set up channels and configure access permissions'
       ),
-      icon: <Settings className='size-6' strokeWidth={1.5} />,
     },
     {
-      num: '2',
+      num: '贰',
       title: t('Connect'),
       desc: t(
         'Connect through OpenAI, Claude, Gemini, and other compatible API routes'
       ),
-      icon: <Zap className='size-6' strokeWidth={1.5} />,
     },
     {
-      num: '3',
+      num: '叁',
       title: t('Monitor'),
       desc: t('Track usage, costs and performance with real-time analytics'),
-      icon: <BarChart3 className='size-6' strokeWidth={1.5} />,
     },
   ]
 
   return (
-    <section className='relative z-10 border-t border-[rgba(200,155,88,0.14)] px-6 py-24 md:py-32'>
-      <div className='mx-auto max-w-6xl'>
-        <AnimateInView className='mb-16 text-center md:mb-20'>
-          <p className='text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase'>
-            {t('How It Works')}
-          </p>
-          <h2 className='text-2xl font-bold tracking-tight md:text-3xl'>
+    <section className='relative z-10 border-t border-[rgba(200,155,88,0.14)] px-6 py-28 md:py-40'>
+      <div className='mx-auto max-w-5xl'>
+        <AnimateInView className='mb-20 text-center md:mb-24'>
+          <h2 className='text-3xl font-bold tracking-tight md:text-5xl'>
             {t('Three steps to get started')}
           </h2>
         </AnimateInView>
 
-        <div className='grid gap-8 md:grid-cols-3 md:gap-12'>
+        <div className='grid gap-16 md:grid-cols-3 md:gap-12'>
           {steps.map((step, i) => (
             <AnimateInView
               key={step.num}
@@ -69,16 +62,12 @@ export function HowItWorks() {
               animation='fade-up'
               className='relative flex flex-col items-center text-center'
             >
-              <div className='relative mb-6'>
-                <div className='border-[rgba(200,155,88,0.25)] bg-[rgba(200,155,88,0.05)] text-[#C89B58] flex size-16 items-center justify-center rounded-2xl border transition-colors'>
-                  {step.icon}
-                </div>
-                <div className='absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border border-[rgba(200,155,88,0.4)] bg-[#2a2015] text-xs font-bold text-[#D8BC85]'>
-                  {step.num}
-                </div>
-              </div>
-              <h3 className='font-serif mb-2 text-base font-medium tracking-[0.12em] text-[#E9D9B8]'>{step.title}</h3>
-              <p className='text-muted-foreground max-w-[240px] text-sm leading-relaxed'>
+              <span className='mb-6 font-serif text-5xl font-medium text-[#C89B58]/25'>
+                {step.num}
+              </span>              <h3 className='font-serif mb-3 text-lg font-medium tracking-[0.12em] text-[#E9D9B8]'>
+                {step.title}
+              </h3>
+              <p className='text-muted-foreground/75 max-w-[260px] text-sm leading-relaxed'>
                 {step.desc}
               </p>
             </AnimateInView>

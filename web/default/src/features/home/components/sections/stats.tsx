@@ -106,7 +106,7 @@ export function Stats(_props: StatsProps) {
 
   return (
     <div className='relative z-10 border-y border-[rgba(200,155,88,0.16)] bg-[rgba(14,18,22,0.32)] backdrop-blur-md'>
-      <div className='mx-auto max-w-6xl px-6 py-12 md:py-14'>
+      <div className='mx-auto max-w-6xl px-6 py-14 md:py-20'>
         <div className='grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-[rgba(200,155,88,0.14)]'>
           {stats.map((s) => (
             <div

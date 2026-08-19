@@ -36,7 +36,7 @@ export function CTA(props: CTAProps) {
   }
 
   return (
-    <section className='relative z-10 overflow-hidden px-6 py-24 md:py-32'>
+    <section className='relative z-10 overflow-hidden px-6 py-28 md:py-44'>
       {/* 金晕背景 */}
       <div
         aria-hidden
@@ -50,29 +50,32 @@ export function CTA(props: CTAProps) {
       />
 
       <AnimateInView
-        className='mx-auto max-w-2xl text-center'
+        className='mx-auto max-w-3xl text-center'
         animation='scale-in'
       >
-        <h2 className='text-2xl leading-tight font-bold tracking-tight md:text-4xl'>
+        <h2 className='text-3xl leading-tight font-bold tracking-tight md:text-5xl'>
           {t('Ready to simplify')}
           <br />
-          <span className='bg-gradient-to-r from-[#EFD9A7] via-[#D8BC85] to-[#9A6B2F] bg-clip-text text-transparent drop-shadow-[0_0_24px_rgba(200,155,88,0.22)]'>
+          <span className='bg-gradient-to-r from-[#F2E2B6] via-[#DDBE82] to-[#9A6B2F] bg-clip-text text-transparent drop-shadow-[0_0_32px_rgba(200,155,88,0.3)]'>
             {t('your AI integration?')}
           </span>
         </h2>
-        <p className='text-muted-foreground/80 mx-auto mt-5 max-w-md text-sm leading-relaxed md:text-base'>
+        <p className='text-muted-foreground/80 mx-auto mt-6 max-w-md text-base leading-relaxed md:text-lg'>
           {t(
             'Deploy your own gateway and start routing requests through your configured upstream services.'
           )}
         </p>
-        <div className='mt-8 flex items-center justify-center gap-3'>
-          <Button className='group rounded-lg' render={<Link to='/sign-up' />}>
+        <div className='mt-10 flex items-center justify-center gap-3'>
+          <Button
+            className='group h-11 rounded-lg px-6'
+            render={<Link to='/sign-up' />}
+          >
             {t('Get Started')}
             <ArrowRight className='ml-1 size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
           </Button>
           <Button
             variant='outline'
-            className='border-border hover:border-border hover:bg-muted/50 rounded-lg'
+            className='border-border hover:border-border hover:bg-muted/50 h-11 rounded-lg px-6'
             render={<Link to='/pricing' />}
           >
             {t('View Pricing')}
