@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  DOCKER_IMAGE: ghcr.io/chain-works/ominode
+  DOCKER_IMAGE: ghcr.io/ominode/ominode
 
 jobs:
   build-and-push:
@@ -122,7 +122,9 @@ jobs:
             # ---- 2. Update to new SHA-tagged image ----
             echo "⬆️  Updating docker-compose.yml to: ${NEW_IMAGE}"
             cp docker-compose.yml docker-compose.yml.bak
-            sed -i "s|image: ${{ env.DOCKER_IMAGE }}:.*|image: ${NEW_IMAGE}|" docker-compose.yml
+            # Match any registry/org prefix (e.g. legacy ghcr.io/chain-works/) so the
+            # compose file is updated even when it still points at the old org path
+            sed -i "s|image: .*/ominode:.*|image: ${NEW_IMAGE}|" docker-compose.yml
 
             echo "📥 Pulling ${NEW_IMAGE}..."
             dc pull

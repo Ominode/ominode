@@ -37,7 +37,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/chain-works/ominode-docs:latest
-            ghcr.io/chain-works/ominode-docs:${{ github.sha }}
+            ghcr.io/ominode/ominode-docs:latest
+            ghcr.io/ominode/ominode-docs:${{ github.sha }}
           cache-from: type=gha,scope=ominode-docs
           cache-to: type=gha,mode=max,scope=ominode-docs
