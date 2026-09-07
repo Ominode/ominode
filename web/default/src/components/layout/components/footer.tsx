@@ -59,7 +59,7 @@ function FooterLinkItem(props: { link: FooterLink }) {
         href={props.link.href}
         target='_blank'
         rel='noopener noreferrer'
-        className='text-muted-foreground hover:text-foreground text-sm transition-colors duration-200'
+        className='text-sm text-[#44547A] transition-colors duration-200 hover:text-[#16213E]'
       >
         {label}
       </a>
@@ -69,7 +69,7 @@ function FooterLinkItem(props: { link: FooterLink }) {
   return (
     <Link
       to={props.link.href}
-      className='text-muted-foreground hover:text-foreground text-sm transition-colors duration-200'
+      className='text-sm text-[#44547A] transition-colors duration-200 hover:text-[#16213E]'
     >
       {label}
     </Link>
@@ -105,13 +105,13 @@ function LegalLinks(props: { leadingSeparator?: boolean }) {
       {items.map((item, index) => (
         <Fragment key={item.key}>
           {(props.leadingSeparator || index > 0) && (
-            <span aria-hidden='true' className='text-muted-foreground/30'>
+            <span aria-hidden='true' className='text-[#7A89A8]/50'>
               ·
             </span>
           )}
           <Link
             to={item.href}
-            className='hover:text-foreground transition-colors duration-200'
+            className='transition-colors duration-200 hover:text-[#16213E]'
           >
             {item.label}
           </Link>
@@ -126,13 +126,13 @@ function LegalLinks(props: { leadingSeparator?: boolean }) {
 function ProjectAttribution(props: { currentYear: number; inline?: boolean }) {
   const { t } = useTranslation()
   const content = (
-    <span className='text-muted-foreground/45'>
+    <span className='text-[#7A89A8]'>
       &copy; {props.currentYear}{' '}
       <a
         href='https://github.com/QuantumNous/new-api'
         target='_blank'
         rel='noopener noreferrer'
-        className='text-foreground/70 hover:text-foreground font-medium transition-colors'
+        className='font-medium text-[#3B4C75] transition-colors hover:text-[#16213E]'
       >
         {t('New API')}
       </a>
@@ -143,7 +143,7 @@ function ProjectAttribution(props: { currentYear: number; inline?: boolean }) {
     return content
   }
   return (
-    <div className='text-muted-foreground/45 text-center text-xs sm:text-right'>
+    <div className='text-center text-xs text-[#7A89A8] sm:text-right'>
       {content}
     </div>
   )
@@ -248,7 +248,10 @@ export function Footer(props: FooterProps) {
 
   return (
     <footer
-      className={cn('relative z-10 border-t border-[rgba(200,155,88,0.14)]', props.className)}
+      className={cn(
+        'relative z-10 border-t border-slate-900/10',
+        props.className
+      )}
     >
       <div className='mx-auto max-w-6xl px-6 py-12 md:py-16'>
         <div className='flex flex-col justify-between gap-10 md:flex-row md:gap-16'>
@@ -260,11 +263,11 @@ export function Footer(props: FooterProps) {
                 alt={displayName}
                 className='size-7 rounded-lg object-contain'
               />
-              <span className='text-sm font-semibold tracking-tight'>
+              <span className='text-sm font-semibold tracking-tight text-[#16213E]'>
                 {displayName}
               </span>
             </Link>
-            <p className='text-muted-foreground/60 mt-3 max-w-[200px] text-xs leading-relaxed'>
+            <p className='mt-3 max-w-[200px] text-xs leading-relaxed text-[#5A6B8C]'>
               {t('Powerful API Management Platform')}
             </p>
           </div>
@@ -272,14 +275,14 @@ export function Footer(props: FooterProps) {
           {/* Links columns */}
           {isDemoSiteMode && (
             <div className='grid grid-cols-3 gap-8 md:gap-16'>
-              {displayColumns.map((column, index) => (
-                <div key={index}>
-                  <p className='text-muted-foreground/50 mb-3 text-xs font-medium tracking-wider uppercase'>
+              {displayColumns.map((column) => (
+                <div key={column.title}>
+                  <p className='mb-3 text-xs font-medium tracking-wider text-[#5A6B8C] uppercase'>
                     {t(column.title)}
                   </p>
                   <ul className='space-y-2.5'>
-                    {column.links.map((link, linkIndex) => (
-                      <li key={linkIndex}>
+                    {column.links.map((link) => (
+                      <li key={link.href}>
                         <FooterLinkItem link={link} />
                       </li>
                     ))}
@@ -292,8 +295,8 @@ export function Footer(props: FooterProps) {
 
         {/* Copyright + optional legal links inline on the left, project
             attribution on the right; wraps on narrow screens. */}
-        <div className='border-border/30 mt-12 flex flex-col items-center justify-between gap-x-3 gap-y-2 border-t pt-6 sm:flex-row'>
-          <div className='text-muted-foreground/40 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs sm:justify-start'>
+        <div className='mt-12 flex flex-col items-center justify-between gap-x-3 gap-y-2 border-t border-slate-900/10 pt-6 sm:flex-row'>
+          <div className='flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-[#7A89A8] sm:justify-start'>
             <span>
               &copy; {currentYear} {displayName}.{' '}
               {props.copyright ?? t('footer.defaultCopyright')}

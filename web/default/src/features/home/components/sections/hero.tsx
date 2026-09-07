@@ -22,8 +22,6 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
 
-const HERO_BG_IMG = '/media/models_bg.png'
-
 interface HeroProps {
   className?: string
   isAuthenticated?: boolean
@@ -34,26 +32,10 @@ export function Hero(props: HeroProps) {
 
   return (
     <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16'>
-      {/* 背景：models_bg.png 全屏铺满，模型星球主视觉位于画面右侧 */}
-      <img
-        src={HERO_BG_IMG}
-        alt=''
-        aria-hidden
-        className='pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center'
-      />
-      {/* 可读性纱幕：左侧提亮，保证标题在天空背景上始终可读 */}
-      <div
-        aria-hidden
-        className='pointer-events-none absolute inset-0 -z-10'
-        style={{
-          background:
-            'linear-gradient(to right, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.38) 38%, transparent 62%)',
-        }}
-      />
-
+      {/* 背景由全局 BackgroundVideo 层提供（models_bg.png 全屏铺满） */}
       <div className='mx-auto flex w-full max-w-6xl flex-col items-start text-left'>
         <div
-          className='landing-animate-fade-up mb-6 text-[11px] font-semibold tracking-[0.28em] text-slate-500 uppercase opacity-0'
+          className='landing-animate-fade-up mb-6 text-[11px] font-semibold tracking-[0.28em] text-[#3B4C75] uppercase opacity-0'
           style={{ animationDelay: '0ms' }}
         >
           {t('The Leading LLM API Aggregator')}
@@ -71,7 +53,7 @@ export function Hero(props: HeroProps) {
         </h1>
 
         <p
-          className='landing-animate-fade-up mt-6 max-w-md text-base leading-relaxed text-slate-600 opacity-0 md:text-lg'
+          className='landing-animate-fade-up mt-6 max-w-md text-base leading-relaxed font-medium text-[#2E3E63] opacity-0 md:text-lg'
           style={{ animationDelay: '120ms' }}
         >
           {t(

@@ -37,14 +37,14 @@ export function CTA(props: CTAProps) {
 
   return (
     <section className='relative z-10 overflow-hidden px-6 py-28 md:py-44'>
-      {/* 金晕背景 */}
+      {/* 蓝紫光晕背景 */}
       <div
         aria-hidden
         className='absolute inset-0 -z-10 opacity-50'
         style={{
           background: [
-            'radial-gradient(ellipse 50% 50% at 30% 50%, rgba(200,155,88,0.14) 0%, transparent 70%)',
-            'radial-gradient(ellipse 40% 40% at 70% 40%, rgba(138,98,42,0.12) 0%, transparent 70%)',
+            'radial-gradient(ellipse 50% 50% at 30% 50%, rgba(59,130,246,0.14) 0%, transparent 70%)',
+            'radial-gradient(ellipse 40% 40% at 70% 40%, rgba(168,85,247,0.12) 0%, transparent 70%)',
           ].join(', '),
         }}
       />
@@ -53,14 +53,14 @@ export function CTA(props: CTAProps) {
         className='mx-auto max-w-3xl text-center'
         animation='scale-in'
       >
-        <h2 className='text-3xl leading-tight font-bold tracking-tight md:text-5xl'>
+        <h2 className='text-3xl leading-tight font-bold tracking-tight text-[#16213E] md:text-5xl'>
           {t('Ready to simplify')}
           <br />
-          <span className='bg-gradient-to-r from-[#F2E2B6] via-[#DDBE82] to-[#9A6B2F] bg-clip-text text-transparent drop-shadow-[0_0_32px_rgba(200,155,88,0.3)]'>
+          <span className='bg-gradient-to-r from-[#3B82F6] via-[#7C5CFC] to-[#C026D3] bg-clip-text text-transparent drop-shadow-[0_0_32px_rgba(124,92,252,0.25)]'>
             {t('your AI integration?')}
           </span>
         </h2>
-        <p className='text-muted-foreground/80 mx-auto mt-6 max-w-md text-base leading-relaxed md:text-lg'>
+        <p className='mx-auto mt-6 max-w-md text-base leading-relaxed text-[#44547A] md:text-lg'>
           {t(
             'Deploy your own gateway and start routing requests through your configured upstream services.'
           )}
@@ -75,7 +75,7 @@ export function CTA(props: CTAProps) {
           </Button>
           <Button
             variant='outline'
-            className='border-border hover:border-border hover:bg-muted/50 h-11 rounded-lg px-6'
+            className='h-11 rounded-lg border-white/60 bg-white/70 px-6 text-[#16213E] backdrop-blur hover:bg-white/90'
             render={<Link to='/pricing' />}
           >
             {t('View Pricing')}
