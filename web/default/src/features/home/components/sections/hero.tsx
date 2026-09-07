@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
 
-import { HeroJadePanel } from '../hero-jade-panel'
+const HERO_BG_IMG = '/media/models_bg.png'
 
 interface HeroProps {
   className?: string
@@ -33,63 +33,59 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
 
   return (
-    <section className='relative z-10 flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-24 pb-16'>
-      {/* 金晕：暮光金自标题后方漫射 */}
+    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16'>
+      {/* 背景：models_bg.png 全屏铺满，模型星球主视觉位于画面右侧 */}
+      <img
+        src={HERO_BG_IMG}
+        alt=''
+        aria-hidden
+        className='pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center'
+      />
+      {/* 可读性纱幕：左侧提亮，保证标题在天空背景上始终可读 */}
       <div
         aria-hidden
-        className='pointer-events-none absolute inset-0 -z-10 opacity-70'
+        className='pointer-events-none absolute inset-0 -z-10'
         style={{
-          background: [
-            'radial-gradient(ellipse 60% 45% at 50% 22%, rgba(200,155,88,0.17) 0%, transparent 65%)',
-            'radial-gradient(ellipse 45% 35% at 50% 78%, rgba(138,98,42,0.10) 0%, transparent 60%)',
-          ].join(', '),
+          background:
+            'linear-gradient(to right, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.38) 38%, transparent 62%)',
         }}
       />
-      {/* 可读性纱幕：标题区收一层暖夜色 */}
-      <div
-        aria-hidden
-        className='pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_50%_28%,rgba(12,10,8,0.45),transparent_72%)]'
-      />
 
-      <div className='mx-auto flex w-full max-w-4xl flex-col items-center text-center'>
+      <div className='mx-auto flex w-full max-w-6xl flex-col items-start text-left'>
         <div
-          className='landing-animate-fade-up mb-6 inline-flex items-center gap-1.5 rounded-full border border-[#C89B58]/25 bg-[#C89B58]/[0.06] px-3 py-1.5 text-[11px] font-medium tracking-[0.18em] text-[#D8BC85] opacity-0 shadow-[0_0_18px_rgba(200,155,88,0.12)]'
+          className='landing-animate-fade-up mb-6 text-[11px] font-semibold tracking-[0.28em] text-slate-500 uppercase opacity-0'
           style={{ animationDelay: '0ms' }}
         >
-          <span className='relative flex size-1.5'>
-            <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C89B58] opacity-60' />
-            <span className='relative inline-flex size-1.5 rounded-full bg-[#C89B58]' />
-          </span>
-          <span>{t('AI Application Infrastructure Foundation')}</span>
+          {t('The Leading LLM API Aggregator')}
         </div>
 
         <h1
-          className='landing-animate-fade-up text-[clamp(2.9rem,7vw,5.4rem)] leading-[1.06] font-bold tracking-tight opacity-0'
+          className='landing-animate-fade-up text-[clamp(2.9rem,7vw,5.4rem)] leading-[1.06] font-bold tracking-tight text-[#16213E] opacity-0'
           style={{ animationDelay: '60ms' }}
         >
-          {t('Unified API Gateway for')}
+          {t('One Platform.')}
           <br />
-          <span className='bg-gradient-to-r from-[#F2E2B6] via-[#DDBE82] to-[#9A6B2F] bg-clip-text text-transparent drop-shadow-[0_0_44px_rgba(200,155,88,0.4)]'>
-            {t('Vast Range of AI Models')}
+          <span className='bg-gradient-to-r from-[#3B82F6] via-[#7C5CFC] to-[#C026D3] bg-clip-text text-transparent'>
+            {t('All Leading Models.')}
           </span>
         </h1>
 
         <p
-          className='landing-animate-fade-up text-muted-foreground/85 mt-6 max-w-xl text-base leading-relaxed opacity-0 md:text-lg'
+          className='landing-animate-fade-up mt-6 max-w-md text-base leading-relaxed text-slate-600 opacity-0 md:text-lg'
           style={{ animationDelay: '120ms' }}
         >
           {t(
-            'Access a vast selection of models via a standard, unified API protocol. Power AI applications, manage digital assets, and connect the Future.'
+            "Access the world's top AI models through a single API. More models, lower costs, faster innovation."
           )}
         </p>
 
         <div
-          className='landing-animate-fade-up mt-9 flex flex-wrap items-center justify-center gap-3 opacity-0'
+          className='landing-animate-fade-up mt-9 flex flex-wrap items-center gap-3 opacity-0'
           style={{ animationDelay: '180ms' }}
         >
           {props.isAuthenticated ? (
             <Button
-              className='group h-11 rounded-lg px-6 text-sm font-medium'
+              className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#3B82F6] to-[#A855F7] px-7 text-sm font-medium text-white shadow-[0_8px_24px_rgba(99,102,241,0.35)] hover:opacity-95'
               render={<Link to='/dashboard' />}
             >
               {t('Go to Dashboard')}
@@ -98,30 +94,22 @@ export function Hero(props: HeroProps) {
           ) : (
             <>
               <Button
-                className='group h-11 rounded-lg px-6 text-sm font-medium'
+                className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#3B82F6] to-[#A855F7] px-7 text-sm font-medium text-white shadow-[0_8px_24px_rgba(99,102,241,0.35)] hover:opacity-95'
                 render={<Link to='/sign-up' />}
               >
-                {t('Get Started')}
+                {t('Start Building')}
                 <ArrowRight className='ml-1.5 size-4 transition-transform duration-200 group-hover:translate-x-0.5' />
               </Button>
               <Button
                 variant='outline'
-                className='border-border hover:border-border hover:bg-muted/50 h-11 rounded-lg px-6 text-sm font-medium'
+                className='h-12 rounded-full border-white/60 bg-white/70 px-7 text-sm font-medium text-[#16213E] shadow-[0_4px_16px_rgba(15,23,42,0.08)] backdrop-blur hover:bg-white/90'
                 render={<Link to='/pricing' />}
               >
-                {t('View Pricing')}
+                {t('View Models')}
               </Button>
             </>
           )}
         </div>
-      </div>
-
-      {/* 玉石信息面板：产品主视觉，悬于天宫云海之上 */}
-      <div
-        className='landing-animate-fade-up mt-16 w-full opacity-0 md:mt-20'
-        style={{ animationDelay: '300ms' }}
-      >
-        <HeroJadePanel />
       </div>
     </section>
   )
