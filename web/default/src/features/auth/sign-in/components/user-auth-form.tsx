@@ -323,7 +323,7 @@ export function UserAuthForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn('grid gap-5', className)}
+        className={cn('grid gap-4', className)}
         {...props}
       >
         {hasAlternativeLogin && alternativeLoginMethods}
@@ -375,7 +375,7 @@ export function UserAuthForm({
             {/* Submit Button */}
             <Button
               type='submit'
-              className='mt-2 h-11 w-full justify-center gap-2 rounded-lg text-sm font-semibold'
+              className='mt-2 w-full justify-center gap-2'
               disabled={isLoading || (requiresLegalConsent && !agreedToLegal)}
             >
               {isLoading ? <Loader2 className='animate-spin' /> : <LogIn />}
