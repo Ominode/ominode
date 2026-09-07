@@ -87,18 +87,18 @@ body[data-theme-preset='celestial-twilight'] {
   }
 }
 
-/* ── Serif headings with 舒朗 letter-spacing (宋体风骨) ─────────────────── */
+/* ── Headings follow the active font axis ──────────────────────────────── */
 /* Split element selectors from attribute selectors: `:is()` takes the max
    specificity of its arguments, so mixing `[data-slot=...]` in would bump
    the whole rule above the h1/h2 override below and 0.15em would never win. */
 [data-theme-preset='celestial-twilight'] :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-serif);
-  letter-spacing: 0.12em;
+  font-family: var(--font-body);
+  letter-spacing: 0;
 }
 
 /* Larger displays earn wider tracking per the spec's 0.15em–0.25em range. */
 [data-theme-preset='celestial-twilight'] :is(h1, h2) {
-  letter-spacing: 0.15em;
+  letter-spacing: -0.02em;
 }
 
 /* Slot-based titles (card / dialog / sheet / …) keep the same serif face
@@ -112,8 +112,8 @@ body[data-theme-preset='celestial-twilight'] {
     [data-slot='drawer-title'],
     [data-slot='popover-title']
   ) {
-  font-family: var(--font-serif);
-  letter-spacing: 0.12em;
+  font-family: var(--font-body);
+  letter-spacing: 0;
 }
 
 /* 卡片标题：宋体赤金 */
@@ -192,10 +192,10 @@ body[data-theme-preset='celestial-twilight'] {
 
 /* ── Data tables: de-grid + serif gold headers + hover flow-light ──────── */
 [data-theme-preset='celestial-twilight'] [data-slot='table'] thead th {
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   color: var(--primary);
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
 }
 
 /* 行交互：hover 时产生从左至右的渐变流光 */

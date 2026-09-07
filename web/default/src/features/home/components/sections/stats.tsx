@@ -105,7 +105,7 @@ export function Stats(_props: StatsProps) {
   ]
 
   return (
-    <div className='relative z-10 border-y border-border/60 bg-background/35 backdrop-blur-md'>
+    <div className='relative z-10 border-y border-slate-900/10 bg-white/45 backdrop-blur-md'>
       <div className='mx-auto max-w-6xl px-6 py-14 md:py-20'>
         <div className='grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-slate-900/10'>
           {stats.map((s) => (
@@ -113,10 +113,10 @@ export function Stats(_props: StatsProps) {
               key={s.label}
               className='flex flex-col items-center text-center'
             >
-              <span className='text-foreground font-serif text-3xl font-medium tracking-[0.14em] md:text-4xl'>
+              <span className='font-serif text-3xl font-medium tracking-[0.14em] text-[#16213E] md:text-4xl'>
                 <Counter end={s.end} suffix={s.suffix} decimals={s.decimals} />
               </span>
-              <span className='text-muted-foreground mt-2 text-xs font-medium tracking-[0.18em] uppercase'>
+              <span className='mt-2 text-xs font-medium tracking-[0.18em] text-[#5A6B8C] uppercase'>
                 {s.label}
               </span>
             </div>

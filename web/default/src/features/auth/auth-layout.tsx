@@ -31,7 +31,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const { systemName, logo, loading } = useSystemConfig()
 
   return (
-    <div className='bg-background relative grid h-svh max-w-none'>
+    <div className='relative grid h-svh max-w-none bg-[linear-gradient(135deg,#edf5ff_0%,#f8fbff_55%,#e9f1ff_100%)]'>
       <Link
         to='/'
         className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'

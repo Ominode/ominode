@@ -31,28 +31,38 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
 
   return (
-    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden bg-transparent px-6 pt-24 pb-16'>
+    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden bg-[#f4f8ff] px-6 pt-24 pb-16 text-[#17345c]'>
+      <img
+        src='/media/AI_webpage-bg.png'
+        alt=''
+        aria-hidden='true'
+        className='absolute inset-y-0 right-0 h-full w-full object-cover object-right opacity-90 lg:w-[64%]'
+      />
+      <div
+        aria-hidden='true'
+        className='absolute inset-0 bg-gradient-to-r from-[#f4f8ff] via-[#f4f8ff]/95 to-[#f4f8ff]/10 lg:from-[#f4f8ff] lg:via-[#f4f8ff]/92 lg:to-transparent'
+      />
       <div className='relative mx-auto flex w-full max-w-6xl flex-col items-start text-left'>
         <div
-          className='landing-animate-fade-up text-primary mb-6 text-xs font-semibold tracking-[0.22em] uppercase opacity-0'
+          className='landing-animate-fade-up mb-6 text-xs font-semibold tracking-[0.22em] text-[#52709a] uppercase opacity-0'
           style={{ animationDelay: '0ms' }}
         >
           {t('The Leading LLM API Aggregator')}
         </div>
 
         <h1
-          className='landing-animate-fade-up text-foreground max-w-3xl text-[clamp(2.8rem,6vw,5rem)] leading-[1.06] font-bold tracking-tight opacity-0'
+          className='landing-animate-fade-up max-w-3xl text-[clamp(2.8rem,6vw,5rem)] leading-[1.06] font-bold tracking-tight text-[#17345c] opacity-0'
           style={{ animationDelay: '60ms' }}
         >
           {t('One Platform.')}
           <br />
-          <span className='text-primary'>
+          <span className='bg-gradient-to-r from-[#3B82F6] via-[#7C5CFC] to-[#C026D3] bg-clip-text text-transparent'>
             {t('All Leading Models.')}
           </span>
         </h1>
 
         <p
-          className='landing-animate-fade-up text-muted-foreground mt-6 max-w-xl text-base leading-relaxed font-medium opacity-0 md:text-lg'
+          className='landing-animate-fade-up mt-6 max-w-xl text-base leading-relaxed font-medium text-[#52709a] opacity-0 md:text-lg'
           style={{ animationDelay: '120ms' }}
         >
           {t(
@@ -66,7 +76,7 @@ export function Hero(props: HeroProps) {
         >
           {props.isAuthenticated ? (
             <Button
-              className='group h-12 rounded-lg px-7 text-sm font-semibold shadow-lg shadow-primary/20'
+              className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#28a8ef] to-[#a66af2] px-7 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(72,135,232,0.28)] hover:brightness-105'
               render={<Link to='/dashboard' />}
             >
               {t('Go to Dashboard')}
@@ -75,7 +85,7 @@ export function Hero(props: HeroProps) {
           ) : (
             <>
               <Button
-                className='group h-12 rounded-lg px-7 text-sm font-semibold shadow-lg shadow-primary/20'
+                className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#28a8ef] to-[#a66af2] px-7 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(72,135,232,0.28)] hover:brightness-105'
                 render={<Link to='/sign-up' />}
               >
                 {t('Start Building')}
@@ -83,7 +93,7 @@ export function Hero(props: HeroProps) {
               </Button>
               <Button
                 variant='outline'
-                className='h-12 rounded-lg border-border bg-background/70 px-7 text-sm font-semibold backdrop-blur hover:bg-accent'
+                className='h-12 rounded-full border-[#9ab3d1] bg-white/75 px-7 text-sm font-semibold text-[#17345c] shadow-[0_4px_16px_rgba(35,70,110,0.10)] backdrop-blur hover:bg-white'
                 render={<Link to='/pricing' />}
               >
                 {t('View Models')}

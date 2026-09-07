@@ -28,13 +28,13 @@ export function ForgotPassword() {
     <AuthLayout>
       <div className='w-full space-y-8'>
         <div className='space-y-3'>
-          <h2 className='text-primary text-center font-serif text-2xl font-medium tracking-[0.16em]'>
+          <h2 className='font-serif text-center text-2xl font-medium tracking-[0.16em] text-[#E4C98F]'>
             {t('Forgot password')}
           </h2>
           <div className='flex items-center justify-center gap-3 pt-1' aria-hidden>
-            <span className='bg-primary/60 h-px w-16 bg-gradient-to-r from-transparent' />
-            <span className='text-primary text-[10px]'>◆</span>
-            <span className='bg-primary/60 h-px w-16 bg-gradient-to-l from-transparent' />
+            <span className='h-px w-16 bg-gradient-to-r from-transparent to-[#C89B58]/60' />
+            <span className='text-[10px] text-[#C89B58]'>◆</span>
+            <span className='h-px w-16 bg-gradient-to-l from-transparent to-[#C89B58]/60' />
           </div>
           <p className='text-muted-foreground text-center text-sm sm:text-base'>
             {t(

@@ -46,10 +46,10 @@ export function HowItWorks() {
   ]
 
   return (
-    <section className='relative z-10 border-t border-border/60 px-6 py-28 md:py-40'>
+    <section className='relative z-10 border-t border-slate-900/10 px-6 py-28 md:py-40'>
       <div className='mx-auto max-w-5xl'>
         <AnimateInView className='mb-20 text-center md:mb-24'>
-          <h2 className='text-foreground text-3xl font-bold tracking-tight md:text-5xl'>
+          <h2 className='text-3xl font-bold tracking-tight text-[#16213E] md:text-5xl'>
             {t('Three steps to get started')}
           </h2>
         </AnimateInView>
@@ -62,13 +62,13 @@ export function HowItWorks() {
               animation='fade-up'
               className='relative flex flex-col items-center text-center'
             >
-              <span className='text-primary mb-6 font-serif text-5xl font-medium opacity-30'>
+              <span className='mb-6 font-serif text-5xl font-medium text-[#7C5CFC]/30'>
                 {step.num}
               </span>{' '}
-              <h3 className='text-foreground mb-3 font-serif text-lg font-medium tracking-[0.12em]'>
+              <h3 className='mb-3 font-serif text-lg font-medium tracking-[0.12em] text-[#16213E]'>
                 {step.title}
               </h3>
-              <p className='text-muted-foreground max-w-[260px] text-sm leading-relaxed'>
+              <p className='max-w-[260px] text-sm leading-relaxed text-[#44547A]'>
                 {step.desc}
               </p>
             </AnimateInView>
