@@ -34,7 +34,7 @@ export function SignIn() {
     <AuthLayout>
       <div className='w-full space-y-8'>
         <div className='space-y-2'>
-          <h2 className='font-serif text-center text-2xl font-medium tracking-[0.16em] text-[#E4C98F]'>
+          <h2 className='text-center font-serif text-3xl font-semibold tracking-[0.08em] text-[#17345c]'>
             {t('Sign in')}
           </h2>
           <div

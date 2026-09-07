@@ -31,7 +31,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const { systemName, logo, loading } = useSystemConfig()
 
   return (
-    <div className='relative grid h-svh max-w-none'>
+    <div className='relative grid h-svh max-w-none bg-[linear-gradient(135deg,#edf5ff_0%,#f8fbff_55%,#e9f1ff_100%)]'>
       <Link
         to='/'
         className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'
@@ -54,7 +54,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
         )}
       </Link>
       <div className='container flex items-center pt-16 pb-[8vh] sm:pt-0'>
-        <div className='auth-jade-panel mx-auto w-full space-y-6 px-6 py-10 sm:w-[480px] sm:p-10'>
+        <div className='auth-jade-panel auth-modern-panel mx-auto w-full space-y-7 px-6 py-10 sm:w-[500px] sm:p-11'>
           {children}
         </div>
       </div>

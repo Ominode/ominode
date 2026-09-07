@@ -31,18 +31,27 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
 
   return (
-    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16'>
-      {/* 背景由全局 BackgroundVideo 层提供（models_bg.png 全屏铺满） */}
-      <div className='mx-auto flex w-full max-w-6xl flex-col items-start text-left'>
+    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden bg-[#f4f8ff] px-6 pt-24 pb-16 text-[#17345c]'>
+      <img
+        src='/media/AI_webpage-bg.png'
+        alt=''
+        aria-hidden='true'
+        className='absolute inset-y-0 right-0 h-full w-full object-cover object-right opacity-90 lg:w-[64%]'
+      />
+      <div
+        aria-hidden='true'
+        className='absolute inset-0 bg-gradient-to-r from-[#f4f8ff] via-[#f4f8ff]/95 to-[#f4f8ff]/10 lg:from-[#f4f8ff] lg:via-[#f4f8ff]/92 lg:to-transparent'
+      />
+      <div className='relative mx-auto flex w-full max-w-6xl flex-col items-start text-left'>
         <div
-          className='landing-animate-fade-up mb-6 text-[11px] font-semibold tracking-[0.28em] text-[#3B4C75] uppercase opacity-0'
+          className='landing-animate-fade-up mb-6 text-xs font-semibold tracking-[0.22em] text-[#52709a] uppercase opacity-0'
           style={{ animationDelay: '0ms' }}
         >
           {t('The Leading LLM API Aggregator')}
         </div>
 
         <h1
-          className='landing-animate-fade-up text-[clamp(2.9rem,7vw,5.4rem)] leading-[1.06] font-bold tracking-tight text-[#16213E] opacity-0'
+          className='landing-animate-fade-up max-w-3xl text-[clamp(2.8rem,6vw,5rem)] leading-[1.06] font-bold tracking-tight text-[#17345c] opacity-0'
           style={{ animationDelay: '60ms' }}
         >
           {t('One Platform.')}
@@ -53,7 +62,7 @@ export function Hero(props: HeroProps) {
         </h1>
 
         <p
-          className='landing-animate-fade-up mt-6 max-w-md text-base leading-relaxed font-medium text-[#2E3E63] opacity-0 md:text-lg'
+          className='landing-animate-fade-up mt-6 max-w-xl text-base leading-relaxed font-medium text-[#52709a] opacity-0 md:text-lg'
           style={{ animationDelay: '120ms' }}
         >
           {t(
@@ -67,7 +76,7 @@ export function Hero(props: HeroProps) {
         >
           {props.isAuthenticated ? (
             <Button
-              className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#3B82F6] to-[#A855F7] px-7 text-sm font-medium text-white shadow-[0_8px_24px_rgba(99,102,241,0.35)] hover:opacity-95'
+              className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#28a8ef] to-[#a66af2] px-7 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(72,135,232,0.28)] hover:brightness-105'
               render={<Link to='/dashboard' />}
             >
               {t('Go to Dashboard')}
@@ -76,7 +85,7 @@ export function Hero(props: HeroProps) {
           ) : (
             <>
               <Button
-                className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#3B82F6] to-[#A855F7] px-7 text-sm font-medium text-white shadow-[0_8px_24px_rgba(99,102,241,0.35)] hover:opacity-95'
+                className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#28a8ef] to-[#a66af2] px-7 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(72,135,232,0.28)] hover:brightness-105'
                 render={<Link to='/sign-up' />}
               >
                 {t('Start Building')}
@@ -84,7 +93,7 @@ export function Hero(props: HeroProps) {
               </Button>
               <Button
                 variant='outline'
-                className='h-12 rounded-full border-white/60 bg-white/70 px-7 text-sm font-medium text-[#16213E] shadow-[0_4px_16px_rgba(15,23,42,0.08)] backdrop-blur hover:bg-white/90'
+                className='h-12 rounded-full border-[#9ab3d1] bg-white/75 px-7 text-sm font-semibold text-[#17345c] shadow-[0_4px_16px_rgba(35,70,110,0.10)] backdrop-blur hover:bg-white'
                 render={<Link to='/pricing' />}
               >
                 {t('View Models')}

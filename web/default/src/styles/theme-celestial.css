@@ -411,6 +411,30 @@ body[data-theme-preset='celestial-twilight'] ::-webkit-scrollbar-thumb:hover {
   -webkit-backdrop-filter: blur(10px);
 }
 
+/* Public auth pages use the bright model artwork, so the form needs a cool
+ * glass surface instead of the console's dark jade treatment. */
+[data-theme-preset='celestial-twilight'] .auth-modern-panel {
+  border-color: rgba(111, 151, 198, 0.28);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow:
+    0 24px 70px -24px rgba(45, 83, 132, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+[data-theme-preset='celestial-twilight'] .auth-modern-panel label,
+[data-theme-preset='celestial-twilight'] .auth-modern-panel a,
+[data-theme-preset='celestial-twilight'] .auth-modern-panel p {
+  color: #52709a;
+}
+
+[data-theme-preset='celestial-twilight'] .auth-modern-panel :is([data-slot='input'], [data-slot='textarea']) {
+  color: #17345c;
+  background: rgba(245, 249, 255, 0.9);
+  border-color: rgba(111, 151, 198, 0.35);
+}
+
 /* 古风输入框：鎏金边框 + 聚焦柔光（全站 input/textarea 生效） */
 [data-theme-preset='celestial-twilight'] :is([data-slot='input'], [data-slot='textarea']) {
   background-color: rgba(10, 13, 16, 0.4);
