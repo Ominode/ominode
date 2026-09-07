@@ -31,29 +31,29 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
 
   return (
-    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16'>
+    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-28 pb-16'>
       {/* 背景由全局 BackgroundVideo 层提供（models_bg.png 全屏铺满） */}
       <div className='mx-auto flex w-full max-w-6xl flex-col items-start text-left'>
         <div
-          className='landing-animate-fade-up mb-6 text-[11px] font-semibold tracking-[0.28em] text-[#3B4C75] uppercase opacity-0'
+          className='landing-animate-fade-up text-primary mb-6 text-xs font-semibold tracking-[0.22em] uppercase opacity-0'
           style={{ animationDelay: '0ms' }}
         >
           {t('The Leading LLM API Aggregator')}
         </div>
 
         <h1
-          className='landing-animate-fade-up text-[clamp(2.9rem,7vw,5.4rem)] leading-[1.06] font-bold tracking-tight text-[#16213E] opacity-0'
+          className='landing-animate-fade-up max-w-4xl text-[clamp(2.55rem,6vw,4.6rem)] leading-[1.08] font-semibold tracking-tight text-foreground opacity-0'
           style={{ animationDelay: '60ms' }}
         >
           {t('One Platform.')}
           <br />
-          <span className='bg-gradient-to-r from-[#3B82F6] via-[#7C5CFC] to-[#C026D3] bg-clip-text text-transparent'>
+          <span className='text-primary'>
             {t('All Leading Models.')}
           </span>
         </h1>
 
         <p
-          className='landing-animate-fade-up mt-6 max-w-md text-base leading-relaxed font-medium text-[#2E3E63] opacity-0 md:text-lg'
+          className='landing-animate-fade-up text-muted-foreground mt-6 max-w-xl text-base leading-relaxed opacity-0 md:text-lg'
           style={{ animationDelay: '120ms' }}
         >
           {t(
@@ -67,7 +67,7 @@ export function Hero(props: HeroProps) {
         >
           {props.isAuthenticated ? (
             <Button
-              className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#3B82F6] to-[#A855F7] px-7 text-sm font-medium text-white shadow-[0_8px_24px_rgba(99,102,241,0.35)] hover:opacity-95'
+              className='group h-12 rounded-lg px-7 text-sm font-semibold shadow-lg shadow-primary/20'
               render={<Link to='/dashboard' />}
             >
               {t('Go to Dashboard')}
@@ -76,7 +76,7 @@ export function Hero(props: HeroProps) {
           ) : (
             <>
               <Button
-                className='group h-12 rounded-full border-0 bg-gradient-to-r from-[#3B82F6] to-[#A855F7] px-7 text-sm font-medium text-white shadow-[0_8px_24px_rgba(99,102,241,0.35)] hover:opacity-95'
+                className='group h-12 rounded-lg px-7 text-sm font-semibold shadow-lg shadow-primary/20'
                 render={<Link to='/sign-up' />}
               >
                 {t('Start Building')}
@@ -84,7 +84,7 @@ export function Hero(props: HeroProps) {
               </Button>
               <Button
                 variant='outline'
-                className='h-12 rounded-full border-white/60 bg-white/70 px-7 text-sm font-medium text-[#16213E] shadow-[0_4px_16px_rgba(15,23,42,0.08)] backdrop-blur hover:bg-white/90'
+                className='h-12 rounded-lg border-primary/30 bg-background/50 px-7 text-sm font-semibold backdrop-blur hover:bg-primary/10'
                 render={<Link to='/pricing' />}
               >
                 {t('View Models')}

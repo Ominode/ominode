@@ -31,10 +31,10 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const { systemName, logo, loading } = useSystemConfig()
 
   return (
-    <div className='relative grid h-svh max-w-none'>
+    <div className='relative grid h-svh max-w-none bg-[radial-gradient(circle_at_top,rgba(200,155,88,0.12),transparent_42%)]'>
       <Link
         to='/'
-        className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'
+        className='absolute top-5 left-5 z-10 flex items-center gap-2.5 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'
       >
         <div className='relative h-8 w-8'>
           {loading ? (
@@ -50,11 +50,11 @@ export function AuthLayout({ children }: AuthLayoutProps) {
         {loading ? (
           <Skeleton className='h-6 w-24' />
         ) : (
-          <h1 className='text-xl font-medium'>{systemName}</h1>
+            <h1 className='text-lg font-semibold tracking-wide'>{systemName}</h1>
         )}
       </Link>
       <div className='container flex items-center pt-16 pb-[8vh] sm:pt-0'>
-        <div className='auth-jade-panel mx-auto w-full space-y-6 px-6 py-10 sm:w-[480px] sm:p-10'>
+        <div className='auth-jade-panel mx-auto w-full space-y-7 px-6 py-10 sm:w-[500px] sm:p-11'>
           {children}
         </div>
       </div>
