@@ -58,10 +58,10 @@ export function Features(_props: FeaturesProps) {
     <section className='relative z-10 px-6 py-28 md:py-40'>
       <div className='mx-auto max-w-6xl'>
         <AnimateInView className='mx-auto mb-20 max-w-2xl text-center md:mb-28'>
-          <h2 className='text-3xl leading-tight font-bold tracking-tight text-[#16213E] md:text-5xl'>
+          <h2 className='text-foreground text-3xl leading-tight font-bold tracking-tight md:text-5xl'>
             {t('Built for developers,')}
             <br />
-            <span className='bg-gradient-to-r from-[#3B82F6] via-[#7C5CFC] to-[#C026D3] bg-clip-text text-transparent'>
+            <span className='text-primary'>
               {t('designed for scale')}
             </span>
           </h2>
@@ -75,13 +75,13 @@ export function Features(_props: FeaturesProps) {
               animation='fade-up'
               className='flex flex-col items-center'
             >
-              <span className='mb-4 font-serif text-sm tracking-[0.3em] text-[#7C5CFC]/70'>
+              <span className='text-primary mb-4 font-serif text-sm tracking-[0.3em] opacity-70'>
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <h3 className='mb-3 font-serif text-lg font-medium tracking-[0.12em] text-[#16213E]'>
+              <h3 className='text-foreground mb-3 font-serif text-lg font-medium tracking-[0.12em]'>
                 {f.title}
               </h3>
-              <p className='max-w-[240px] text-sm leading-relaxed text-[#44547A]'>
+              <p className='text-muted-foreground max-w-[240px] text-sm leading-relaxed'>
                 {f.desc}
               </p>
             </AnimateInView>

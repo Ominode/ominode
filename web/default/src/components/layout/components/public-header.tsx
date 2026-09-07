@@ -186,8 +186,8 @@ export function PublicHeader(props: PublicHeaderProps) {
             className={cn(
               'flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
                 scrolled
-                ? 'bg-white/75 ring-[#9ab3d1]/70 h-14 rounded-2xl pr-2 pl-4 shadow-[0_8px_28px_-14px_rgba(35,70,110,0.35)] ring-1 backdrop-blur-2xl'
-                : 'h-[4.5rem] rounded-b-2xl border-b border-[#9ab3d1]/40 bg-white/25 px-2 backdrop-blur-md'
+                ? 'bg-background/75 ring-primary/25 h-14 rounded-2xl pr-2 pl-4 shadow-lg shadow-background/20 ring-1 backdrop-blur-2xl'
+                : 'h-[4.5rem] rounded-b-2xl border-b border-primary/20 bg-background/25 px-2 backdrop-blur-md'
             )}
           >
             {/* Logo */}
@@ -209,7 +209,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                   />
                 )}
               </div>
-              <span className='text-[#17345c] text-base font-semibold tracking-tight'>
+              <span className='text-foreground text-base font-semibold tracking-tight'>
                 {loading ? <Skeleton className='h-4 w-16' /> : displaySiteName}
               </span>
             </Link>
@@ -229,7 +229,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                       tabIndex={link.disabled ? -1 : undefined}
                       onClick={(event) => handleNavLinkClick(event, link)}
                       className={cn(
-                        'text-[#52709a] hover:text-[#17345c] rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
+                        'text-muted-foreground hover:text-foreground rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
                         link.disabled && 'pointer-events-none opacity-50'
                       )}
                     >
@@ -246,8 +246,8 @@ export function PublicHeader(props: PublicHeaderProps) {
                     className={cn(
                       'rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
                       isActive
-                        ? 'text-[#17345c]'
-                        : 'text-[#52709a] hover:text-[#17345c]',
+                        ? 'text-foreground'
+                        : 'text-muted-foreground hover:text-foreground',
                       link.disabled && 'pointer-events-none opacity-50'
                     )}
                   >
@@ -287,7 +287,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                   ) : (
                     <Button
                       size='sm'
-                      className='h-9 rounded-full bg-gradient-to-r from-[#28a8ef] to-[#a66af2] px-4 text-sm font-semibold text-white shadow-md shadow-blue-200/60 hover:brightness-105'
+                      className='h-9 rounded-lg px-4 text-sm font-semibold shadow-md shadow-primary/20'
                       render={<Link to='/sign-in' />}
                     >
                       {t('Sign in')}
