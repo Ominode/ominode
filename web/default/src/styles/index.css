@@ -120,12 +120,22 @@ For commercial licensing, please contact support@quantumnous.com
  * celestial-twilight preset keeps its bespoke tint (theme-celestial.css), which
  * outranks these on specificity.
  *
- * Deliberately kept mostly opaque: console tables and forms are dense, and
- * legibility beats showing more of the scene. No backdrop-filter here — these
- * are large scrolling surfaces, and full-page repaint is the known jank source
- * (see the note in theme-celestial.css). */
+ * Exactly ONE translucent layer may sit over the artwork at any point, because
+ * stacked alpha multiplies. The default variant is `inset`, which puts the
+ * wrapper behind the inset panel — tinting both at 85% and 88% passed
+ * 0.15 x 0.12 = 1.8% of the scene, i.e. nothing. So the wrapper is fully
+ * transparent and only the panels tint.
+ *
+ * 76% is a balance: console tables and forms are dense, so this stays well
+ * short of the public pages' veil while keeping the scene legible. No
+ * backdrop-filter here — these are large scrolling surfaces, and full-page
+ * repaint is the known jank source (see the note in theme-celestial.css). */
+[data-slot='sidebar-wrapper']:has([data-variant='inset']) {
+  background-color: transparent;
+}
+
 [data-slot='sidebar-inset'] {
-  background-color: color-mix(in oklab, var(--background) 88%, transparent);
+  background-color: color-mix(in oklab, var(--background) 76%, transparent);
 }
 
 /* `sidebar-inner` covers the normal desktop sidebar; the `:not(...)` selector
@@ -133,9 +143,8 @@ For commercial licensing, please contact support@quantumnous.com
  * `bg-sidebar` div. The mobile drawer (`[data-mobile]`) stays opaque — it
  * overlays the content rather than sitting beside it. */
 [data-slot='sidebar-inner'],
-[data-slot='sidebar']:not([data-mobile]):not([data-variant]),
-[data-slot='sidebar-wrapper']:has([data-variant='inset']) {
-  background-color: color-mix(in oklab, var(--sidebar) 85%, transparent);
+[data-slot='sidebar']:not([data-mobile]):not([data-variant]) {
+  background-color: color-mix(in oklab, var(--sidebar) 76%, transparent);
 }
 
 /* Vercel Geist-style skeleton shimmer */
