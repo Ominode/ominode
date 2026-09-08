@@ -23,23 +23,27 @@ import { AnimateInView } from '@/components/animate-in-view'
 export function HowItWorks() {
   const { t } = useTranslation()
 
+  // 序号也要随语言切换：中文用大写数字，日文用大字，拉丁语系用罗马数字。
   const steps = [
     {
-      num: '壹',
+      id: 'configure',
+      num: t('landing.howItWorks.step1'),
       title: t('Configure'),
       desc: t(
         'Add your API keys, set up channels and configure access permissions'
       ),
     },
     {
-      num: '贰',
+      id: 'connect',
+      num: t('landing.howItWorks.step2'),
       title: t('Connect'),
       desc: t(
         'Connect through OpenAI, Claude, Gemini, and other compatible API routes'
       ),
     },
     {
-      num: '叁',
+      id: 'monitor',
+      num: t('landing.howItWorks.step3'),
       title: t('Monitor'),
       desc: t('Track usage, costs and performance with real-time analytics'),
     },
@@ -57,7 +61,7 @@ export function HowItWorks() {
         <div className='grid gap-16 md:grid-cols-3 md:gap-12'>
           {steps.map((step, i) => (
             <AnimateInView
-              key={step.num}
+              key={step.id}
               delay={i * 150}
               animation='fade-up'
               className='relative flex flex-col items-center text-center'
