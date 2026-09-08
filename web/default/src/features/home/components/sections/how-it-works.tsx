@@ -23,7 +23,7 @@ import { AnimateInView } from '@/components/animate-in-view'
 export function HowItWorks() {
   const { t } = useTranslation()
 
-  // 序号也要随语言切换：中日用 一二三，拉丁语系用 1 2 3。
+  // 序号也要随语言切换：中文用大写数字，日文用大字，拉丁语系用罗马数字。
   const steps = [
     {
       id: 'configure',
