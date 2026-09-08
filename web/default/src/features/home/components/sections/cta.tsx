@@ -53,14 +53,14 @@ export function CTA(props: CTAProps) {
         className='mx-auto max-w-3xl text-center'
         animation='scale-in'
       >
-        <h2 className='text-3xl leading-tight font-bold tracking-tight text-[#16213E] md:text-5xl'>
+        <h2 className='text-3xl leading-tight font-bold tracking-tight text-[#16213E] dark:text-slate-100 md:text-5xl'>
           {t('Ready to simplify')}
           <br />
           <span className='bg-gradient-to-r from-[#3B82F6] via-[#7C5CFC] to-[#C026D3] bg-clip-text text-transparent drop-shadow-[0_0_32px_rgba(124,92,252,0.25)]'>
             {t('your AI integration?')}
           </span>
         </h2>
-        <p className='mx-auto mt-6 max-w-md text-base leading-relaxed text-[#44547A] md:text-lg'>
+        <p className='mx-auto mt-6 max-w-md text-base leading-relaxed text-[#44547A] dark:text-slate-400 md:text-lg'>
           {t(
             'Deploy your own gateway and start routing requests through your configured upstream services.'
           )}
@@ -75,7 +75,7 @@ export function CTA(props: CTAProps) {
           </Button>
           <Button
             variant='outline'
-            className='h-11 rounded-lg border-white/60 bg-white/70 px-6 text-[#16213E] backdrop-blur hover:bg-white/90'
+            className='h-11 rounded-lg border-white/60 bg-white/70 px-6 text-[#16213E] backdrop-blur hover:bg-white/90 dark:border-white/20 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-white/20'
             render={<Link to='/pricing' />}
           >
             {t('View Pricing')}

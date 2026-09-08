@@ -186,8 +186,8 @@ export function PublicHeader(props: PublicHeaderProps) {
             className={cn(
               'flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
                 scrolled
-                ? 'bg-white/75 ring-[#9ab3d1]/70 h-14 rounded-2xl pr-2 pl-4 shadow-[0_8px_28px_-14px_rgba(35,70,110,0.35)] ring-1 backdrop-blur-2xl'
-                : 'h-[4.5rem] rounded-b-2xl border-b border-[#9ab3d1]/40 bg-white/25 px-2 backdrop-blur-md'
+                ? 'bg-white/75 ring-[#9ab3d1]/70 h-14 rounded-2xl pr-2 pl-4 shadow-[0_8px_28px_-14px_rgba(35,70,110,0.35)] ring-1 backdrop-blur-2xl dark:bg-white/10 dark:ring-white/15'
+                : 'h-[4.5rem] rounded-b-2xl border-b border-[#9ab3d1]/40 bg-white/25 px-2 backdrop-blur-md dark:border-white/10 dark:bg-white/5'
             )}
           >
             {/* Logo */}
@@ -209,7 +209,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                   />
                 )}
               </div>
-              <span className='text-[#17345c] text-base font-semibold tracking-tight'>
+              <span className='text-[#17345c] dark:text-slate-100 text-base font-semibold tracking-tight'>
                 {loading ? <Skeleton className='h-4 w-16' /> : displaySiteName}
               </span>
             </Link>
@@ -229,7 +229,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                       tabIndex={link.disabled ? -1 : undefined}
                       onClick={(event) => handleNavLinkClick(event, link)}
                       className={cn(
-                        'text-[#52709a] hover:text-[#17345c] rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
+                        'text-[#52709a] hover:text-[#17345c] dark:text-slate-400 dark:hover:text-slate-100 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
                         link.disabled && 'pointer-events-none opacity-50'
                       )}
                     >
@@ -246,8 +246,8 @@ export function PublicHeader(props: PublicHeaderProps) {
                     className={cn(
                       'rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
                       isActive
-                        ? 'text-[#17345c]'
-                        : 'text-[#52709a] hover:text-[#17345c]',
+                        ? 'text-[#17345c] dark:text-slate-100'
+                        : 'text-[#52709a] hover:text-[#17345c] dark:text-slate-400 dark:hover:text-slate-100',
                       link.disabled && 'pointer-events-none opacity-50'
                     )}
                   >

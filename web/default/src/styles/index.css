@@ -88,15 +88,12 @@ For commercial licensing, please contact support@quantumnous.com
   }
 }
 
-/* ── models_bg.png backdrop veils ────────────────────────────────────────── */
+/* ── models_bg.png backdrop veil ─────────────────────────────────────────── */
 /* The fixed artwork layer (components/background-video.tsx) sits behind all
- * content; a veil keeps overlaid text readable.
- * - `models-bg-veil-light`: fixed bright veil for light-designed public pages
- *   (landing / auth), which use dark text regardless of the color mode.
- * - `models-bg-veil`: adaptive veil for the console — bright in light mode,
- *   night in dark mode. The night-toned celestial-twilight preset forces the
- *   dark veil in both modes (see theme-celestial.css). */
-.models-bg-veil-light,
+ * content on the public and auth pages; this veil keeps overlaid text readable
+ * and gives the artwork its light and dark treatment — bright in light mode,
+ * night in dark mode. The night-toned celestial-twilight preset forces the dark
+ * veil in both modes (see theme-celestial.css). */
 .models-bg-veil {
   background: linear-gradient(
     to bottom,

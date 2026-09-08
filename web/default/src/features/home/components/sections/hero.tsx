@@ -30,18 +30,19 @@ interface HeroProps {
 export function Hero(props: HeroProps) {
   const { t } = useTranslation()
 
+  // 不设底色：整屏高的 hero 若铺不透明底，会把背景层遮成「首屏无图、下滑才有图」。
   return (
-    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden bg-[#f4f8ff] px-6 pt-24 pb-16 text-[#17345c]'>
+    <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16 text-[#17345c] dark:text-slate-100'>
       <div className='relative mx-auto flex w-full max-w-6xl flex-col items-start text-left'>
         <div
-          className='landing-animate-fade-up mb-6 text-xs font-semibold tracking-[0.22em] text-[#52709a] uppercase opacity-0'
+          className='landing-animate-fade-up mb-6 text-xs font-semibold tracking-[0.22em] text-[#52709a] dark:text-slate-400 uppercase opacity-0'
           style={{ animationDelay: '0ms' }}
         >
           {t('The Leading LLM API Aggregator')}
         </div>
 
         <h1
-          className='landing-animate-fade-up max-w-3xl text-[clamp(2.8rem,6vw,5rem)] leading-[1.06] font-bold tracking-tight text-[#17345c] opacity-0'
+          className='landing-animate-fade-up max-w-3xl text-[clamp(2.8rem,6vw,5rem)] leading-[1.06] font-bold tracking-tight text-[#17345c] dark:text-slate-100 opacity-0'
           style={{ animationDelay: '60ms' }}
         >
           {t('One Platform.')}
@@ -52,7 +53,7 @@ export function Hero(props: HeroProps) {
         </h1>
 
         <p
-          className='landing-animate-fade-up mt-6 max-w-xl text-base leading-relaxed font-medium text-[#52709a] opacity-0 md:text-lg'
+          className='landing-animate-fade-up mt-6 max-w-xl text-base leading-relaxed font-medium text-[#52709a] dark:text-slate-400 opacity-0 md:text-lg'
           style={{ animationDelay: '120ms' }}
         >
           {t(
@@ -83,7 +84,7 @@ export function Hero(props: HeroProps) {
               </Button>
               <Button
                 variant='outline'
-                className='h-12 rounded-full border-[#9ab3d1] bg-white/75 px-7 text-sm font-semibold text-[#17345c] shadow-[0_4px_16px_rgba(35,70,110,0.10)] backdrop-blur hover:bg-white'
+                className='h-12 rounded-full border-[#9ab3d1] bg-white/75 px-7 text-sm font-semibold text-[#17345c] shadow-[0_4px_16px_rgba(35,70,110,0.10)] backdrop-blur hover:bg-white dark:border-white/20 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-white/20'
                 render={<Link to='/pricing' />}
               >
                 {t('View Models')}

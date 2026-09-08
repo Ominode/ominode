@@ -33,8 +33,8 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
   return (
     <div className='relative grid h-svh max-w-none'>
-      {/* 亮色登录页：模型星球场景 + 固定亮纱（容器不设底色，否则会盖住背景层）。 */}
-      <BackgroundVideo variant='light' />
+      {/* 模型星球场景（容器不设底色，否则会盖住背景层）。 */}
+      <BackgroundVideo />
       <Link
         to='/'
         className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'

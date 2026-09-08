@@ -37,8 +37,8 @@ type PublicLayoutProps = {
 export function PublicLayout(props: PublicLayoutProps) {
   return (
     <div className='text-foreground relative min-h-svh overflow-x-clip'>
-      {/* 模型星球场景 — 公开页均为亮色设计，固定亮纱（明暗模式下皆然）。 */}
-      <BackgroundVideo variant='light' />
+      {/* 模型星球场景 — 纱幕随明暗模式切换（见 styles/index.css）。 */}
+      <BackgroundVideo />
       <PublicHeader
         navContent={props.navContent}
         navLinks={props.navLinks}
