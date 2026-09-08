@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { BackgroundVideo } from '@/components/background-video'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSystemConfig } from '@/hooks/use-system-config'
 
@@ -31,7 +32,9 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const { systemName, logo, loading } = useSystemConfig()
 
   return (
-    <div className='relative grid h-svh max-w-none bg-[linear-gradient(135deg,#edf5ff_0%,#f8fbff_55%,#e9f1ff_100%)]'>
+    <div className='relative grid h-svh max-w-none'>
+      {/* 亮色登录页：模型星球场景 + 固定亮纱（容器不设底色，否则会盖住背景层）。 */}
+      <BackgroundVideo variant='light' />
       <Link
         to='/'
         className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'

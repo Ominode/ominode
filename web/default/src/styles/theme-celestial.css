@@ -63,10 +63,16 @@ body[data-theme-preset='celestial-twilight'] {
   -webkit-backdrop-filter: blur(12px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  [data-theme-preset='celestial-twilight'] .celestial-video-layer {
-    display: none;
-  }
+/* 仙阙暮光两种模式皆为夜色基调 —— 自适应纱幕在本 preset 下恒用深色。
+   （推镜动画已由 no-preference 门控；背景层本身在 reduced-motion 下保持可见，
+   否则会让正文直接落在 body 底色上。） */
+[data-theme-preset='celestial-twilight'] .models-bg-veil {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 13, 16, 0.62) 0%,
+    rgba(10, 13, 16, 0.48) 45%,
+    rgba(10, 13, 16, 0.72) 100%
+  );
 }
 
 /* Ken Burns 推镜：天宫场景缓慢推进，营造电影级纵深感。

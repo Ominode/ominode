@@ -16,6 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { BackgroundVideo } from '@/components/background-video'
 import { AnimatedOutlet } from '@/components/page-transition'
 import { SkipToMain } from '@/components/skip-to-main'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
@@ -39,6 +40,8 @@ export function AuthenticatedLayout(props: AuthenticatedLayoutProps) {
       <SearchProvider>
         <SidebarProvider defaultOpen={defaultOpen} className='flex-col'>
           <SkipToMain />
+          {/* 模型星球场景 — 控制台随主题切换纱幕（亮色亮纱 / 暗色及暮光 preset 暗纱）。 */}
+          <BackgroundVideo variant='adaptive' />
           <AppHeader />
           <div className='flex min-h-0 w-full flex-1'>
             <AppSidebar />

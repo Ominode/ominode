@@ -16,6 +16,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { BackgroundVideo } from '@/components/background-video'
+
 import type { TopNavLink } from '../types'
 import { PublicHeader, type PublicHeaderProps } from './public-header'
 
@@ -35,6 +37,8 @@ type PublicLayoutProps = {
 export function PublicLayout(props: PublicLayoutProps) {
   return (
     <div className='text-foreground relative min-h-svh overflow-x-clip'>
+      {/* 模型星球场景 — 公开页均为亮色设计，固定亮纱（明暗模式下皆然）。 */}
+      <BackgroundVideo variant='light' />
       <PublicHeader
         navContent={props.navContent}
         navLinks={props.navLinks}
