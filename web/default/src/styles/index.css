@@ -112,6 +112,32 @@ For commercial licensing, please contact support@quantumnous.com
   );
 }
 
+/* ── Console backdrop ────────────────────────────────────────────────────── */
+/* The dashboard shares the public pages' artwork layer, so its chrome has to be
+ * translucent — a solid fill would hide the scene entirely. Each surface mixes
+ * transparency into the theme's *own* token, so all ~12 presets tint the
+ * artwork with their own hue and no per-preset rule is needed. The night-toned
+ * celestial-twilight preset keeps its bespoke tint (theme-celestial.css), which
+ * outranks these on specificity.
+ *
+ * Deliberately kept mostly opaque: console tables and forms are dense, and
+ * legibility beats showing more of the scene. No backdrop-filter here — these
+ * are large scrolling surfaces, and full-page repaint is the known jank source
+ * (see the note in theme-celestial.css). */
+[data-slot='sidebar-inset'] {
+  background-color: color-mix(in oklab, var(--background) 88%, transparent);
+}
+
+/* `sidebar-inner` covers the normal desktop sidebar; the `:not(...)` selector
+ * catches the flat `collapsible: 'none'` variant, which renders its own
+ * `bg-sidebar` div. The mobile drawer (`[data-mobile]`) stays opaque — it
+ * overlays the content rather than sitting beside it. */
+[data-slot='sidebar-inner'],
+[data-slot='sidebar']:not([data-mobile]):not([data-variant]),
+[data-slot='sidebar-wrapper']:has([data-variant='inset']) {
+  background-color: color-mix(in oklab, var(--sidebar) 85%, transparent);
+}
+
 /* Vercel Geist-style skeleton shimmer */
 .skeleton-shimmer {
   background: linear-gradient(

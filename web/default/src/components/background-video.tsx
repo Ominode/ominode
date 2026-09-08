@@ -30,8 +30,9 @@ import { useCallback, type SyntheticEvent } from 'react'
  *      暗色模式暗纱；夜色基调的 celestial-twilight preset 下恒为暗纱
  *      （见 styles/theme-celestial.css）。
  *
- * 仅用于公开页与登录页；控制台内容区是不透明的 `bg-background`，铺背景层只会
- * 白白加载素材而看不见。
+ * 公开页、登录页与控制台共用同一张场景。控制台的侧栏与内容区因此改为半透明
+ * （见 styles/index.css 的「Console backdrop」一节），否则不透明底色会把场景
+ * 完全盖住。
  *
  * 背景层固定全屏、垫在所有内容之下（`-z-10`），移动端同样保持 cover 裁剪。
  */

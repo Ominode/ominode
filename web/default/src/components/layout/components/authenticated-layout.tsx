@@ -16,6 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { BackgroundVideo } from '@/components/background-video'
 import { AnimatedOutlet } from '@/components/page-transition'
 import { SkipToMain } from '@/components/skip-to-main'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
@@ -39,6 +40,8 @@ export function AuthenticatedLayout(props: AuthenticatedLayoutProps) {
       <SearchProvider>
         <SidebarProvider defaultOpen={defaultOpen} className='flex-col'>
           <SkipToMain />
+          {/* 与公开页同一张场景；控制台各面板为半透明，见 styles/index.css。 */}
+          <BackgroundVideo />
           <AppHeader />
           <div className='flex min-h-0 w-full flex-1'>
             <AppSidebar />
