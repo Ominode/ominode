@@ -42,12 +42,6 @@ interface FooterProps {
   className?: string
 }
 
-const NEW_API_FOOTER_ATTRIBUTION_KEY = [
-  'footer',
-  'new' + 'api',
-  'projectAttributionSuffix',
-].join('.')
-
 function FooterLinkItem(props: { link: FooterLink }) {
   const { t } = useTranslation()
   const isExternal = props.link.href.startsWith('http')
@@ -121,30 +115,16 @@ function LegalLinks(props: { leadingSeparator?: boolean }) {
   )
 }
 
-// inline=true returns just the inner span for composition in a parent flex
-// row. inline=false wraps in a centered/right-aligned div (default).
-function ProjectAttribution(props: { currentYear: number; inline?: boolean }) {
-  const { t } = useTranslation()
-  const content = (
-    <span className='text-[#7A89A8]'>
-      &copy; {props.currentYear}{' '}
-      <a
-        href='https://github.com/QuantumNous/new-api'
-        target='_blank'
-        rel='noopener noreferrer'
-        className='font-medium text-[#3B4C75] transition-colors hover:text-[#16213E]'
-      >
-        {t('New API')}
-      </a>
-      . {t(NEW_API_FOOTER_ATTRIBUTION_KEY)}
-    </span>
-  )
-  if (props.inline) {
-    return content
+// Renders the legal links container on the side of a custom footer; renders
+// nothing when no legal links are configured.
+function CustomFooterLegalLinks() {
+  const { status } = useStatus()
+  if (!status?.user_agreement_enabled && !status?.privacy_policy_enabled) {
+    return null
   }
   return (
-    <div className='text-center text-xs text-[#7A89A8] sm:text-right'>
-      {content}
+    <div className='border-border/60 text-muted-foreground/45 flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t pt-4 text-xs sm:w-auto sm:justify-end sm:border-t-0 sm:border-l sm:pt-0 sm:pl-5'>
+      <LegalLinks />
     </div>
   )
 }
@@ -236,10 +216,7 @@ export function Footer(props: FooterProps) {
               className='custom-footer text-muted-foreground min-w-0 text-center text-sm sm:text-left'
               dangerouslySetInnerHTML={{ __html: footerHtml }}
             />
-            <div className='border-border/60 text-muted-foreground/45 flex w-full flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t pt-4 text-xs sm:w-auto sm:justify-end sm:border-t-0 sm:border-l sm:pt-0 sm:pl-5'>
-              <LegalLinks />
-              <ProjectAttribution currentYear={currentYear} inline />
-            </div>
+            <CustomFooterLegalLinks />
           </div>
         </div>
       </footer>
@@ -293,8 +270,7 @@ export function Footer(props: FooterProps) {
           )}
         </div>
 
-        {/* Copyright + optional legal links inline on the left, project
-            attribution on the right; wraps on narrow screens. */}
+        {/* Copyright + optional legal links inline; wraps on narrow screens. */}
         <div className='mt-12 flex flex-col items-center justify-between gap-x-3 gap-y-2 border-t border-slate-900/10 pt-6 sm:flex-row'>
           <div className='flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-[#7A89A8] sm:justify-start'>
             <span>
@@ -303,7 +279,6 @@ export function Footer(props: FooterProps) {
             </span>
             <LegalLinks leadingSeparator />
           </div>
-          <ProjectAttribution currentYear={currentYear} />
         </div>
       </div>
     </footer>
