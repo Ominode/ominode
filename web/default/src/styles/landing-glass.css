@@ -192,11 +192,12 @@ For commercial licensing, please contact support@quantumnous.com
 /* ── Liquid Glass Intelligence Core ────────────────────────────────────────── */
 .liquid-core-stage {
   /* these resolve where they are used, so % means % of the stage */
-  --tile: clamp(44px, 10cqw, 76px);
-  /* 1.4x the largest sphere an outside-the-sphere orbit could fit
-   * (50% - 16px - 1.16 tile): the sphere now fills the stage and the orbit
-   * runs across its silhouette instead of around it */
-  --sphere-r: calc((50% - 16px - var(--tile) * 1.16) * 1.4);
+  /* logo tiles scaled to sit in proportion with the large sphere */
+  --tile: clamp(52px, 14cqw, 112px);
+  /* 1.4x the largest sphere an outside-the-sphere orbit could fit, measured
+   * with the earlier 10cqw tile. That tile size is pinned here so enlarging
+   * the logos does not shrink the sphere. */
+  --sphere-r: calc((50% - 16px - clamp(44px, 10cqw, 76px) * 1.16) * 1.4);
   /* the widest orbit that keeps side-on tiles (~0.54 tile wide from their
    * centre) 4px inside the stage, so logos never reach the copy; flattened by
    * --orbit-tilt */
