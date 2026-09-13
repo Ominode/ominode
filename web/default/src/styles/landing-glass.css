@@ -193,13 +193,14 @@ For commercial licensing, please contact support@quantumnous.com
 .liquid-core-stage {
   /* these resolve where they are used, so % means % of the stage */
   --tile: clamp(44px, 10cqw, 76px);
-  /* the largest sphere whose orbit still fits the stage: the widest point of
-   * the orbit is --orbit-rx plus half a side-on tile (~0.54 tile), so
-   * sphere-r + 12px + 0.62 tile + 0.54 tile must stay 4px inside 50% */
-  --sphere-r: calc(50% - 16px - var(--tile) * 1.16);
-  /* horizontal orbit radius: sphere edge + gap + ~half the tile's diagonal, so
-   * tiles at the sides clear the sphere; the orbit is flattened by --orbit-tilt */
-  --orbit-rx: calc(var(--sphere-r) + 12px + var(--tile) * 0.62);
+  /* 1.4x the largest sphere an outside-the-sphere orbit could fit
+   * (50% - 16px - 1.16 tile): the sphere now fills the stage and the orbit
+   * runs across its silhouette instead of around it */
+  --sphere-r: calc((50% - 16px - var(--tile) * 1.16) * 1.4);
+  /* the widest orbit that keeps side-on tiles (~0.54 tile wide from their
+   * centre) 4px inside the stage, so logos never reach the copy; flattened by
+   * --orbit-tilt */
+  --orbit-rx: calc(50% - 4px - var(--tile) * 0.54);
   --orbit-tilt: 0.38;
   position: relative;
   container-type: inline-size;
@@ -258,10 +259,10 @@ For commercial licensing, please contact support@quantumnous.com
   object-fit: cover;
   -webkit-mask: radial-gradient(
     circle closest-side,
-    #000 84%,
-    transparent 97%
+    #000 82%,
+    transparent 90%
   );
-  mask: radial-gradient(circle closest-side, #000 84%, transparent 97%);
+  mask: radial-gradient(circle closest-side, #000 82%, transparent 90%);
 }
 
 /* Soft light the core casts onto the water below it */
