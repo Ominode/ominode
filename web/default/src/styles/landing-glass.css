@@ -22,8 +22,8 @@ For commercial licensing, please contact support@quantumnous.com
  * navbar / CTA micro-interactions.
  *
  * Motion budget: continuous motion is CSS (transform / opacity / rotate /
- * translate). The only per-frame JS is the card orbit loop in
- * hero-liquid-core.tsx; the glass sphere is a keyed video. Entrance animations use the individual `translate`
+ * translate). There is no per-frame JS: the glass sphere is a keyed video
+ * and the model logos sit still in a ring around it. Entrance animations use the individual `translate`
  * property so hover `transform`s never fight them.
  * ════════════════════════════════════════════════════════════════════════════ */
 
@@ -191,8 +191,13 @@ For commercial licensing, please contact support@quantumnous.com
 
 /* ── Liquid Glass Intelligence Core ────────────────────────────────────────── */
 .liquid-core-stage {
-  --core-mx: 0;
-  --core-my: 0;
+  /* all three resolve where they are used, so % means % of the stage */
+  --tile: clamp(46px, 12cqw, 84px);
+  --sphere-r: 36.75%;
+  /* tile centre radius: sphere edge + gap + ~half the tile's diagonal, so the
+   * square tiles at diagonal positions clear the sphere too, not just the ones
+   * at top/bottom/left/right */
+  --ring-r: calc(var(--sphere-r) + 12px + var(--tile) * 0.62);
   position: relative;
   container-type: inline-size;
   pointer-events: none;
@@ -220,22 +225,30 @@ For commercial licensing, please contact support@quantumnous.com
 }
 
 /* The sphere video's frame is square-cropped here; the sphere itself fills
- * ~80% of that crop, so a 70% box gives a ~56%-wide sphere on the stage. */
+ * ~80% of that crop, so a 91.9% box gives a 73.5%-wide sphere (--sphere-r x 2):
+ * 1.6x the previous 46%-of-a-smaller-stage core. */
 .liquid-core {
   position: absolute;
-  top: 15%;
-  left: 15%;
+  top: 4.05%;
+  left: 4.05%;
   z-index: 20;
-  width: 70%;
+  width: 91.9%;
   aspect-ratio: 1;
   animation:
     landing-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both,
     liquid-core-float 18s ease-in-out 900ms infinite;
 }
 
+.liquid-core-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
 /* Studio-rendered iridescent glass loop. The SVG matte in hero-liquid-core.tsx
  * keys out its grey backdrop; this round mask trims the vignette the matte's
- * dead zone does not fully reach. A few px of pointer parallax. */
+ * dead zone does not fully reach. */
 .liquid-core-sphere {
   display: block;
   width: 100%;
@@ -247,18 +260,17 @@ For commercial licensing, please contact support@quantumnous.com
     transparent 97%
   );
   mask: radial-gradient(circle closest-side, #000 84%, transparent 97%);
-  translate: calc(var(--core-mx) * 4px) calc(var(--core-my) * 3px);
 }
 
 /* Soft light the core casts onto the water below it */
 .liquid-core-ambient {
   --ambient-alpha: 0.55;
   position: absolute;
-  top: 76%;
-  left: 20%;
+  top: 83%;
+  left: 18%;
   z-index: 1;
-  width: 60%;
-  height: 12%;
+  width: 64%;
+  height: 10%;
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
@@ -270,73 +282,54 @@ For commercial licensing, please contact support@quantumnous.com
   animation: liquid-core-breathe 14s ease-in-out infinite;
 }
 
-/* ── Optical-fibre orbits ──────────────────────────────────────────────────── */
-@keyframes liquid-core-glint {
-  from {
-    stroke-dashoffset: 200;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.liquid-core-orbits {
+/* ── Logo ring ─────────────────────────────────────────────────────────────── */
+/* A hairline optical ring threading the logos; same radius as the tiles. */
+.liquid-core-ring {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.liquid-core-orbits[data-layer='back'] {
-  z-index: 5;
-  opacity: 0.6;
-}
-
-.liquid-core-orbits[data-layer='front'] {
-  z-index: 25;
-  opacity: 0.9;
-}
-
-.liquid-core-fiber {
-  fill: none;
-  stroke-width: 0.9;
-}
-
-.liquid-core-glint {
-  fill: none;
-  stroke: rgb(255 255 255 / 0.95);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-dasharray: 5 195;
-  animation: liquid-core-glint 18s linear infinite;
-}
-
-.liquid-core-glints > :nth-child(2) {
-  animation-duration: 22s;
-  animation-delay: -7s;
-}
-
-.liquid-core-glints > :nth-child(3) {
-  animation-duration: 15s;
-  animation-delay: -11s;
+  top: 50%;
+  left: 50%;
+  z-index: 15;
+  width: calc(var(--ring-r) * 2);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 200deg,
+    rgb(228 241 255 / 0.9),
+    rgb(143 189 240 / 0.55) 25%,
+    rgb(199 182 244 / 0.85) 50%,
+    rgb(143 189 240 / 0.5) 75%,
+    rgb(228 241 255 / 0.9)
+  );
+  opacity: 0.75;
+  transform: translate(-50%, -50%);
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 1.25px),
+    #000 calc(100% - 1px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 1.25px),
+    #000 calc(100% - 1px)
+  );
+  animation: landing-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) 340ms both;
 }
 
 /* ── Floating glass tiles ──────────────────────────────────────────────────── */
 .liquid-core-cards {
   position: absolute;
   inset: 0;
+  z-index: 30;
 }
 
+/* still, evenly spaced on the ring (angles set per tile in the component) */
 .liquid-core-card {
-  --tile: clamp(46px, 12cqw, 84px);
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: calc(50% + var(--ring-sin) * var(--ring-r));
+  left: calc(50% + var(--ring-cos) * var(--ring-r));
   width: var(--tile);
   height: var(--tile);
   transform: translate(-50%, -50%);
-  will-change: transform, opacity;
 }
 
 .liquid-core-tile {
@@ -349,7 +342,7 @@ For commercial licensing, please contact support@quantumnous.com
   color: #0f172a;
   font-size: calc(var(--tile) * 0.46);
   pointer-events: auto;
-  /* frosted glass without backdrop-filter: tiles move every frame */
+  /* frosted glass without backdrop-filter */
   background: linear-gradient(
     150deg,
     rgb(255 255 255 / 0.66) 0%,
@@ -397,10 +390,6 @@ For commercial licensing, please contact support@quantumnous.com
 }
 .liquid-core-cards > :nth-child(5) .liquid-core-tile {
   animation-delay: 540ms;
-}
-
-.liquid-core-card[data-depth='back'] .liquid-core-tile {
-  filter: blur(0.7px) saturate(0.88);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -815,12 +804,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 /* ── Mobile: lighter glass, no particles / glints / shimmer ────────────────── */
 @media (max-width: 767px) {
-  .liquid-core-card[data-depth='back'] .liquid-core-tile {
-    filter: saturate(0.9);
-  }
-
   .liquid-core-motes,
-  .liquid-core-glints,
   .landing-lake-shimmer {
     display: none;
   }
@@ -833,20 +817,20 @@ For commercial licensing, please contact support@quantumnous.com
   .liquid-core,
   .liquid-core-ambient,
   .liquid-core-tile,
-  .liquid-core-glint,
+  .liquid-core-ring,
   .liquid-core-mote {
     animation: none !important;
   }
 
   .landing-animate-rise,
   .liquid-core,
+  .liquid-core-ring,
   .liquid-core-tile {
     opacity: 1 !important;
     translate: none !important;
   }
 
   .liquid-core-motes,
-  .liquid-core-glints,
   .landing-lake-shimmer,
   .landing-cta-primary::after {
     display: none;

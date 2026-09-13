@@ -33,10 +33,10 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
 
   // 不设底色：整屏高的 hero 若铺不透明底，会把背景层遮成「首屏无图、下滑才有图」。
-  // 首屏入场顺序：eyebrow → 标题 → 描述 → 按钮 → 玻璃核心 → 模型卡片，总时长约 1s。
+  // 首屏入场顺序：eyebrow → 标题 → 描述 → 按钮 → 玻璃球 → Logo 圈，总时长约 1s。
   return (
     <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16 text-(--landing-ink)'>
-      <div className='relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-6'>
+      <div className='relative mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-8'>
         <div className='flex flex-col items-start text-left'>
           <div className='landing-animate-rise landing-eyebrow mb-6'>
             {t('The Leading LLM API Aggregator')}
@@ -95,7 +95,7 @@ export function Hero(props: HeroProps) {
           </div>
         </div>
 
-        <HeroLiquidCore className='mx-auto max-w-[340px] sm:max-w-[420px] lg:max-w-[540px]' />
+        <HeroLiquidCore className='mx-auto max-w-[360px] sm:max-w-[520px] lg:max-w-[640px]' />
       </div>
 
       <div aria-hidden='true' className='landing-lake-shimmer' />
