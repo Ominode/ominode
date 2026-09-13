@@ -33,10 +33,12 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
 
   // 不设底色：整屏高的 hero 若铺不透明底，会把背景层遮成「首屏无图、下滑才有图」。
+  // 大屏上文字列按内容收窄（最多 36rem），其余宽度全部留给玻璃球；舞台高度不超过
+  // 一屏。手机上球体在文字下方，向两侧页边距各借 1.25rem。
   // 首屏入场顺序：eyebrow → 标题 → 描述 → 按钮 → 玻璃球 → Logo 圈，总时长约 1s。
   return (
     <section className='relative z-10 flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-24 pb-16 text-(--landing-ink)'>
-      <div className='relative mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-8'>
+      <div className='relative mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[fit-content(36rem)_minmax(0,1fr)] lg:gap-8'>
         <div className='flex flex-col items-start text-left'>
           <div className='landing-animate-rise landing-eyebrow mb-6'>
             {t('The Leading LLM API Aggregator')}
@@ -54,7 +56,7 @@ export function Hero(props: HeroProps) {
           </h1>
 
           <p
-            className='landing-animate-rise landing-lede mt-6 max-w-[34rem] text-base md:text-lg'
+            className='landing-animate-rise landing-lede mt-6 max-w-[34rem] text-base md:text-lg lg:max-w-[30rem]'
             style={{ animationDelay: '140ms' }}
           >
             {t(
@@ -95,7 +97,7 @@ export function Hero(props: HeroProps) {
           </div>
         </div>
 
-        <HeroLiquidCore className='mx-auto max-w-[360px] sm:max-w-[520px] lg:max-w-[640px]' />
+        <HeroLiquidCore className='-mx-5 w-[calc(100%+2.5rem)] max-w-none sm:mx-auto sm:w-full sm:max-w-[640px] lg:max-w-[min(100%,calc(100svh_-_10rem))]' />
       </div>
 
       <div aria-hidden='true' className='landing-lake-shimmer' />
