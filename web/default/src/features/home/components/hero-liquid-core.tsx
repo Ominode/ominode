@@ -21,7 +21,7 @@ import DeepSeekColor from '@lobehub/icons/es/DeepSeek/components/Color'
 import GeminiColor from '@lobehub/icons/es/Gemini/components/Color'
 import MetaColor from '@lobehub/icons/es/Meta/components/Color'
 import OpenAIMono from '@lobehub/icons/es/OpenAI/components/Mono'
-import { useEffect, useId, useRef, type CSSProperties } from 'react'
+import { useEffect, useId, useRef } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -33,19 +33,23 @@ import { cn } from '@/lib/utils'
  * 能以普通合成叠在湖光雪山上，明暗主题都成立。没有用 mix-blend-mode：hero 与
  * 核心的入场动画都会建立隔离的层叠上下文，混合模式碰不到背景图。
  *
- * 五个模型 Logo 静止、等距地排成一圈，贴着球体外沿，并由一条同半径的细光环
- * 串起来。圈的半径在 CSS 里由球体半径 + 间隙 + 半个卡片宽度算出，所以球体与
- * 卡片尺寸怎么缩放，Logo 都不会压到球体上。没有逐帧 JS：视频离开视口时暂停，
- * prefers-reduced-motion 下不播放、停在首帧海报。模型 Logo 直接深引用
- * @lobehub/icons 的单个组件，避免把整个图标库打进首页。
+ * 五个模型 Logo 在同一条倾斜的椭圆轨道上等距排布、同速匀速公转：转到前方时
+ * 放大、变亮并挡在球体前面，转到后方时缩小、变淡并被球体遮住；轨道线也分成
+ * 后半段（球体之后）与前半段（球体之前）两层。因为同速且相隔 72°，卡片之间
+ * 永远不会追越重叠。
+ *
+ * 轨道尺寸只在 CSS 里定义（球体半径 + 间隙 + 约半个卡片对角线），JS 仅在尺寸
+ * 变化时读取一次轨道线的实际宽高，逐帧只写 transform / opacity。舞台离开视口时
+ * 动画与视频一起暂停；prefers-reduced-motion 下卡片静止、视频停在首帧海报。
+ * 模型 Logo 直接深引用 @lobehub/icons 的单个组件，避免把整个图标库打进首页。
  */
 
-type RingLogo = {
+type OrbitLogo = {
   id: string
   Logo: typeof ClaudeColor
 }
 
-const RING_LOGOS: RingLogo[] = [
+const ORBIT_LOGOS: OrbitLogo[] = [
   { id: 'openai', Logo: OpenAIMono },
   { id: 'claude', Logo: ClaudeColor },
   { id: 'gemini', Logo: GeminiColor },
@@ -53,17 +57,9 @@ const RING_LOGOS: RingLogo[] = [
   { id: 'deepseek', Logo: DeepSeekColor },
 ]
 
-// 从正上方开始，顺时针等距排布
-const RING_POSITIONS = RING_LOGOS.map((logo, index) => {
-  const angle = -Math.PI / 2 + (index / RING_LOGOS.length) * Math.PI * 2
-  return {
-    ...logo,
-    style: {
-      '--ring-cos': Math.cos(angle).toFixed(4),
-      '--ring-sin': Math.sin(angle).toFixed(4),
-    } as CSSProperties,
-  }
-})
+/** 公转一周的秒数，所有 Logo 共用 */
+const ORBIT_PERIOD = 24
+const TAU = Math.PI * 2
 
 const MOTE_IDS = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7']
 
@@ -77,27 +73,87 @@ type HeroLiquidCoreProps = {
 export function HeroLiquidCore(props: HeroLiquidCoreProps) {
   const stageRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const orbitRef = useRef<HTMLDivElement>(null)
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([])
   const matteFilterId = `${useId().replaceAll(/[^a-zA-Z0-9_-]/g, '')}-matte`
 
   useEffect(() => {
     const stage = stageRef.current
     const video = videoRef.current
-    if (!stage || !video) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const orbit = orbitRef.current
+    if (!stage || !video || !orbit) return
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+    const startedAt = performance.now()
+
+    let radiusX = orbit.offsetWidth / 2
+    let radiusY = orbit.offsetHeight / 2
+    let frameId = 0
+
+    const placeLogos = (now: number) => {
+      const turn = ((now - startedAt) / 1000 / ORBIT_PERIOD) * TAU
+      cardRefs.current.forEach((card, index) => {
+        if (!card) return
+
+        // 从正前方开始，等距相隔 72°
+        const angle = Math.PI / 2 + (index / ORBIT_LOGOS.length) * TAU + turn
+        const depth = Math.sin(angle)
+        const nearness = (depth + 1) / 2
+        const x = Math.cos(angle) * radiusX
+        const y = depth * radiusY
+        const scale = 0.78 + nearness * 0.3
+
+        card.style.transform = `translate(-50%, -50%) translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`
+        card.style.opacity = (0.55 + nearness * 0.45).toFixed(3)
+
+        // 前半圈在球体（z-index 20）之前，后半圈在其后
+        const zIndex = depth > 0 ? '30' : '10'
+        if (card.style.zIndex !== zIndex) card.style.zIndex = zIndex
+
+        let layer = 'mid'
+        if (depth < -0.4) layer = 'back'
+        else if (depth > 0.4) layer = 'front'
+        if (card.dataset.depth !== layer) card.dataset.depth = layer
+      })
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      radiusX = orbit.offsetWidth / 2
+      radiusY = orbit.offsetHeight / 2
+      if (reducedMotion) placeLogos(startedAt)
+    })
+    resizeObserver.observe(stage)
+
+    if (reducedMotion) {
+      placeLogos(startedAt)
+      return () => resizeObserver.disconnect()
+    }
 
     // 自动播放可能被浏览器拒绝（省流量模式等）；那时停在海报帧即可
     video.muted = true
+    const tick = (now: number) => {
+      placeLogos(now)
+      frameId = requestAnimationFrame(tick)
+    }
+
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
+        if (!frameId) frameId = requestAnimationFrame(tick)
         video.play().catch(() => undefined)
         return
       }
+      cancelAnimationFrame(frameId)
+      frameId = 0
       video.pause()
     })
     visibilityObserver.observe(stage)
 
     return () => {
+      cancelAnimationFrame(frameId)
       visibilityObserver.disconnect()
+      resizeObserver.disconnect()
       video.pause()
     }
   }, [])
@@ -164,7 +220,7 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
       </svg>
 
       <div className='liquid-core-ambient' />
-      <div className='liquid-core-ring' />
+      <div ref={orbitRef} className='liquid-core-orbit' data-half='back' />
 
       <div className='liquid-core'>
         <video
@@ -180,9 +236,18 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
         />
       </div>
 
+      <div className='liquid-core-orbit' data-half='front' />
+
       <div className='liquid-core-cards'>
-        {RING_POSITIONS.map((logo) => (
-          <div key={logo.id} className='liquid-core-card' style={logo.style}>
+        {ORBIT_LOGOS.map((logo, index) => (
+          <div
+            key={logo.id}
+            ref={(element) => {
+              cardRefs.current[index] = element
+            }}
+            className='liquid-core-card'
+            data-depth='mid'
+          >
             <div className='liquid-core-tile'>
               <logo.Logo size='1em' />
             </div>
