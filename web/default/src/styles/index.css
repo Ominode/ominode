@@ -32,6 +32,7 @@ For commercial licensing, please contact support@quantumnous.com
 /* 仙阙暮光 (Celestial Twilight) preset-scoped aesthetic layer. Inert for any
  * other preset because every rule is keyed to `data-theme-preset`. */
 @import './theme-celestial.css';
+@import './landing-glass.css';
 
 /* Shiki dual themes: token colors follow dark theme (pre background stays `bg-background` on the block) */
 @layer components {
@@ -88,7 +89,7 @@ For commercial licensing, please contact support@quantumnous.com
   }
 }
 
-/* ── models_bg.png backdrop veil ─────────────────────────────────────────── */
+/* ── Landscape backdrop veil ───────────────────────────────────────────────── */
 /* The fixed artwork layer (components/background-video.tsx) sits behind all
  * content on the public and auth pages; this veil keeps overlaid text readable
  * and gives the artwork its light and dark treatment — bright in light mode,

@@ -22,7 +22,9 @@ import { useCallback, type SyntheticEvent } from 'react'
  * 全屏背景层 — the bottom-most visual layer of the page.
  *
  * 三层从下到上：
- *   1. 模型星球静态场景 `models_bg.png`（object-cover 全屏铺满）；
+ *   1. 湖光雪山静态场景 `ominode-landscape.webp`（object-cover 全屏铺满）。这是
+ *      原场景图去掉烘焙进去的球体、模型卡片与右下角建筑后的净版，右侧改为
+ *      开阔湖面与远处雪山；首页主视觉改由 HeroLiquidCore 实时渲染；
  *   2. 背景视频（占位容器，素材放入 `public/media/ominode-tiangong.mp4` 即启用，
  *      未提供时 `<video>` 无帧渲染为透明，露出底下的 CG 场景）；
  *   3. 纱幕（veil），压住场景高光，保证叠加在场景上的文字始终可读。纱幕随
@@ -36,7 +38,7 @@ import { useCallback, type SyntheticEvent } from 'react'
  *
  * 背景层固定全屏、垫在所有内容之下（`-z-10`），移动端同样保持 cover 裁剪。
  */
-const MODELS_BG_IMG = '/media/models_bg.png'
+const LANDSCAPE_IMG = '/media/ominode-landscape.webp'
 const TIANGONG_VIDEO_SRC = '/media/ominode-tiangong.mp4'
 
 export function BackgroundVideo() {
@@ -51,7 +53,7 @@ export function BackgroundVideo() {
       aria-hidden='true'
     >
       <img
-        src={MODELS_BG_IMG}
+        src={LANDSCAPE_IMG}
         alt=''
         className='absolute inset-0 h-full w-full object-cover'
       />

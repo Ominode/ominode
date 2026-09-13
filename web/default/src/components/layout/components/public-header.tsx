@@ -183,9 +183,31 @@ export function PublicHeader(props: PublicHeaderProps) {
           )}
         >
           <nav
+            onPointerEnter={(event) => {
+              // 进入时缓存导航条位置；移动时只写 CSS 变量，不读布局
+              const rect = event.currentTarget.getBoundingClientRect()
+              event.currentTarget.style.setProperty(
+                '--nav-left',
+                String(rect.left)
+              )
+              event.currentTarget.style.setProperty(
+                '--nav-top',
+                String(rect.top)
+              )
+            }}
+            onPointerMove={(event) => {
+              event.currentTarget.style.setProperty(
+                '--nav-px',
+                String(event.clientX)
+              )
+              event.currentTarget.style.setProperty(
+                '--nav-py',
+                String(event.clientY)
+              )
+            }}
             className={cn(
-              'flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
-                scrolled
+              'landing-nav-glass flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
+              scrolled
                 ? 'bg-white/75 ring-[#9ab3d1]/70 h-14 rounded-2xl pr-2 pl-4 shadow-[0_8px_28px_-14px_rgba(35,70,110,0.35)] ring-1 backdrop-blur-2xl dark:bg-white/10 dark:ring-white/15'
                 : 'h-[4.5rem] rounded-b-2xl border-b border-[#9ab3d1]/40 bg-white/25 px-2 backdrop-blur-md dark:border-white/10 dark:bg-white/5'
             )}
@@ -209,7 +231,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                   />
                 )}
               </div>
-              <span className='text-[#17345c] dark:text-slate-100 text-base font-semibold tracking-tight'>
+              <span className='text-base font-semibold tracking-tight text-[#17345c] dark:text-slate-100'>
                 {loading ? <Skeleton className='h-4 w-16' /> : displaySiteName}
               </span>
             </Link>
@@ -229,7 +251,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                       tabIndex={link.disabled ? -1 : undefined}
                       onClick={(event) => handleNavLinkClick(event, link)}
                       className={cn(
-                        'text-[#52709a] hover:text-[#17345c] dark:text-slate-400 dark:hover:text-slate-100 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
+                        'landing-nav-link text-[#52709a] hover:text-[#17345c] dark:text-slate-400 dark:hover:text-slate-100 rounded-lg px-3 py-2 text-sm font-medium',
                         link.disabled && 'pointer-events-none opacity-50'
                       )}
                     >
@@ -243,8 +265,9 @@ export function PublicHeader(props: PublicHeaderProps) {
                     to={link.href}
                     disabled={link.disabled}
                     onClick={(event) => handleNavLinkClick(event, link)}
+                    data-active={isActive}
                     className={cn(
-                      'rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200',
+                      'landing-nav-link rounded-lg px-3 py-2 text-sm font-medium',
                       isActive
                         ? 'text-[#17345c] dark:text-slate-100'
                         : 'text-[#52709a] hover:text-[#17345c] dark:text-slate-400 dark:hover:text-slate-100',
@@ -262,19 +285,29 @@ export function PublicHeader(props: PublicHeaderProps) {
                 <div className='bg-border/40 mx-2 h-4 w-px' />
               )}
 
-              {showLanguageSwitcher && <LanguageSwitcher />}
-              {showThemeSwitch && <ThemeSwitch />}
+              {showLanguageSwitcher && (
+                <span className='landing-nav-icon'>
+                  <LanguageSwitcher />
+                </span>
+              )}
+              {showThemeSwitch && (
+                <span className='landing-nav-icon'>
+                  <ThemeSwitch />
+                </span>
+              )}
               {showNotifications && (
-                <NotificationPopover
-                  open={notifications.popoverOpen}
-                  onOpenChange={notifications.setPopoverOpen}
-                  unreadCount={notifications.unreadCount}
-                  activeTab={notifications.activeTab}
-                  onTabChange={notifications.setActiveTab}
-                  notice={notifications.notice}
-                  announcements={notifications.announcements}
-                  loading={notifications.loading}
-                />
+                <span className='landing-nav-icon' data-icon='bell'>
+                  <NotificationPopover
+                    open={notifications.popoverOpen}
+                    onOpenChange={notifications.setPopoverOpen}
+                    unreadCount={notifications.unreadCount}
+                    activeTab={notifications.activeTab}
+                    onTabChange={notifications.setActiveTab}
+                    notice={notifications.notice}
+                    announcements={notifications.announcements}
+                    loading={notifications.loading}
+                  />
+                </span>
               )}
 
               {showAuthButtons && (
@@ -287,7 +320,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                   ) : (
                     <Button
                       size='sm'
-                      className='h-9 rounded-full bg-gradient-to-r from-[#28a8ef] to-[#a66af2] px-4 text-sm font-semibold text-white shadow-md shadow-blue-200/60 hover:brightness-105'
+                      className='landing-login h-9 rounded-full bg-gradient-to-r from-[#28a8ef] to-[#a66af2] px-4 text-sm font-semibold text-white shadow-md shadow-blue-200/60'
                       render={<Link to='/sign-in' />}
                     >
                       {t('Sign in')}
