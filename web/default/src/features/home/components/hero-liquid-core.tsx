@@ -28,13 +28,19 @@ import { cn } from '@/lib/utils'
 /**
  * Liquid Glass Intelligence Core — 首页右侧主视觉。
  *
- * 分层（由后到前）：光纤轨道后半段 → 玻璃核心（折射透镜 / 内部流光画布 /
- * 冰晶纹理 / 焦散扫光 / 边缘高光 / 镜面高光）→ 光纤轨道前半段 → 模型玻璃卡片。
+ * 分层（由后到前）：光纤轨道后半段 → 液态玻璃球（循环视频）→ 光纤轨道前半段
+ * → 模型玻璃卡片。
  *
- * 连续运动全部由 CSS 动画驱动，只有两件事需要逐帧计算，共用同一个
- * requestAnimationFrame：卡片的椭圆公转（深度决定缩放、透明度与前后遮挡）
- * 和内部流光画布。舞台离开视口时暂停；prefers-reduced-motion 下只绘制静帧。
- * 模型 Logo 直接深引用 @lobehub/icons 的单个组件，避免把整个图标库打进首页。
+ * 玻璃球是一段在灰色摄影棚背景上渲染的虹彩液态玻璃循环视频。灰底用 SVG 抠像
+ * 滤镜（下方 `matte`）按「与灰底的亮度偏差 + 色度」生成 alpha 去掉，所以球体
+ * 能以普通合成叠在湖光雪山上，明暗主题都成立。没有用 mix-blend-mode：hero、
+ * 核心的入场与漂浮动画都会建立隔离的层叠上下文，混合模式根本碰不到背景图，
+ * 而且以后任何祖先加上 transform / opacity 都会让灰底重新露出来。
+ *
+ * 卡片的椭圆公转（深度决定缩放、透明度与前后遮挡）由一个 requestAnimationFrame
+ * 驱动；舞台离开视口时循环与视频一起暂停。prefers-reduced-motion 下卡片静止、
+ * 视频不播放，只显示首帧海报。模型 Logo 直接深引用 @lobehub/icons 的单个组件，
+ * 避免把整个图标库打进首页。
  */
 
 type OrbitLane = {
@@ -127,148 +133,13 @@ const RING_ARCS = ORBIT_LANES.filter((lane) => lane.ring).map((lane) => {
 
 const MOTE_IDS = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7']
 
+const SPHERE_VIDEO_SRC = '/media/ominode-glass-sphere.mp4'
+const SPHERE_POSTER_SRC = '/media/ominode-glass-sphere-poster.webp'
+
 // 移动端：所有卡片共用一条轨道、等距排布、同速公转 —— 彼此永不追越，保证不重叠。
 const COMPACT_PERIOD = 34
 const COMPACT_ORBIT = { radius: 0.42, tilt: 0.46, lift: 0 }
-const LIGHT_BUFFER = 200
-const LIGHT_FRAME_MS = 33
 const TAU = Math.PI * 2
-
-const LIGHT_BLOBS = [
-  {
-    color: '255, 255, 255',
-    alpha: 0.26,
-    radius: 70,
-    orbitX: 38,
-    orbitY: 30,
-    periodX: 13,
-    periodY: 17,
-    offset: 0,
-  },
-  {
-    color: '160, 212, 255',
-    alpha: 0.24,
-    radius: 82,
-    orbitX: 44,
-    orbitY: 36,
-    periodX: 17,
-    periodY: 11,
-    offset: 1.9,
-  },
-  {
-    color: '130, 236, 246',
-    alpha: 0.18,
-    radius: 60,
-    orbitX: 34,
-    orbitY: 42,
-    periodX: 9,
-    periodY: 14,
-    offset: 3.4,
-  },
-  {
-    color: '184, 158, 255',
-    alpha: 0.2,
-    radius: 66,
-    orbitX: 40,
-    orbitY: 28,
-    periodX: 19,
-    periodY: 15,
-    offset: 4.6,
-  },
-  {
-    color: '255, 196, 228',
-    alpha: 0.1,
-    radius: 54,
-    orbitX: 30,
-    orbitY: 34,
-    periodX: 15,
-    periodY: 20,
-    offset: 5.8,
-  },
-]
-
-// 焦散光丝的 RGB 分离：青、粉两道偏移副本 + 白色主线，形成轻微色散。
-const CAUSTIC_CHANNELS: Array<[number, string, number]> = [
-  [-1.1, '120, 232, 255', 0.22],
-  [1.1, '255, 170, 220', 0.16],
-  [0, '255, 255, 255', 0.42],
-]
-
-/**
- * 核心内部的液态流光：几团缓慢游走、呼吸的柔光，加三条带色散的焦散光丝。
- * 画在 200px 的低分辨率画布上，由 CSS 放大到核心尺寸，放大本身就是柔化。
- */
-function paintInternalLight(ctx: CanvasRenderingContext2D, seconds: number) {
-  const center = LIGHT_BUFFER / 2
-  ctx.globalCompositeOperation = 'source-over'
-  ctx.clearRect(0, 0, LIGHT_BUFFER, LIGHT_BUFFER)
-  ctx.globalCompositeOperation = 'lighter'
-
-  for (const blob of LIGHT_BLOBS) {
-    const x =
-      center +
-      Math.sin((seconds / blob.periodX) * TAU + blob.offset) * blob.orbitX
-    const y =
-      center +
-      Math.cos((seconds / blob.periodY) * TAU + blob.offset) * blob.orbitY
-    const breathe =
-      0.85 +
-      Math.sin((seconds / (blob.periodX + blob.periodY)) * TAU + blob.offset) *
-        0.15
-    const gradient = ctx.createRadialGradient(
-      x,
-      y,
-      0,
-      x,
-      y,
-      blob.radius * breathe
-    )
-    gradient.addColorStop(0, `rgba(${blob.color}, ${blob.alpha})`)
-    gradient.addColorStop(1, `rgba(${blob.color}, 0)`)
-    ctx.fillStyle = gradient
-    ctx.fillRect(0, 0, LIGHT_BUFFER, LIGHT_BUFFER)
-  }
-
-  ctx.lineCap = 'round'
-  for (let strand = 0; strand < 3; strand += 1) {
-    const phase = (seconds / (11 + strand * 4)) * TAU + strand * 2.1
-    const sway = Math.sin(phase) * 26
-    const bend = Math.cos(phase * 0.7) * 34
-    const baseY = 58 + strand * 42
-    const glow = 0.5 + Math.sin(phase * 1.3) * 0.5
-    ctx.lineWidth = 1.4 + strand * 0.4
-    for (const [dx, color, alpha] of CAUSTIC_CHANNELS) {
-      ctx.strokeStyle = `rgba(${color}, ${(alpha * glow).toFixed(3)})`
-      ctx.beginPath()
-      ctx.moveTo(18 + dx, baseY + sway)
-      ctx.bezierCurveTo(
-        70 + dx,
-        baseY - bend,
-        130 + dx,
-        baseY + bend + sway * 0.5,
-        182 + dx,
-        baseY - sway
-      )
-      ctx.stroke()
-    }
-  }
-
-  // 边缘羽化，让流光在玻璃边缘自然消散
-  ctx.globalCompositeOperation = 'destination-in'
-  const edge = ctx.createRadialGradient(
-    center,
-    center,
-    center * 0.55,
-    center,
-    center,
-    center
-  )
-  edge.addColorStop(0, 'rgba(0, 0, 0, 1)')
-  edge.addColorStop(0.78, 'rgba(0, 0, 0, 0.9)')
-  edge.addColorStop(1, 'rgba(0, 0, 0, 0)')
-  ctx.fillStyle = edge
-  ctx.fillRect(0, 0, LIGHT_BUFFER, LIGHT_BUFFER)
-}
 
 type HeroLiquidCoreProps = {
   className?: string
@@ -276,16 +147,16 @@ type HeroLiquidCoreProps = {
 
 export function HeroLiquidCore(props: HeroLiquidCoreProps) {
   const stageRef = useRef<HTMLDivElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const cardRefs = useRef<Array<HTMLDivElement | null>>([])
   const svgId = useId().replaceAll(/[^a-zA-Z0-9_-]/g, '')
   const fiberGradientId = `${svgId}-fiber`
-  const crystalFilterId = `${svgId}-crystal`
+  const matteFilterId = `${svgId}-matte`
 
   useEffect(() => {
     const stage = stageRef.current
-    const ctx = canvasRef.current?.getContext('2d')
-    if (!stage || !ctx) return
+    const video = videoRef.current
+    if (!stage || !video) return
 
     const reducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
@@ -301,7 +172,6 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
     let pointerY = 0
     let parallaxX = 0
     let parallaxY = 0
-    let lastLightPaint = -Infinity
     let frameId = 0
 
     const render = (now: number) => {
@@ -342,11 +212,6 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
         else if (depth > 0.4) layer = 'front'
         if (card.dataset.depth !== layer) card.dataset.depth = layer
       })
-
-      if (now - lastLightPaint >= LIGHT_FRAME_MS) {
-        lastLightPaint = now
-        paintInternalLight(ctx, seconds)
-      }
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -360,6 +225,8 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
       return () => resizeObserver.disconnect()
     }
 
+    // 自动播放可能被浏览器拒绝（省流量模式等）；那时停在海报帧即可
+    video.muted = true
     const tick = (now: number) => {
       render(now)
       frameId = requestAnimationFrame(tick)
@@ -368,11 +235,13 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !frameId) {
         frameId = requestAnimationFrame(tick)
+        video.play().catch(() => undefined)
         return
       }
       if (!entry.isIntersecting) {
         cancelAnimationFrame(frameId)
         frameId = 0
+        video.pause()
       }
     })
     visibilityObserver.observe(stage)
@@ -389,6 +258,7 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
 
     return () => {
       cancelAnimationFrame(frameId)
+      video.pause()
       visibilityObserver.disconnect()
       resizeObserver.disconnect()
       if (trackPointer) window.removeEventListener('pointermove', onPointerMove)
@@ -417,6 +287,56 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
             <stop offset='0.78' stopColor='#c7b6f4' stopOpacity='0.9' />
             <stop offset='1' stopColor='#e4f1ff' stopOpacity='0.45' />
           </linearGradient>
+          {/*
+            抠掉视频的灰色摄影棚背景（sRGB 约 0.72）：
+            dev.R = 比灰底亮的部分（高光），dev.G = 比灰底暗的部分（边缘/阴影），
+            dev.B 与 cool.R/G = 色度（虹彩）。几路相加得到 alpha 蒙版，
+            灰底附近 0.66–0.76 的亮度区间为死区，彻底透明。
+          */}
+          <filter
+            id={matteFilterId}
+            x='0'
+            y='0'
+            width='100%'
+            height='100%'
+            colorInterpolationFilters='sRGB'
+          >
+            <feColorMatrix
+              in='SourceGraphic'
+              type='matrix'
+              result='dev'
+              values='1.8 3.54 0.66 0 -4.56  -1.8 -3.54 -0.66 0 3.96  5 0 -5 0 0  0 0 0 1 0'
+            />
+            <feColorMatrix
+              in='SourceGraphic'
+              type='matrix'
+              result='cool'
+              values='-5 0 5 0 0  0 5 -5 0 0  0 0 0 0 0  0 0 0 1 0'
+            />
+            <feColorMatrix
+              in='dev'
+              type='matrix'
+              result='devAlpha'
+              values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 1 1 0 0'
+            />
+            <feColorMatrix
+              in='cool'
+              type='matrix'
+              result='coolAlpha'
+              values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 1 0 0 0'
+            />
+            <feComposite
+              in='devAlpha'
+              in2='coolAlpha'
+              operator='arithmetic'
+              k1='0'
+              k2='1'
+              k3='1'
+              k4='0'
+              result='matte'
+            />
+            <feComposite in='SourceGraphic' in2='matte' operator='in' />
+          </filter>
         </defs>
         {RING_ARCS.map((arc) => (
           <path
@@ -430,43 +350,17 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
       </svg>
 
       <div className='liquid-core'>
-        <div className='liquid-core-lens' />
-        <canvas
-          ref={canvasRef}
-          className='liquid-core-light'
-          width={LIGHT_BUFFER}
-          height={LIGHT_BUFFER}
+        <video
+          ref={videoRef}
+          className='liquid-core-sphere'
+          src={SPHERE_VIDEO_SRC}
+          poster={SPHERE_POSTER_SRC}
+          muted
+          loop
+          playsInline
+          preload='auto'
+          style={{ filter: `url(#${matteFilterId})` }}
         />
-        <svg className='liquid-core-crystal' viewBox='0 0 200 200'>
-          <defs>
-            <filter
-              id={crystalFilterId}
-              x='0'
-              y='0'
-              width='100%'
-              height='100%'
-              colorInterpolationFilters='sRGB'
-            >
-              <feTurbulence
-                type='fractalNoise'
-                baseFrequency='0.014 0.04'
-                numOctaves={2}
-                seed={11}
-              />
-              <feComponentTransfer>
-                <feFuncR type='table' tableValues='0 0 0 0.9 0 0 0 0' />
-              </feComponentTransfer>
-              <feColorMatrix
-                type='matrix'
-                values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0.7 0 0 0 0'
-              />
-            </filter>
-          </defs>
-          <rect width='200' height='200' filter={`url(#${crystalFilterId})`} />
-        </svg>
-        <div className='liquid-core-sweep' />
-        <div className='liquid-core-rim' />
-        <div className='liquid-core-specular' />
       </div>
 
       <svg

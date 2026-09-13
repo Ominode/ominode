@@ -107,9 +107,9 @@ For commercial licensing, please contact support@quantumnous.com
 .dark .models-bg-veil {
   background: linear-gradient(
     to bottom,
-    rgba(10, 13, 16, 0.62) 0%,
-    rgba(10, 13, 16, 0.48) 45%,
-    rgba(10, 13, 16, 0.72) 100%
+    rgba(10, 13, 16, 0.64) 0%,
+    rgba(10, 13, 16, 0.6) 45%,
+    rgba(10, 13, 16, 0.78) 100%
   );
 }
 

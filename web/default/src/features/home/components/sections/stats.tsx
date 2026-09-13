@@ -113,12 +113,10 @@ export function Stats(_props: StatsProps) {
               key={s.label}
               className='flex flex-col items-center text-center'
             >
-              <span className='font-serif text-3xl font-medium tracking-[0.14em] text-[#16213E] dark:text-slate-100 md:text-4xl'>
+              <span className='text-4xl font-light tracking-[-0.02em] text-(--landing-ink) md:text-5xl'>
                 <Counter end={s.end} suffix={s.suffix} decimals={s.decimals} />
               </span>
-              <span className='mt-2 text-xs font-medium tracking-[0.18em] text-[#5A6B8C] dark:text-slate-400 uppercase'>
-                {s.label}
-              </span>
+              <span className='landing-label mt-3'>{s.label}</span>
             </div>
           ))}
         </div>

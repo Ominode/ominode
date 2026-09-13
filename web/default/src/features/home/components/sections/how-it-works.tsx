@@ -50,10 +50,10 @@ export function HowItWorks() {
   ]
 
   return (
-    <section className='relative z-10 border-t border-slate-900/10 dark:border-white/10 px-6 py-28 md:py-40'>
+    <section className='relative z-10 border-t border-slate-900/10 px-6 py-28 md:py-40 dark:border-white/10'>
       <div className='mx-auto max-w-5xl'>
         <AnimateInView className='mb-20 text-center md:mb-24'>
-          <h2 className='text-3xl font-bold tracking-tight text-[#16213E] dark:text-slate-100 md:text-5xl'>
+          <h2 className='landing-heading text-3xl md:text-5xl'>
             {t('Three steps to get started')}
           </h2>
         </AnimateInView>
@@ -66,15 +66,11 @@ export function HowItWorks() {
               animation='fade-up'
               className='relative flex flex-col items-center text-center'
             >
-              <span className='mb-6 font-serif text-5xl font-medium text-[#7C5CFC]/30 dark:text-[#a78bfa]/40'>
+              <span className='landing-accent-text mb-5 font-serif text-5xl font-medium opacity-80'>
                 {step.num}
               </span>{' '}
-              <h3 className='mb-3 font-serif text-lg font-medium tracking-[0.12em] text-[#16213E] dark:text-slate-100'>
-                {step.title}
-              </h3>
-              <p className='max-w-[260px] text-sm leading-relaxed text-[#44547A] dark:text-slate-400'>
-                {step.desc}
-              </p>
+              <h3 className='landing-title mb-2.5 text-lg'>{step.title}</h3>
+              <p className='landing-copy max-w-[260px] text-sm'>{step.desc}</p>
             </AnimateInView>
           ))}
         </div>

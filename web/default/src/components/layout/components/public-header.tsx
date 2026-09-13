@@ -179,7 +179,7 @@ export function PublicHeader(props: PublicHeaderProps) {
         <div
           className={cn(
             'pointer-events-auto mx-auto transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
-            scrolled ? 'max-w-[52rem] px-3 pt-3' : 'max-w-7xl px-4 pt-0 md:px-6'
+            scrolled ? 'max-w-[56rem] px-3 pt-3' : 'max-w-7xl px-4 pt-0 md:px-6'
           )}
         >
           <nav
@@ -231,7 +231,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                   />
                 )}
               </div>
-              <span className='text-base font-semibold tracking-tight text-[#17345c] dark:text-slate-100'>
+              <span className='text-base font-semibold tracking-tight text-(--landing-ink)'>
                 {loading ? <Skeleton className='h-4 w-16' /> : displaySiteName}
               </span>
             </Link>
@@ -251,7 +251,7 @@ export function PublicHeader(props: PublicHeaderProps) {
                       tabIndex={link.disabled ? -1 : undefined}
                       onClick={(event) => handleNavLinkClick(event, link)}
                       className={cn(
-                        'landing-nav-link text-[#52709a] hover:text-[#17345c] dark:text-slate-400 dark:hover:text-slate-100 rounded-lg px-3 py-2 text-sm font-medium',
+                        'landing-nav-link text-(--landing-muted) hover:text-(--landing-ink) rounded-lg px-3 py-2 text-sm font-medium lg:whitespace-nowrap',
                         link.disabled && 'pointer-events-none opacity-50'
                       )}
                     >
@@ -267,10 +267,10 @@ export function PublicHeader(props: PublicHeaderProps) {
                     onClick={(event) => handleNavLinkClick(event, link)}
                     data-active={isActive}
                     className={cn(
-                      'landing-nav-link rounded-lg px-3 py-2 text-sm font-medium',
+                      'landing-nav-link rounded-lg px-3 py-2 text-sm font-medium lg:whitespace-nowrap',
                       isActive
-                        ? 'text-[#17345c] dark:text-slate-100'
-                        : 'text-[#52709a] hover:text-[#17345c] dark:text-slate-400 dark:hover:text-slate-100',
+                        ? 'text-(--landing-ink)'
+                        : 'text-(--landing-muted) hover:text-(--landing-ink)',
                       link.disabled && 'pointer-events-none opacity-50'
                     )}
                   >
