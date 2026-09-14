@@ -5096,6 +5096,7 @@
     "landing.howItWorks.step1": "壱",
     "landing.howItWorks.step2": "弐",
     "landing.howItWorks.step3": "参",
-    "The minimum top-up amount is {{amount}} USD": "最低チャージ金額は {{amount}} USD です"
+    "The minimum top-up amount is {{amount}} USD": "最低チャージ金額は {{amount}} USD です",
+    "Supports Alipay and WeChat Pay": "Alipay・WeChat Pay に対応"
   }
 }

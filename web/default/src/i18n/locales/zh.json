@@ -5096,6 +5096,7 @@
     "landing.howItWorks.step1": "壹",
     "landing.howItWorks.step2": "贰",
     "landing.howItWorks.step3": "叁",
-    "The minimum top-up amount is {{amount}} USD": "最低充值金额为 {{amount}} USD"
+    "The minimum top-up amount is {{amount}} USD": "最低充值金额为 {{amount}} USD",
+    "Supports Alipay and WeChat Pay": "支持支付宝和微信支付"
   }
 }

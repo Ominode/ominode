@@ -5096,6 +5096,7 @@
     "landing.howItWorks.step1": "I",
     "landing.howItWorks.step2": "II",
     "landing.howItWorks.step3": "III",
-    "The minimum top-up amount is {{amount}} USD": "The minimum top-up amount is {{amount}} USD"
+    "The minimum top-up amount is {{amount}} USD": "The minimum top-up amount is {{amount}} USD",
+    "Supports Alipay and WeChat Pay": "Supports Alipay and WeChat Pay"
   }
 }

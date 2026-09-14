@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import { Gift, ExternalLink, Loader2, Receipt, WalletCards } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { SiAlipay, SiWechat } from 'react-icons/si'
 
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -36,6 +37,7 @@ import {
 import { formatNumber } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
+import { PAYMENT_ICON_COLORS, PAYMENT_TYPES } from '../constants'
 import {
   formatCurrency,
   getDiscountLabel,
@@ -316,6 +318,12 @@ export function RechargeFormCard({
                   <div className='grid grid-cols-2 gap-1.5 sm:gap-3 lg:grid-cols-3'>
                     {topupInfo?.pay_methods?.map((method) => {
                       const minTopup = method.min_topup || 0
+                      // Stripe checkout also takes Alipay and WeChat Pay (when enabled
+                      // in the Stripe Dashboard), so call that out on its button.
+                      const walletNote =
+                        method.type === PAYMENT_TYPES.STRIPE
+                          ? t('Supports Alipay and WeChat Pay')
+                          : undefined
                       const disabled = minTopup > topupAmount
                       const disabledReason = disabled
                         ? t('Minimum topup amount: {{amount}}', {
@@ -333,11 +341,9 @@ export function RechargeFormCard({
                           onClick={() => onPaymentMethodSelect(method)}
                           disabled={disabled || !!paymentLoading}
                           title={disabledReason}
-                          aria-label={
-                            disabledReason
-                              ? `${method.name}. ${disabledReason}`
-                              : method.name
-                          }
+                          aria-label={[method.name, walletNote, disabledReason]
+                            .filter(Boolean)
+                            .join('. ')}
                           className='min-h-14 min-w-0 justify-start gap-2 rounded-lg px-3 py-2 text-left'
                         >
                           {paymentLoading === method.type ? (
@@ -354,6 +360,33 @@ export function RechargeFormCard({
                             <span className='max-w-full truncate'>
                               {method.name}
                             </span>
+                            {walletNote && (
+                              <span className='text-muted-foreground flex max-w-full items-start gap-1 text-[11px] leading-4 font-normal whitespace-normal'>
+                                <span className='flex shrink-0 items-center gap-0.5 pt-px'>
+                                  <SiAlipay
+                                    aria-hidden='true'
+                                    className='size-3'
+                                    style={{
+                                      color:
+                                        PAYMENT_ICON_COLORS[
+                                          PAYMENT_TYPES.ALIPAY
+                                        ],
+                                    }}
+                                  />
+                                  <SiWechat
+                                    aria-hidden='true'
+                                    className='size-3'
+                                    style={{
+                                      color:
+                                        PAYMENT_ICON_COLORS[
+                                          PAYMENT_TYPES.WECHAT
+                                        ],
+                                    }}
+                                  />
+                                </span>
+                                <span>{walletNote}</span>
+                              </span>
+                            )}
                             {disabledLabel && (
                               <span className='text-muted-foreground max-w-full truncate text-[11px] leading-4 font-normal'>
                                 {disabledLabel}

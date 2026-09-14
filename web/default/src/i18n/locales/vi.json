@@ -5096,6 +5096,7 @@
     "landing.howItWorks.step1": "I",
     "landing.howItWorks.step2": "II",
     "landing.howItWorks.step3": "III",
-    "The minimum top-up amount is {{amount}} USD": "Số tiền nạp tối thiểu là {{amount}} USD"
+    "The minimum top-up amount is {{amount}} USD": "Số tiền nạp tối thiểu là {{amount}} USD",
+    "Supports Alipay and WeChat Pay": "Hỗ trợ Alipay và WeChat Pay"
   }
 }
