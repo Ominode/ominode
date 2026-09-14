@@ -20,11 +20,10 @@ import ClaudeColor from '@lobehub/icons/es/Claude/components/Color'
 import DeepSeekColor from '@lobehub/icons/es/DeepSeek/components/Color'
 import GeminiColor from '@lobehub/icons/es/Gemini/components/Color'
 import GrokMono from '@lobehub/icons/es/Grok/components/Mono'
-import KimiColor from '@lobehub/icons/es/Kimi/components/Color'
 import MetaColor from '@lobehub/icons/es/Meta/components/Color'
 import OpenAIMono from '@lobehub/icons/es/OpenAI/components/Mono'
 import QwenColor from '@lobehub/icons/es/Qwen/components/Color'
-import { useEffect, useId, useRef } from 'react'
+import { useEffect, useId, useRef, type ComponentType } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -44,12 +43,38 @@ import { cn } from '@/lib/utils'
  * 轨道尺寸只在 CSS 里定义（球体半径 + 间隙 + 约半个卡片对角线），JS 仅在尺寸
  * 变化时读取一次轨道线的实际宽高，逐帧只写 transform / opacity。舞台离开视口时
  * 动画与视频一起暂停；prefers-reduced-motion 下卡片静止、视频停在首帧海报。
- * 模型 Logo 直接深引用 @lobehub/icons 的单个组件，避免把整个图标库打进首页。
+ * 模型 Logo 直接深引用 @lobehub/icons 的单个组件，避免把整个图标库打进首页；
+ * Kimi 用的是新版「K + 蓝色气泡」标志，图标库里没有，所以在本文件内联 SVG。
  */
 
 type OrbitLogo = {
   id: string
-  Logo: typeof ClaudeColor
+  Logo: ComponentType<{ size?: number | string }>
+}
+
+/** Kimi 新版标志：K 字随主题取 currentColor，气泡保持品牌蓝 */
+function KimiLogo(props: { size?: number | string }) {
+  return (
+    <svg
+      width={props.size}
+      height={props.size}
+      viewBox='25 24 550 550'
+      xmlns='http://www.w3.org/2000/svg'
+      style={{ flex: 'none', lineHeight: 1 }}
+    >
+      <title>Kimi</title>
+      <path fill='currentColor' d='M30 68h93v483H30z' />
+      <path
+        fill='currentColor'
+        d='M322 68h104l-65 144q-21 44-60 44h55v27a65 65 0 0 1-65 65H122v-92h116z'
+      />
+      <path fill='currentColor' d='M353 551h92V350a92 94 0 0 0-92-94z' />
+      <path
+        fill='#027AFF'
+        d='M466 161l15-19c-11-12-15-26-15-42 0-33 23-53 52-53s51 20 51 53c0 38-20 58-59 59z'
+      />
+    </svg>
+  )
 }
 
 const ORBIT_LOGOS: OrbitLogo[] = [
@@ -60,7 +85,7 @@ const ORBIT_LOGOS: OrbitLogo[] = [
   { id: 'meta', Logo: MetaColor },
   { id: 'deepseek', Logo: DeepSeekColor },
   { id: 'grok', Logo: GrokMono },
-  { id: 'kimi', Logo: KimiColor },
+  { id: 'kimi', Logo: KimiLogo },
 ]
 
 /** 公转一周的秒数，所有 Logo 共用 */
