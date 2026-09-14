@@ -19,8 +19,11 @@ For commercial licensing, please contact support@quantumnous.com
 import ClaudeColor from '@lobehub/icons/es/Claude/components/Color'
 import DeepSeekColor from '@lobehub/icons/es/DeepSeek/components/Color'
 import GeminiColor from '@lobehub/icons/es/Gemini/components/Color'
+import GrokMono from '@lobehub/icons/es/Grok/components/Mono'
+import KimiColor from '@lobehub/icons/es/Kimi/components/Color'
 import MetaColor from '@lobehub/icons/es/Meta/components/Color'
 import OpenAIMono from '@lobehub/icons/es/OpenAI/components/Mono'
+import QwenColor from '@lobehub/icons/es/Qwen/components/Color'
 import { useEffect, useId, useRef } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -33,10 +36,10 @@ import { cn } from '@/lib/utils'
  * 能以普通合成叠在湖光雪山上，明暗主题都成立。没有用 mix-blend-mode：hero 与
  * 核心的入场动画都会建立隔离的层叠上下文，混合模式碰不到背景图。
  *
- * 五个模型 Logo 在同一条倾斜的椭圆轨道上等距排布、同速匀速公转：转到前方时
+ * 八个模型 Logo 在同一条倾斜的椭圆轨道上等距排布、同速匀速公转：转到前方时
  * 放大、变亮并挡在球体前面，转到后方时缩小、变淡并被球体遮住；轨道线也分成
- * 后半段（球体之后）与前半段（球体之前）两层。因为同速且相隔 72°，卡片之间
- * 永远不会追越重叠。
+ * 后半段（球体之后）与前半段（球体之前）两层。因为同速且等距（相隔 45°），
+ * 卡片之间永远不会追越；轨道倾角取到让相邻卡片在任何角度都不重叠。
  *
  * 轨道尺寸只在 CSS 里定义（球体半径 + 间隙 + 约半个卡片对角线），JS 仅在尺寸
  * 变化时读取一次轨道线的实际宽高，逐帧只写 transform / opacity。舞台离开视口时
@@ -53,8 +56,11 @@ const ORBIT_LOGOS: OrbitLogo[] = [
   { id: 'openai', Logo: OpenAIMono },
   { id: 'claude', Logo: ClaudeColor },
   { id: 'gemini', Logo: GeminiColor },
+  { id: 'qwen', Logo: QwenColor },
   { id: 'meta', Logo: MetaColor },
   { id: 'deepseek', Logo: DeepSeekColor },
+  { id: 'grok', Logo: GrokMono },
+  { id: 'kimi', Logo: KimiColor },
 ]
 
 /** 公转一周的秒数，所有 Logo 共用 */
@@ -97,7 +103,7 @@ export function HeroLiquidCore(props: HeroLiquidCoreProps) {
       cardRefs.current.forEach((card, index) => {
         if (!card) return
 
-        // 从正前方开始，等距相隔 72°
+        // 从正前方开始，按 Logo 数量等距排布
         const angle = Math.PI / 2 + (index / ORBIT_LOGOS.length) * TAU + turn
         const depth = Math.sin(angle)
         const nearness = (depth + 1) / 2

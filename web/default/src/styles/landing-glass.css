@@ -194,15 +194,17 @@ For commercial licensing, please contact support@quantumnous.com
   /* these resolve where they are used, so % means % of the stage */
   /* logo tiles scaled to sit in proportion with the large sphere */
   --tile: clamp(52px, 14cqw, 112px);
-  /* 1.4x the largest sphere an outside-the-sphere orbit could fit, measured
-   * with the earlier 10cqw tile. That tile size is pinned here so enlarging
-   * the logos does not shrink the sphere. */
-  --sphere-r: calc((50% - 16px - clamp(44px, 10cqw, 76px) * 1.16) * 1.4);
+  /* 1.26x (1.4x, then 0.9x) the largest sphere an outside-the-sphere orbit
+   * could fit, measured with the earlier 10cqw tile. That tile size is pinned
+   * here so enlarging the logos does not shrink the sphere. */
+  --sphere-r: calc((50% - 16px - clamp(44px, 10cqw, 76px) * 1.16) * 1.26);
   /* the widest orbit that keeps side-on tiles (~0.54 tile wide from their
    * centre) 4px inside the stage, so logos never reach the copy; flattened by
    * --orbit-tilt */
   --orbit-rx: calc(50% - 4px - var(--tile) * 0.54);
-  --orbit-tilt: 0.38;
+  /* 0.5: with eight tiles 45 degrees apart, anything flatter lets neighbours
+   * overlap as they pass the sides */
+  --orbit-tilt: 0.5;
   position: relative;
   container-type: inline-size;
   pointer-events: none;
@@ -396,6 +398,15 @@ For commercial licensing, please contact support@quantumnous.com
 }
 .liquid-core-cards > :nth-child(5) .liquid-core-tile {
   animation-delay: 540ms;
+}
+.liquid-core-cards > :nth-child(6) .liquid-core-tile {
+  animation-delay: 580ms;
+}
+.liquid-core-cards > :nth-child(7) .liquid-core-tile {
+  animation-delay: 620ms;
+}
+.liquid-core-cards > :nth-child(8) .liquid-core-tile {
+  animation-delay: 660ms;
 }
 
 /* far side of the orbit: a touch of depth blur */
