@@ -9,7 +9,7 @@ var (
 	WaffoPancakePrivateKey string
 	WaffoPancakeReturnURL  string
 	WaffoPancakeUnitPrice  float64 = 1.0
-	WaffoPancakeMinTopUp   int     = 1
+	WaffoPancakeMinTopUp   int     = 10
 	WaffoPancakeStoreID    string
 	WaffoPancakeProductID  string
 )

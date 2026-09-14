@@ -165,7 +165,7 @@ const BILLING_SECTIONS = [
           WaffoMerchantId: settings.WaffoMerchantId ?? '',
           WaffoCurrency: settings.WaffoCurrency ?? 'USD',
           WaffoUnitPrice: settings.WaffoUnitPrice ?? 1,
-          WaffoMinTopUp: settings.WaffoMinTopUp ?? 1,
+          WaffoMinTopUp: settings.WaffoMinTopUp ?? 10,
           WaffoNotifyUrl: settings.WaffoNotifyUrl ?? '',
           WaffoReturnUrl: settings.WaffoReturnUrl ?? '',
           WaffoPayMethods: settings.WaffoPayMethods ?? '[]',

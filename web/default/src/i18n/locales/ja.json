@@ -5095,6 +5095,7 @@
     "Zoom": "ズーム",
     "landing.howItWorks.step1": "壱",
     "landing.howItWorks.step2": "弐",
-    "landing.howItWorks.step3": "参"
+    "landing.howItWorks.step3": "参",
+    "The minimum top-up amount is {{amount}} USD": "最低チャージ金額は {{amount}} USD です"
   }
 }

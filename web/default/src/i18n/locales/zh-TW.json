@@ -5095,6 +5095,7 @@
     "Zoom": "縮放",
     "landing.howItWorks.step1": "壹",
     "landing.howItWorks.step2": "貳",
-    "landing.howItWorks.step3": "參"
+    "landing.howItWorks.step3": "參",
+    "The minimum top-up amount is {{amount}} USD": "最低儲值金額為 {{amount}} USD"
   }
 }

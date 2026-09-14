@@ -18,6 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 import { SectionPageLayout } from '@/components/layout'
 import { useStatus } from '@/hooks/use-status'
@@ -172,6 +173,11 @@ export function Wallet(props: WalletProps) {
       // Validate minimum topup
       const minTopup = getMinTopupAmount(topupInfo)
       if (topupAmount < minTopup) {
+        toast.error(
+          t('The minimum top-up amount is {{amount}} USD', {
+            amount: minTopup,
+          })
+        )
         return
       }
 
@@ -237,6 +243,16 @@ export function Wallet(props: WalletProps) {
   }
 
   const handleWaffoMethodSelect = async (_method: unknown, index: number) => {
+    const waffoMinTopup = topupInfo?.waffo_min_topup || 0
+    if (topupAmount < waffoMinTopup) {
+      toast.error(
+        t('The minimum top-up amount is {{amount}} USD', {
+          amount: waffoMinTopup,
+        })
+      )
+      return
+    }
+
     const loadingKey = `waffo-${index}`
     setPaymentLoading(loadingKey)
 

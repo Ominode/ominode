@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/chain-works/ominode/common"
+	"github.com/chain-works/ominode/i18n"
 	"github.com/chain-works/ominode/logger"
 	"github.com/chain-works/ominode/model"
 	"github.com/chain-works/ominode/service"
@@ -176,6 +177,16 @@ func getPayMoney(amount int64, group string) float64 {
 	return payMoney.InexactFloat64()
 }
 
+// topUpAmountTooLowMessage is the localized "below the minimum top-up" error
+// shared by every amount-based gateway. Minimums are configured in USD; in
+// token display mode the request amount is compared in quota units, but the
+// message still names the USD figure the user sees in settings.
+func topUpAmountTooLowMessage(c *gin.Context, minTopUpUSD int) string {
+	return i18n.T(c, i18n.MsgTopupAmountTooLow, map[string]any{
+		"Min": fmt.Sprintf("%d USD", minTopUpUSD),
+	})
+}
+
 func getMinTopup() int64 {
 	minTopup := operation_setting.MinTopUp
 	if operation_setting.GetQuotaDisplayType() == operation_setting.QuotaDisplayTypeTokens {
@@ -194,7 +205,7 @@ func RequestEpay(c *gin.Context) {
 		return
 	}
 	if req.Amount < getMinTopup() {
-		c.JSON(http.StatusOK, gin.H{"message": "error", "data": fmt.Sprintf("充值数量不能小于 %d", getMinTopup())})
+		c.JSON(http.StatusOK, gin.H{"message": "error", "data": topUpAmountTooLowMessage(c, operation_setting.MinTopUp)})
 		return
 	}
 
@@ -420,7 +431,7 @@ func RequestAmount(c *gin.Context) {
 	}
 
 	if req.Amount < getMinTopup() {
-		c.JSON(http.StatusOK, gin.H{"message": "error", "data": fmt.Sprintf("充值数量不能小于 %d", getMinTopup())})
+		c.JSON(http.StatusOK, gin.H{"message": "error", "data": topUpAmountTooLowMessage(c, operation_setting.MinTopUp)})
 		return
 	}
 	id := c.GetInt("id")

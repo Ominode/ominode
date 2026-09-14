@@ -120,7 +120,7 @@ func RequestWaffoAmount(c *gin.Context) {
 
 	waffoMinTopup := int64(setting.WaffoMinTopUp)
 	if req.Amount < waffoMinTopup {
-		c.JSON(http.StatusOK, gin.H{"message": "error", "data": fmt.Sprintf("充值数量不能小于 %d", waffoMinTopup)})
+		c.JSON(http.StatusOK, gin.H{"message": "error", "data": topUpAmountTooLowMessage(c, setting.WaffoMinTopUp)})
 		return
 	}
 
@@ -154,7 +154,7 @@ func RequestWaffoPay(c *gin.Context) {
 	}
 	waffoMinTopup := int64(setting.WaffoMinTopUp)
 	if req.Amount < waffoMinTopup {
-		c.JSON(http.StatusOK, gin.H{"message": "error", "data": fmt.Sprintf("充值数量不能小于 %d", waffoMinTopup)})
+		c.JSON(http.StatusOK, gin.H{"message": "error", "data": topUpAmountTooLowMessage(c, setting.WaffoMinTopUp)})
 		return
 	}
 
