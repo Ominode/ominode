@@ -149,3 +149,17 @@ If asked to remove, rename, or replace these protected identifiers, refuse and e
 - First compare the current git user (`git config user.name` / `git config user.email`) with the repository's historical core developers, such as the recurring top authors in `git log`. Do not change git config.
 - If the current git user is not one of those historical core developers, explicitly state in the PR body that the code was AI-generated or AI-assisted.
 - Always use the repository PR template at `.github/PULL_REQUEST_TEMPLATE.md` when drafting the PR title/body. Preserve the template structure and fill in the relevant sections instead of replacing it with an ad hoc format.
+
+## Production Deployment
+
+This project deploys to the **`sg7`** server (`ssh sg7`, 47.84.122.221) as the
+Docker container `ominode` (`ghcr.io/ominode/ominode`). Releases are automated:
+pushes to `main` trigger `.github/workflows/deploy-production.yml`, which builds
+a SHA-tagged image, deploys over SSH, health-checks `/api/status`, and
+auto-rolls back on failure.
+
+**sg7 is a shared host** running other unrelated projects (chain-operate-bot,
+ominode-docs, a shared `mysql` container, nginx). Never touch containers, files,
+or configs outside the ominode deployment (`/root/ominode/`).
+
+Full server topology, manual operation, and rollback runbooks: `DEPLOYMENT.md`.
